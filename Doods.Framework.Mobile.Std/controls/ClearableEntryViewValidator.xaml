@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.controls;assembly=Doods.Framework.Mobile.Std"
+             xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std"
+             x:Class="Doods.Framework.Mobile.Std.controls.ClearableEntryViewValidator">
+   
+        <ContentView.Resources>
+        <ResourceDictionary>
+        <Style x:Key="ValidationErrorLabelStyle"
+               TargetType="{x:Type Label}">
+            <Setter Property="TextColor"
+                    Value="Red" />
+            <Setter Property="FontSize"
+                    Value="12" />
+        </Style>
+        </ResourceDictionary>
+        </ContentView.Resources>
+    <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+               
+            </Grid.ColumnDefinitions>
+            <Label x:Name="MyLabel"
+                   Text="{Binding LabelText, Mode=TwoWay}"
+                   Grid.Row="0"
+                   Grid.Column="0" />
+
+            <Entry x:Name="MyEntry"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Style="{Binding EntryStyle,Mode=OneWay}"
+                   Text="{Binding EntryText.Value, Mode=TwoWay}" >
+
+               
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding EntryText.IsValid}"
+                                 Value="False">
+                        <Setter Property="behaviors:LineColorBehavior.LineColor"
+                                Value="Red" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+
+            <controls:FloatingActionButton x:Name="MyFloatingActionButton"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Source="ic_clear_white_light.png"
+                                           Size="Mini"
+                                           VerticalOptions="StartAndExpand"
+                                           HasShadow="False" />
+            <Label  x:Name="MyLabelError"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Text="{Binding EntryText.FirstError,Mode=OneWay}"
+                   Style="{StaticResource ValidationErrorLabelStyle}" BackgroundColor="Aqua"/>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
