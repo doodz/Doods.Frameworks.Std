@@ -4,6 +4,9 @@
     {
         string Version { get; }
 
-        int Build { get; }
+        string Build { get; }
+        string ApplicationName { get; }
+
+        string PackageName { get; }
     }
 }

@@ -11,6 +11,7 @@ namespace Doods.Framework.Repository.Std.Config
             builder.RegisterType<Database>().As<IDatabase>().SingleInstance();
             builder.RegisterType<RepositoryBase>().As<IRepository>();
             builder.RegisterType<RepositoryCache>().As<IRepositoryCache>();
+
         }
     }
 }
