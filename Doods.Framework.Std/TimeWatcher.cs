@@ -1,21 +1,26 @@
-﻿using System;
+﻿using Doods.Framework.Std.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Doods.Framework.Std.Extensions;
 
 namespace Doods.Framework.Std
 {
+
+
+
     public class TimeWatcher : ITimeWatcher, IDisposable
     {
         private readonly Dictionary<string, TimeDescription> _cache;
         private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+        private readonly TimeTracer _timeTracer;
         private int _count;
 
-        public TimeWatcher()
+        public TimeWatcher(TimeTracer timeTracer = null)
         {
+            _timeTracer = timeTracer;
             _cache = new Dictionary<string, TimeDescription>();
             Start();
         }
@@ -43,43 +48,60 @@ namespace Doods.Framework.Std
             _count = 0;
         }
 
-        public IWatcher StartWatcher(string name)
+      
+
+        public IWatcher StartWatcher(string name, bool telemetry)
         {
-            return StartWatcherInternal(name);
+            return StartWatcherInternal(name, telemetry, false);
         }
 
-        public async Task<IWatcher> StartWatcherAsync(string name)
+        public async Task<IWatcher> StartWatcherAsync(string name, bool telemetry)
         {
             using (this)
             {
                 await _lock.WaitAsync();
-                var watcher = StartWatcherInternal(name);
+                var watcher = StartWatcherInternal(name, telemetry, false);
                 return watcher;
             }
         }
 
-        public void StopWatcher(string key, Dictionary<string, object> descriptions)
+        public void StopWatcher(string key, Dictionary<string, string> properties, Dictionary<string, double> measures)
         {
             if (!_cache.ContainsKey(key)) return;
 
             var time = _cache[key];
             time.Watcher.Stop();
 
-            _cache[key] = new TimeDescription(time.Watcher, time.Level, descriptions);
+            properties = properties ?? new Dictionary<string, string>();
+            measures = measures ?? new Dictionary<string, double>();
+            measures.Add("ms", time.Watcher.ElapsedMilliseconds);
+
+            var value = new TimeDescription(time.Name, time.Key, time.Telemetry, time.Debug, time.Watcher, time.Level, properties, measures);
+
+            _timeTracer?.Log($"{value.FormatLevel()}{key.Split(':')[0]}: {value.Format()}");
+
+            _cache[key] = value;
             _count--;
         }
 
         public string[] Traces => GetTraces();
 
-        private IWatcher StartWatcherInternal(string name)
+        public IReadOnlyCollection<IWatcherDescriptor> Watchers => GetWatchers();
+
+        private IReadOnlyCollection<IWatcherDescriptor> GetWatchers()
+        {
+            return _cache.Values.ToList();
+        }
+
+        private IWatcher StartWatcherInternal(string name, bool telemetry, bool debug)
         {
             var key = FormatKey(name, DateTime.Now.Ticks);
             if (_cache.ContainsKey(key)) return null;
 
-            _cache.Add(key, new TimeDescription(Stopwatch.StartNew(), _count));
+            _cache.Add(key, new TimeDescription(name, key, telemetry, debug, Stopwatch.StartNew(), _count));
             _count++;
 
-            return new Watcher(this, key);
+            return new Watcher(this, name, key, telemetry, debug);
         }
 
         private static string FormatKey(string name, long tick)
@@ -97,52 +119,87 @@ namespace Doods.Framework.Std
         {
             private readonly ITimeWatcher _timeWatcher;
 
-            public Watcher(ITimeWatcher timeWatcher, string key)
+            public Watcher(ITimeWatcher timeWatcher, string name, string key, bool telemetry, bool debug)
             {
                 _timeWatcher = timeWatcher;
+                Name = name;
                 Key = key;
-                Descriptions = new Dictionary<string, object>();
+                Telemetry = telemetry;
+                Debug = debug;
+                Properties = new Dictionary<string, string>();
+                Measures = new Dictionary<string, double>();
             }
 
-            public Dictionary<string, object> Descriptions { get; }
+            public Dictionary<string, string> Properties { get; }
+
+            public Dictionary<string, double> Measures { get; }
+
+            public string Name { get; }
 
             public string Key { get; }
 
+            public bool Telemetry { get; }
+
+            public bool Debug { get; }
+
+
             public void Dispose()
             {
-                _timeWatcher.StopWatcher(Key, Descriptions);
+                _timeWatcher.StopWatcher(Key, Properties, Measures);
             }
         }
 
-        private class TimeDescription
+        private class TimeDescription : IWatcherDescriptor
         {
-            public TimeDescription(Stopwatch watcher, int level, Dictionary<string, object> descriptions = null)
+            public TimeDescription(string name, string key, bool telemetry, bool debug, Stopwatch watcher, int level, Dictionary<string, string> properties = null, Dictionary<string, double> measures = null)
             {
+                Name = name;
+                Key = key;
+                Telemetry = telemetry;
+                Debug = debug;
                 Watcher = watcher;
                 Level = level;
-                Descriptions = descriptions;
+                Properties = properties;
+                Measures = measures;
             }
+
 
             public Stopwatch Watcher { get; }
 
             public int Level { get; }
 
-            public Dictionary<string, object> Descriptions { get; }
+            public string Name { get; }
+
+            public string Key { get; }
+
+            public bool Telemetry { get; }
+
+            public bool Debug { get; }
+
+            public Dictionary<string, string> Properties { get; }
+
+            public Dictionary<string, double> Measures { get; }
 
             public string Format()
             {
-                var r = new List<string>();
-                if (Descriptions.IsNotEmpty())
-                    r.AddRange(Descriptions.Select(d => $"{d.Key}={d.Value}"));
+                var r = new List<string>(Properties?.Count ?? 0 + Measures?.Count ?? 0);
 
-                r.Add($"ms={Watcher.ElapsedMilliseconds}");
+                if (Properties.IsNotEmpty())
+                {
+                    r.AddRange(Properties.Select(d => $"{d.Key}={d.Value}"));
+                }
+
+                if (Measures.IsNotEmpty())
+                {
+                    r.AddRange(Measures.Select(d => $"{d.Key}={d.Value}"));
+                }
 
                 return r.Join(", ");
             }
 
             public string FormatLevel()
             {
-                var str = "";
+                var str = string.Empty;
                 if (Level > 0)
                 {
                     var i = 1;
@@ -158,4 +215,6 @@ namespace Doods.Framework.Std
             }
         }
     }
+
+   
 }

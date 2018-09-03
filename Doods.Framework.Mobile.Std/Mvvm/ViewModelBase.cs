@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Doods.Framework.Mobile.Std.controls;
+using Doods.Framework.Std;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Doods.Framework.Std;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Mvvm
 {
@@ -15,12 +19,17 @@ namespace Doods.Framework.Mobile.Std.Mvvm
         private bool _isLoading;
         private bool _isVisible;
 
+        private string _title;
+
         private ViewModelState _viewModelState;
 
-        protected ViewModelBase(ILogger logger)
+
+        protected ViewModelBase(ILogger logger, ITelemetryService telemetryService)
         {
             Logger = logger;
+            Telemetry = telemetryService;
             NotifyLoading = true;
+            RefreshCmd = new Command(RefreshAsync);
         }
 
         /// <summary>
@@ -29,6 +38,8 @@ namespace Doods.Framework.Mobile.Std.Mvvm
         protected int? WaitingDurationIsSecond { get; set; }
 
         protected ILogger Logger { get; }
+
+        protected ITelemetryService Telemetry { get; }
 
         /// <summary>
         ///     Indique si la progression doit être notifié
@@ -74,11 +85,22 @@ namespace Doods.Framework.Mobile.Std.Mvvm
         protected CancellationToken Token => _cts.Token;
 
         /// <summary>
+        ///     Commande de rafraichissement des données, lance StartLoadingAsync
+        /// </summary>
+        public ICommand RefreshCmd { get; }
+
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
+
+        /// <summary>
         ///     Permet de lancer le chargement du ViewModel
         /// </summary>
         /// <param name="context">Contexte de chargement</param>
         /// <returns></returns>
-        public async Task StartLoading(LoadingContext context)
+        public async Task StartLoadingAsync(LoadingContext context)
         {
             if (IsLoading) return;
 
@@ -94,13 +116,13 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             }
             else
             {
-                tracer = new TimeTracer(Logger);
+                tracer = new TimeTracer(Logger, Telemetry);
                 timer = tracer.Timer;
             }
 
             using (var watch = timer.StartWatcher("StartLoading"))
             {
-                watch?.Descriptions?.Add("type", GetType());
+                watch?.Properties?.Add("type", GetType().Name);
 
                 // Préparation du chargement
                 InitializeLoading(context);
@@ -127,6 +149,7 @@ namespace Doods.Framework.Mobile.Std.Mvvm
                 {
                     ViewModelState = ViewModelState.Failed;
                     Logger.Error(e);
+                    Telemetry.Exception(e);
                 }
                 finally
                 {
@@ -178,30 +201,30 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             //NP
         }
 
-        public async Task OnAppearing()
+        public async Task OnAppearingAsync()
         {
             if (_cts.IsCancellationRequested) _cts = new CancellationTokenSource();
 
             if (!IsLoaded && !IsLoading && ViewModelState != ViewModelState.Loading)
-                await StartLoading(LoadingContext.OnAppearing);
+                await StartLoadingAsync(LoadingContext.OnAppearing);
 
             IsVisible = true;
-            await OnInternalAppearing();
+            await OnInternalAppearingAsync();
         }
 
-        protected virtual Task OnInternalAppearing()
+        protected virtual Task OnInternalAppearingAsync()
         {
             return Task.FromResult(0);
         }
 
-        public Task OnDisappearing()
+        public Task OnDisappearingAsync()
         {
             IsVisible = false;
             CancelExecutions();
-            return OnInternalDisappearing();
+            return OnInternalDisappearingAsync();
         }
 
-        protected virtual Task OnInternalDisappearing()
+        protected virtual Task OnInternalDisappearingAsync()
         {
             return Task.FromResult(0);
         }
@@ -220,12 +243,14 @@ namespace Doods.Framework.Mobile.Std.Mvvm
                     innerException = innerException.InnerException;
 
                 Logger.Error(innerException);
+                Telemetry.Exception(e);
                 //TODO : HokeyApp
                 if (!safeExecution) throw;
             }
             catch (Exception e)
             {
                 Logger.Error(e);
+                Telemetry.Exception(e);
                 //TODO : HokeyApp
                 if (!safeExecution) throw;
             }
@@ -263,6 +288,30 @@ namespace Doods.Framework.Mobile.Std.Mvvm
                 _cts.Cancel();
 
             // TODO : Recréer un nouveau _cts ?
+        }
+
+        /// <summary>
+        ///     Obtient la description des éléments à placer dans la toolbar
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<CommandItem> GetToolBarItemDescriptions()
+        {
+            return null;
+        }
+
+        /// <summary>
+        ///     Indique si la toolbar peut etre actualisé, fonction de la sélection
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanUpdateToolBar()
+        {
+            return true;
+        }
+
+        private async void RefreshAsync()
+        {
+            if (IsBusy) return;
+            await StartLoadingAsync(LoadingContext.FromUser);
         }
     }
 }

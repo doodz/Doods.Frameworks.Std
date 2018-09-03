@@ -24,7 +24,7 @@ namespace Doods.Framework.Repository.Std.Tables
         {
             using (var watch = timer.StartWatcher("CountAsync"))
             {
-                watch?.Descriptions?.Add("type", typeof(T));
+                watch?.Properties?.Add("type", typeof(T).Name);
                 cnt = cnt ?? await _database.GetConnection(timer);
                 return await cnt.Table<T>().CountAsync();
             }
@@ -35,8 +35,8 @@ namespace Doods.Framework.Repository.Std.Tables
         {
             using (var watch = timer.StartWatcher("GetAllAsync"))
             {
-                watch?.Descriptions?.Add("type", typeof(T));
-                watch?.Descriptions?.Add("cache", cache);
+                watch?.Properties?.Add("type", typeof(T).Name);
+                watch?.Properties?.Add("cache", cache.ToString());
 
                 var key = $"GetAllAsync:{typeof(T).FullName}";
                 if (cache)
@@ -51,7 +51,7 @@ namespace Doods.Framework.Repository.Std.Tables
                 cnt = cnt ?? await _database.GetConnection(timer);
                 var rslt = await cnt.Table<T>().ToListAsync();
 
-                watch?.Descriptions?.Add("count", rslt.Count);
+                watch?.Properties?.Add("count", rslt.Count.ToString());
 
                 if (cache)
                 {
@@ -67,10 +67,10 @@ namespace Doods.Framework.Repository.Std.Tables
         {
             using (var watch = timer.StartWatcher("GetExploitationsAsync"))
             {
-                watch?.Descriptions?.Add("type", typeof(T));
+                watch?.Properties?.Add("type", typeof(T).Name);
 
                 if (id == null) return default(T);
-                watch?.Descriptions?.Add("id", id);
+                watch?.Properties?.Add("id", id.ToString());
 
                 var cnt = await _database.GetConnection(timer);
                 return await cnt.Table<T>().Where(e => e.Id == id).FirstOrDefaultAsync();

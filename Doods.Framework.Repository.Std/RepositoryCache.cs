@@ -20,7 +20,7 @@ namespace Doods.Framework.Repository.Std
         {
             using (var watcher = timer.StartWatcher("RepositoryCache.Set"))
             {
-                watcher?.Descriptions?.Add("key", k);
+                watcher?.Properties?.Add("key", k.ToString());
 
                 if (k != null && value != null)
                 {
@@ -33,15 +33,15 @@ namespace Doods.Framework.Repository.Std
         {
             using (var watcher = timer.StartWatcher("RepositoryCache.Get"))
             {
-                watcher?.Descriptions?.Add("key", k);
+                watcher?.Properties?.Add("key", k);
 
                 if (k != null && _cache.ContainsKey(k))
                 {
-                    watcher?.Descriptions?.Add("exists", true);
+                    watcher?.Properties?.Add("exists", true.ToString());
                     return (T)_cache[k];
                 }
 
-                watcher?.Descriptions?.Add("exists", false);
+                watcher?.Properties?.Add("exists", false.ToString());
 
                 return default(T);
             }
@@ -52,7 +52,7 @@ namespace Doods.Framework.Repository.Std
             using (var watcher = timer.StartWatcher("RepositoryCache.Clear"))
             {
                 var keys = _cache.Keys.Where(k => factory(k));
-                watcher?.Descriptions?.Add("keys", keys.Join(","));
+                watcher?.Properties?.Add("keys", keys.Join(","));
                 if (keys.IsNotEmpty())
                 {
                     foreach (var k in keys)
@@ -63,7 +63,7 @@ namespace Doods.Framework.Repository.Std
                     return true;
                 }
 
-                watcher?.Descriptions?.Add("exists", false);
+                watcher?.Properties?.Add("exists", false.ToString());
                 return false;
             }
         }

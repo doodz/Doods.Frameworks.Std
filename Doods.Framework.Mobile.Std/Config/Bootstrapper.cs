@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Doods.Framework.Mobile.Std.Interfaces;
+using Doods.Framework.Mobile.Std.Servicies;
 using Doods.Framework.Std;
 
 namespace Doods.Framework.Mobile.Std.Config
@@ -11,6 +12,7 @@ namespace Doods.Framework.Mobile.Std.Config
             
             builder.RegisterType<MyDeviceInfo>().As<IDeviceInfo>().SingleInstance();
             builder.RegisterType<Configuration>().As<IConfiguration>().SingleInstance();
+            builder.RegisterType<TelemetryService>().As<ITelemetryService>().SingleInstance();
         }
     }
 }
