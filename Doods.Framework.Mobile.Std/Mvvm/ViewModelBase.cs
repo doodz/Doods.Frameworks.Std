@@ -1,4 +1,5 @@
 ﻿using Doods.Framework.Mobile.Std.controls;
+using Doods.Framework.Mobile.Std.Interfaces;
 using Doods.Framework.Std;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Mvvm
 {
-    public class ViewModelBase : NotifyPropertyChangedBase
+    public class ViewModelBase : NotifyPropertyChangedBase, IViewModel
     {
         private const int _waitingDurationIsSeconds = 200;
-
+        public virtual Command CmdState { get; set; }
         private int _busyCount;
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private bool _isLoaded;
@@ -140,7 +141,7 @@ namespace Doods.Framework.Mobile.Std.Mvvm
                         await ExecuteAsync(token =>
                         {
                             var ctx = context.IsValid ? context : LoadingContext.Create(context, token, timer);
-                            return Load(ctx);
+                            return LoadAsync(ctx);
                         });
 
                     ViewModelState = ViewModelState.Loaded;
@@ -186,7 +187,7 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             }
         }
 
-        protected virtual Task Load(LoadingContext context)
+        protected virtual Task LoadAsync(LoadingContext context)
         {
             return Task.FromResult(0);
         }
@@ -313,5 +314,6 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             if (IsBusy) return;
             await StartLoadingAsync(LoadingContext.FromUser);
         }
+
     }
 }

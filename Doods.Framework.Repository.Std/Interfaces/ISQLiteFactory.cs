@@ -3,5 +3,6 @@
     public interface ISqLiteFactory
     {
         string GetDatabasePath(string fileName);
+        string DefaultDatabaseName { get; }
     }
 }

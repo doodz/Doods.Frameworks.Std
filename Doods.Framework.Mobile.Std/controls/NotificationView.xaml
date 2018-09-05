@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.controls;assembly=Doods.Framework.Mobile.Std"
+             x:Class="Doods.Framework.Mobile.Std.controls.NotificationView"
+             >
+    <ContentView.Resources>
+        <ResourceDictionary Source="../Resources/MyResourceDictionary.xaml" />
+        
+    </ContentView.Resources>
+  <ContentView.Content>
+      <Frame Style="{StaticResource FrameTopBorderlessStyle}"
+             Padding="10,10,10,0">
+          
+                <Grid Style="{StaticResource GridInFrameStyle}"
+                HorizontalOptions="StartAndExpand">
+              <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding ShowCurrentCmd,Mode=OneWay}" />
+              </Grid.GestureRecognizers>
+
+              <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                    <controls:RoundBoxView Grid.Row="2"
+                                           Grid.Column="0"
+                                           Grid.RowSpan="2"
+                                           Style="{StaticResource BoxViewIndicatorStyle}"
+                                           BackgroundColor="{Binding Color, Mode=OneWay}" />
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

@@ -17,13 +17,15 @@ namespace Doods.Framework.Repository.Std
         private readonly SQLiteAsyncConnection _asyncConnection;
         private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
         private readonly ILogger _logger;
+        private readonly ITelemetryService _telemetry;
 
-        public Database(ISqLiteFactory factory, ILogger looger)
+        public Database(ISqLiteFactory factory, ILogger looger, ITelemetryService telemetryService)
         {
-            _asyncConnection = new SQLiteAsyncConnection(factory.GetDatabasePath("Openmediavault.db"),
+            _asyncConnection = new SQLiteAsyncConnection(factory.GetDatabasePath(factory.DefaultDatabaseName),
                 SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.FullMutex);
 
             _logger = looger;
+            _telemetry = telemetryService;  
         }
 
         private IEnumerable<IMigration> Migrations
@@ -73,7 +75,8 @@ namespace Doods.Framework.Repository.Std
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e, "Database");
+                    _logger.Error(e);
+                    _telemetry.Exception(e);
                 }
             }
 
@@ -92,7 +95,8 @@ namespace Doods.Framework.Repository.Std
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Database");
+                _logger.Error(e);
+                _telemetry.Exception(e);
             }
         }
 

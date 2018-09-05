@@ -7,34 +7,32 @@ namespace Doods.Framework.Mobile.Std.controls
 {
     public class FloatingActionButton : View
     {
+
         public static readonly BindableProperty SizeProperty =
-            BindableProperty.Create<FloatingActionButton, FloatingActionButtonSize>(mn => mn.Size,
-                FloatingActionButtonSize.Normal);
-
+            BindableProperty.Create(nameof(Size), typeof(FloatingActionButtonSize), typeof(FloatingActionButton), FloatingActionButtonSize.Normal);
         public static readonly BindableProperty NormalColorProperty =
-            BindableProperty.Create<FloatingActionButton, Color>(mn => mn.NormalColor, Color.Blue);
-
+            BindableProperty.Create(nameof(NormalColor), typeof(Color), typeof(FloatingActionButton), Color.Blue);
         public static readonly BindableProperty RippleColorProperty =
-            BindableProperty.Create<FloatingActionButton, Color>(mn => mn.RippleColor, Color.Gray);
-
+            BindableProperty.Create(nameof(RippleColor), typeof(Color), typeof(FloatingActionButton), Color.Gray);
         public static readonly BindableProperty DisabledColorProperty =
-            BindableProperty.Create<FloatingActionButton, Color>(mn => mn.DisabledColor, Color.Gray);
-
+            BindableProperty.Create(nameof(DisabledColor), typeof(Color), typeof(FloatingActionButton), Color.Gray);
         public static readonly BindableProperty HasShadowProperty =
-            BindableProperty.Create<FloatingActionButton, bool>(mn => mn.HasShadow, false);
+            BindableProperty.Create(nameof(HasShadow), typeof(bool), typeof(FloatingActionButton), false);
+        public static readonly BindableProperty AnimateOnSelectionProperty =
+            BindableProperty.Create(nameof(AnimateOnSelection), typeof(bool), typeof(FloatingActionButton), true);
 
         public static readonly BindableProperty SourceProperty =
-            BindableProperty.Create<FloatingActionButton, ImageSource>(mn => mn.Source, null);
+            BindableProperty.Create(nameof(Source), typeof(ImageSource), typeof(FloatingActionButton));
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create<FloatingActionButton, ICommand>(mn => mn.Command, null,
-                propertyChanged: HandleCommandChanged);
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(FloatingActionButton),propertyChanged: HandleCommandChanged);
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create<FloatingActionButton, object>(mn => mn.CommandParameter, null);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(FloatingActionButton));
 
-        public static readonly BindableProperty AnimateOnSelectionProperty =
-            BindableProperty.Create<FloatingActionButton, bool>(mn => mn.AnimateOnSelection, true);
+        
+
+       
 
         public FloatingActionButtonSize Size
         {
@@ -108,9 +106,9 @@ namespace Doods.Framework.Mobile.Std.controls
             // TOOD: attach to CanExecuteChanged
         }
 
-        private static void HandleCommandChanged(BindableObject bindable, ICommand oldValue, ICommand newValue)
+        private static void HandleCommandChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            (bindable as FloatingActionButton)?.InternalHandleCommand(oldValue, newValue);
+            (bindable as FloatingActionButton)?.InternalHandleCommand((ICommand)oldValue, (ICommand)newValue);
         }
     }
 
