@@ -1,11 +1,12 @@
 ﻿using Doods.Framework.Mobile.Std.Mvvm;
-using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace Doods.Framework.Mobile.Std.Interfaces
 {
     public interface IViewModel
     {
-        Command CmdState { get; }
+        ICommand CmdState { get; }
         ViewModelState ViewModelState { get; }
+        IColorPalette ColorPalette { get; }
     }
 }

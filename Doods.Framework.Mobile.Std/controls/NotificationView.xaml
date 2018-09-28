@@ -1,38 +1,83 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.controls;assembly=Doods.Framework.Mobile.Std"
              x:Class="Doods.Framework.Mobile.Std.controls.NotificationView"
-             >
+             xmlns:converters="clr-namespace:Doods.Framework.Mobile.Std.Converters;assembly=Doods.Framework.Mobile.Std"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
     <ContentView.Resources>
-        <ResourceDictionary Source="../Resources/MyResourceDictionary.xaml" />
-        
-    </ContentView.Resources>
-  <ContentView.Content>
-      <Frame Style="{StaticResource FrameTopBorderlessStyle}"
-             Padding="10,10,10,0">
-          
-                <Grid Style="{StaticResource GridInFrameStyle}"
-                HorizontalOptions="StartAndExpand">
-              <Grid.GestureRecognizers>
-                  <TapGestureRecognizer Command="{Binding ShowCurrentCmd,Mode=OneWay}" />
-              </Grid.GestureRecognizers>
+        <ResourceDictionary>
 
-              <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/MyResourceDictionary.xaml" />
+                <ResourceDictionary>
+                    <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame Style="{StaticResource FrameTopBorderlessStyle}"
+               Padding="10,10,10,0">
+
+            <Grid Style="{StaticResource GridInFrameStyle}"
+                  HorizontalOptions="StartAndExpand">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowCurrentCmd,Mode=OneWay}" />
+                </Grid.GestureRecognizers>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                    <controls:RoundBoxView Grid.Row="2"
-                                           Grid.Column="0"
-                                           Grid.RowSpan="2"
-                                           Style="{StaticResource BoxViewIndicatorStyle}"
-                                           BackgroundColor="{Binding Color, Mode=OneWay}" />
+
+                <controls:RoundBoxView Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.RowSpan="2"
+                                       WidthRequest="40"
+                                       HeightRequest="40"
+                                       IsVisible="{Binding IsRunning}"
+                                       Style="{StaticResource BoxViewIndicatorStyle}"
+                                       BackgroundColor="{Binding Color, Mode=OneWay}" />
+                <forms:SvgCachedImage
+                    Source="{Binding Icon.ResourceFile,Mode=OneWay}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.RowSpan="2"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    IsVisible="{Binding IsRunning, Converter={StaticResource InverseBoolean}}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+                <ActivityIndicator Grid.Row="2"
+                                   Grid.Column="0"
+                                   Grid.RowSpan="2"
+                                   WidthRequest="40"
+                                   HeightRequest="40"
+                                   IsRunning="{Binding IsRunning}"
+                                   IsVisible="{Binding IsRunning}"
+                                   Color="{StaticResource ColorWhite}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding Title, Mode=OneWay}"
+                       Style="{StaticResource DefaultSubtitleStyle}"
+                       Margin="0,5,0,0" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding Description}"
+                       Margin="0,-5,0,0" />
+
             </Grid>
         </Frame>
     </ContentView.Content>

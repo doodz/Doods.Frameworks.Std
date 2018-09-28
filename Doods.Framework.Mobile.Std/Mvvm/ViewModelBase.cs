@@ -10,10 +10,9 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Mvvm
 {
-    public class ViewModelBase : NotifyPropertyChangedBase, IViewModel
+    public abstract class ViewModelBase : NotifyPropertyChangedBase, IViewModel
     {
         private const int _waitingDurationIsSeconds = 200;
-        public virtual Command CmdState { get; set; }
         private int _busyCount;
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private bool _isLoaded;
@@ -21,10 +20,9 @@ namespace Doods.Framework.Mobile.Std.Mvvm
         private bool _isVisible;
 
         private string _title;
-
+        protected IColorPalette _colorPalette;
         private ViewModelState _viewModelState;
-
-
+        public abstract IColorPalette ColorPalette { get; }
         protected ViewModelBase(ILogger logger, ITelemetryService telemetryService)
         {
             Logger = logger;
@@ -77,12 +75,6 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             set => SetProperty(ref _isVisible, value);
         }
 
-        public ViewModelState ViewModelState
-        {
-            get => _viewModelState;
-            set => SetProperty(ref _viewModelState, value);
-        }
-
         protected CancellationToken Token => _cts.Token;
 
         /// <summary>
@@ -94,6 +86,14 @@ namespace Doods.Framework.Mobile.Std.Mvvm
         {
             get => _title;
             set => SetProperty(ref _title, value);
+        }
+
+        public virtual ICommand CmdState { get; set; }
+
+        public ViewModelState ViewModelState
+        {
+            get => _viewModelState;
+            set => SetProperty(ref _viewModelState, value);
         }
 
         /// <summary>
@@ -314,6 +314,5 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             if (IsBusy) return;
             await StartLoadingAsync(LoadingContext.FromUser);
         }
-
     }
 }
