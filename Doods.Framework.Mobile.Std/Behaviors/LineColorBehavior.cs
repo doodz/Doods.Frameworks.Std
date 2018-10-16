@@ -4,11 +4,12 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Behaviors
 {
+
     public static class LineColorBehavior
     {
         public static readonly BindableProperty ApplyLineColorProperty =
             BindableProperty.CreateAttached("ApplyLineColor", typeof(bool), typeof(LineColorBehavior), false,
-                propertyChanged: onApplyLineColorChanged);
+                propertyChanged: OnApplyLineColorChanged);
 
         public static readonly BindableProperty LineColorProperty =
             BindableProperty.CreateAttached("LineColor", typeof(Color), typeof(LineColorBehavior), Color.Default);
@@ -33,7 +34,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             view.SetValue(LineColorProperty, value);
         }
 
-        private static void onApplyLineColorChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnApplyLineColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var view = bindable as View;
 
@@ -42,7 +43,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
                 return;
             }
 
-            var hasLine = (bool)newValue;
+            bool hasLine = (bool)newValue;
 
             if (hasLine)
             {

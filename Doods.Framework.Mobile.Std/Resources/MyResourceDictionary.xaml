@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std">
     
     <Color x:Key="GrayUltraLight">#FFFFFF</Color>
     <Color x:Key="GrayLight">#F2F2F2</Color>
@@ -21,9 +22,59 @@
     <Color x:Key="ColorWhite">#FFFFFF</Color>
     <Color x:Key="ColorTextGray">#B9B9B9</Color>
 
+
+
+    <Color x:Key="ErrorColor">#ff5252</Color>
     <x:Int32 x:Key="BorderThicknessStatutConseil">3</x:Int32>
 
     <!-- Style OnPlatform-->
+    <OnPlatform x:Key="LittleSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="11" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="12" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="MidMediumSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="12" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="14" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="MediumSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="14" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="16" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="LargeSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="16" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="18" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="LargerSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="18" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="20" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="BigSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="20" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="24" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="ExtraBigSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="24" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="32" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="HugeSize"
+                x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="32" />
+        <On Platform="Android, UWP, WinRT, WinPhone" Value="48" />
+    </OnPlatform>
     <OnPlatform x:Key="GridInFrameStyleOnPlatform"
                 x:TypeArguments="Thickness">
         <On Platform="iOS"
@@ -196,7 +247,50 @@
                 Value="0.5" />
     </Style>
 
+
+
     <!-- Style pour Entry -->
+    <Style x:Key="ValidationErrorLabelStyle"
+           TargetType="{x:Type Label}">
+        <Setter Property="TextColor"
+                Value="{StaticResource ErrorColor}" />
+        <Setter Property="FontSize"
+                Value="{StaticResource LittleSize}" />
+    </Style>
+
+    <Style x:Key="EntryValidatableStyle"  
+           TargetType="{x:Type Entry}">
+       
+        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"  
+                Value="True" />
+        <Setter Property="behaviors:LineColorBehavior.LineColor"  
+                Value="{StaticResource BlackColor}" />
+        <Style.Triggers>
+            <Trigger TargetType="Entry"
+                     Property="IsFocused" 
+                     Value="True">
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+    <Style x:Key="UwpEntryValidatableStyle"
+           TargetType="{x:Type Entry}">
+        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
+                Value="True" />
+        <Setter Property="behaviors:LineColorBehavior.LineColor"
+                Value="Gray" />
+        <Style.Triggers>
+            <Trigger TargetType="Entry"
+                     Property="IsFocused"
+                     Value="True">
+                <Setter Property="Opacity" Value="1" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor"                        
+                        Value="{StaticResource GreenColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 
     <!-- Style pour View -->
 

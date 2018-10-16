@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doods.Framework.Ssh.Std", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doods.Framework.ApiClientBase.Std", "Doods.Framework.ApiClientBase.Std\Doods.Framework.ApiClientBase.Std.csproj", "{64792C87-F060-4627-AD0C-E48F9D13886B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doods.Framework.Std.UnitTest", "Doods.Framework.Std.UnitTest\Doods.Framework.Std.UnitTest.csproj", "{24BCD85F-30DA-40D5-9F24-7CF387B09C95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doods.Framework.Std.UnitTest", "Doods.Framework.Std.UnitTest\Doods.Framework.Std.UnitTest.csproj", "{24BCD85F-30DA-40D5-9F24-7CF387B09C95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doods.Framework.Android", "Doods.Framework.Android\Doods.Framework.Android.csproj", "{60D6BE2E-E0B1-472F-9C8C-209219EBA7EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{24BCD85F-30DA-40D5-9F24-7CF387B09C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24BCD85F-30DA-40D5-9F24-7CF387B09C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24BCD85F-30DA-40D5-9F24-7CF387B09C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D6BE2E-E0B1-472F-9C8C-209219EBA7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D6BE2E-E0B1-472F-9C8C-209219EBA7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D6BE2E-E0B1-472F-9C8C-209219EBA7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D6BE2E-E0B1-472F-9C8C-209219EBA7EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

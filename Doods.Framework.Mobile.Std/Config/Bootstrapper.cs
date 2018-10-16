@@ -13,6 +13,7 @@ namespace Doods.Framework.Mobile.Std.Config
             builder.RegisterType<MyDeviceInfo>().As<IDeviceInfo>().SingleInstance();
             builder.RegisterType<Configuration>().As<IConfiguration>().SingleInstance();
             builder.RegisterType<TelemetryService>().As<ITelemetryService>().SingleInstance();
+            builder.RegisterType<ViewNavigationService>().As<INavigationService>().SingleInstance();
         }
     }
 }

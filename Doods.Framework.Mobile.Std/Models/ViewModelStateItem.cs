@@ -7,14 +7,17 @@ namespace Doods.Framework.Mobile.Std.Models
 {
     public class ViewModelStateItem : BaseItem
     {
-        public ICommand ShowCurrentCmd { get; private set; }
-        private ICommand _addCmd;
+        public ICommand _showCurrentCmd;
 
-        public ICommand AddCmd
+        public ICommand ShowCurrentCmd
         {
-            get => _addCmd;
-            set => SetProperty(ref _addCmd, value);
+            get { return _showCurrentCmd; }
+            set => SetProperty(ref _showCurrentCmd, value);
         }
+
+      
+
+      
 
         public IViewModel ViewModel { get; }
 
@@ -25,7 +28,7 @@ namespace Doods.Framework.Mobile.Std.Models
             Icon = SvgIconTarget.Info;
         }
 
-       
+
         private SvgIconTarget _icon;
 
         public SvgIconTarget Icon
@@ -49,14 +52,6 @@ namespace Doods.Framework.Mobile.Std.Models
         {
             get => _isRunning;
             set => SetProperty(ref _isRunning, value);
-        }
-
-        private bool _canAdd;
-
-        public bool CanAdd
-        {
-            get => _canAdd;
-            set => SetProperty(ref _canAdd, value);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Doods.Framework.Mobile.Std.Enum;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.controls
 {
@@ -37,7 +38,7 @@ namespace Doods.Framework.Mobile.Std.controls
         /// <summary>
         ///     Icone
         /// </summary>
-        public string Icon { get; set; }
+        public FileImageSource Icon { get; set; }
 
         /// <summary>
         ///     Nom du paramètre pour le CommandParameter
