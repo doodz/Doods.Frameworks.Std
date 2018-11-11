@@ -19,7 +19,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
         public static readonly BindableProperty InputConverterProperty = BindableProperty.Create(nameof(Converter),
             typeof(IValueConverter), typeof(EventToCommandBehavior), null);
 
-        private Delegate eventHandler;
+        private Delegate _eventHandler;
 
         public string EventName
         {
@@ -66,22 +66,22 @@ namespace Doods.Framework.Mobile.Std.Behaviors
                 throw new ArgumentException($"EventToCommandBehavior: Can't register the '{EventName}' event.");
 
             var methodInfo = typeof(EventToCommandBehavior).GetTypeInfo().GetDeclaredMethod("OnEvent");
-            eventHandler = methodInfo.CreateDelegate(eventInfo.EventHandlerType, this);
-            eventInfo.AddEventHandler(AssociatedObject, eventHandler);
+            _eventHandler = methodInfo.CreateDelegate(eventInfo.EventHandlerType, this);
+            eventInfo.AddEventHandler(AssociatedObject, _eventHandler);
         }
 
         private void DeregisterEvent(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) return;
 
-            if (eventHandler == null) return;
+            if (_eventHandler == null) return;
 
             var eventInfo = AssociatedObject.GetType().GetRuntimeEvent(name);
             if (eventInfo == null)
                 throw new ArgumentException($"EventToCommandBehavior: Can't de-register the '{EventName}' event.");
 
-            eventInfo.RemoveEventHandler(AssociatedObject, eventHandler);
-            eventHandler = null;
+            eventInfo.RemoveEventHandler(AssociatedObject, _eventHandler);
+            _eventHandler = null;
         }
 
         private void OnEvent(object sender, object eventArgs)

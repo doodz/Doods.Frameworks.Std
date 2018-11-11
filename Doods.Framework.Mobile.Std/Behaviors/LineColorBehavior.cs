@@ -1,10 +1,9 @@
-﻿using Doods.Framework.Mobile.Std.Effects;
-using System.Linq;
+﻿using System.Linq;
+using Doods.Framework.Mobile.Std.Effects;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Behaviors
 {
-
     public static class LineColorBehavior
     {
         public static readonly BindableProperty ApplyLineColorProperty =
@@ -16,7 +15,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
 
         public static bool GetApplyLineColor(BindableObject view)
         {
-            return (bool)view.GetValue(ApplyLineColorProperty);
+            return (bool) view.GetValue(ApplyLineColorProperty);
         }
 
         public static void SetApplyLineColor(BindableObject view, bool value)
@@ -26,7 +25,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
 
         public static Color GetLineColor(BindableObject view)
         {
-            return (Color)view.GetValue(LineColorProperty);
+            return (Color) view.GetValue(LineColorProperty);
         }
 
         public static void SetLineColor(BindableObject view, Color value)
@@ -36,14 +35,9 @@ namespace Doods.Framework.Mobile.Std.Behaviors
 
         private static void OnApplyLineColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var view = bindable as View;
+            if (!(bindable is View view)) return;
 
-            if (view == null)
-            {
-                return;
-            }
-
-            bool hasLine = (bool)newValue;
+            var hasLine = (bool) newValue;
 
             if (hasLine)
             {
@@ -52,10 +46,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             else
             {
                 var entryLineColorEffectToRemove = view.Effects.FirstOrDefault(e => e is EntryLineColorEffect);
-                if (entryLineColorEffectToRemove != null)
-                {
-                    view.Effects.Remove(entryLineColorEffectToRemove);
-                }
+                if (entryLineColorEffectToRemove != null) view.Effects.Remove(entryLineColorEffectToRemove);
             }
         }
     }

@@ -1,25 +1,19 @@
-﻿using Doods.Framework.Mobile.Std.Enum;
+﻿using System.Windows.Input;
+using Doods.Framework.Mobile.Std.Enum;
 using Doods.Framework.Mobile.Std.Interfaces;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Models
 {
     public class ViewModelStateItem : BaseItem
     {
+        private Color? _color;
+
+
+        private SvgIconTarget _icon;
+
+        private bool _isRunning;
         public ICommand _showCurrentCmd;
-
-        public ICommand ShowCurrentCmd
-        {
-            get { return _showCurrentCmd; }
-            set => SetProperty(ref _showCurrentCmd, value);
-        }
-
-      
-
-      
-
-        public IViewModel ViewModel { get; }
 
         public ViewModelStateItem(IViewModel viewModel)
         {
@@ -28,8 +22,14 @@ namespace Doods.Framework.Mobile.Std.Models
             Icon = SvgIconTarget.Info;
         }
 
+        public ICommand ShowCurrentCmd
+        {
+            get => _showCurrentCmd;
+            set => SetProperty(ref _showCurrentCmd, value);
+        }
 
-        private SvgIconTarget _icon;
+
+        public IViewModel ViewModel { get; }
 
         public SvgIconTarget Icon
         {
@@ -37,16 +37,11 @@ namespace Doods.Framework.Mobile.Std.Models
             set => SetProperty(ref _icon, value);
         }
 
-
-        private Color? _color;
-
         public Color? Color
         {
             get => _color;
             set => SetProperty(ref _color, value);
         }
-
-        private bool _isRunning;
 
         public bool IsRunning
         {

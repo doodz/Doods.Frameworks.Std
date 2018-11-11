@@ -12,8 +12,9 @@ namespace Doods.Framework.Mobile.Std.Enum
         public static readonly SvgIconTarget AddCircle = new SvgIconTarget(nameof(AddCircle), "ic_add_circle_24px.svg");
 
         public static readonly SvgIconTarget Info = new SvgIconTarget(nameof(Info), "ic_info_24px.svg");
-        public static readonly SvgIconTarget infoOutline = new SvgIconTarget(nameof(infoOutline), "ic_info_outline_24px.svg");
-       
+        public static readonly SvgIconTarget InfoOutline = new SvgIconTarget(nameof(InfoOutline), "ic_info_outline_24px.svg");
+        public static readonly SvgIconTarget ChevronRight = new SvgIconTarget(nameof(ChevronRight), "ic_chevron_right_24px.svg");
+        public static readonly SvgIconTarget Computer = new SvgIconTarget(nameof(Computer), "ic_computer_24px.svg");
 
         public readonly string IconName;
         public readonly string IconFile;

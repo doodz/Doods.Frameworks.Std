@@ -23,8 +23,10 @@
     <Color x:Key="ColorTextGray">#B9B9B9</Color>
 
 
-
+    
     <Color x:Key="ErrorColor">#ff5252</Color>
+    <Color x:Key="BlackColor">#000000</Color>
+    <Color x:Key="GreenColor">#00A69C</Color>
     <x:Int32 x:Key="BorderThicknessStatutConseil">3</x:Int32>
 
     <!-- Style OnPlatform-->

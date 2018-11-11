@@ -7,7 +7,7 @@
         public bool Check(T value)
         {
             if (value == null) return false;
-            return !string.IsNullOrWhiteSpace(value as string);
+            return !string.IsNullOrWhiteSpace(value.ToString());
         }
     }
 }
