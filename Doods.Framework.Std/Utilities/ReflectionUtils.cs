@@ -22,5 +22,19 @@ namespace Doods.Framework.Std.Utilities
 
             return true;
         }
+
+        public static Type EnsureNotByRefType(Type t)
+        {
+            return (t.IsByRef && t.HasElementType)
+                ? t.GetElementType()
+                : t;
+        }
+
+        public static Type EnsureNotNullableType(Type t)
+        {
+            return (IsNullableType(t))
+                ? Nullable.GetUnderlyingType(t)
+                : t;
+        }
     }
 }
