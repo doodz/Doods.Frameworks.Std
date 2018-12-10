@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Doods.Framework.Ssh.Std.Queries;
 using Doods.Framework.Ssh.Std.Serializers;
 
-namespace Doods.Framework.Ssh.Std.Queries
+namespace Doods.Framework.Ssh.Std.Converters
 {
     public class SshToCpuInfoConverter : SshConverter
     {

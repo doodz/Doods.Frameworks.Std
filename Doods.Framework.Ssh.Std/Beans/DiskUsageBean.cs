@@ -1,8 +1,27 @@
 ﻿
+using System.Collections;
+using System.Collections.Generic;
 using Doods.Framework.Std;
 
 namespace Doods.Framework.Ssh.Std.Beans
 {
+
+
+    public class DiskUsageBeanWhapper : NotifyPropertyChangedBase
+    {
+        private ICollection<DiskUsageBean> _diskUsages;
+        public ICollection<DiskUsageBean> DiskUsages
+        {
+            get => _diskUsages;
+            internal set => SetProperty(ref _diskUsages, value);
+        }
+        public DiskUsageBeanWhapper(ICollection<DiskUsageBean> diskUsages)
+        {
+            DiskUsages = diskUsages;
+        }
+
+    }
+
     public class DiskUsageBean : NotifyPropertyChangedBase
     {
         private string _fileSystem;
@@ -16,37 +35,37 @@ namespace Doods.Framework.Ssh.Std.Beans
         public string FileSystem
         {
             get => _fileSystem;
-            set => SetProperty(ref _fileSystem, value);
+            internal set => SetProperty(ref _fileSystem, value);
         }
 
         public string Size
         {
             get => _size;
-            set => SetProperty(ref _size, value);
+            internal set => SetProperty(ref _size, value);
         }
 
         public string Used
         {
             get => _used;
-            set => SetProperty(ref _used, value);
+            internal set => SetProperty(ref _used, value);
         }
 
         public string Available
         {
             get => _available;
-            set => SetProperty(ref _available, value);
+            internal set => SetProperty(ref _available, value);
         }
 
         public string UsedPercent
         {
             get => _usedPercent;
-            set => SetProperty(ref _usedPercent, value);
+            internal set => SetProperty(ref _usedPercent, value);
         }
 
         public string MountedOn
         {
             get => _mountedOn;
-            set => SetProperty(ref _mountedOn, value);
+            internal set => SetProperty(ref _mountedOn, value);
         }
 
         public DiskUsageBean(string fileSystem, string size, string used,

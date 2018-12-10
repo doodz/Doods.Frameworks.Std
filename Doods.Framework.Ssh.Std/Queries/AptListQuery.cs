@@ -2,6 +2,7 @@
 using System.Linq;
 using Doods.Framework.Ssh.Std.Base.Queries;
 using Doods.Framework.Ssh.Std.Beans;
+using Doods.Framework.Ssh.Std.Converters;
 using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.Ssh.Std.Queries
@@ -48,43 +49,16 @@ namespace Doods.Framework.Ssh.Std.Queries
     {
         public AptListQuery(IClientSsh client) : base(client)
         {
-            CmdString = "apt list --upgradable";
+            CmdString = UpgradableRequest.RequestString;
         }
 
         protected override IEnumerable<UpgradableBean> PaseResult(string result)
         {
 
-            var res = result.Split('\n').Where(r => !string.IsNullOrWhiteSpace(r) && !string.IsNullOrEmpty(r) && !r.Contains("Listing"));
-            return GetUpgradables(res);
+            return (IEnumerable<UpgradableBean>)new SshToAptListConverter().Read(result,typeof(UpgradableBean));
         }
 
 
-        private IEnumerable<UpgradableBean> GetUpgradables(IEnumerable<string> upgradables)
-        {
-            var lst = new List<UpgradableBean>();
-
-            //libraspberrypi-bin/stable 1.20170703-1 armhf [upgradable from: 1.20170515-1]
-            //                0                 1      2        3        4       5
-
-            foreach (var upgradable in upgradables)
-            {
-                var res = upgradable.Split().Where(u => !string.IsNullOrWhiteSpace(u) && !string.IsNullOrEmpty(u));
-
-                var obj = new UpgradableBean();
-                var str = res.ElementAt(0);
-                obj.Name = str.Split('/').First();
-                obj.FromRepo = str.Split('/').Last();
-                str = res.ElementAt(1);
-                obj.NewVersion = str.Split('-').First();
-                str = res.ElementAt(2);
-                obj.Platform = str;
-                str = res.ElementAt(5);
-                obj.HoldHold = str.Split('-').First();
-
-                lst.Add(obj);
-            }
-
-            return lst;
-        }
+       
     }
 }

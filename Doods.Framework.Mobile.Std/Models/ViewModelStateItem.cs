@@ -5,15 +5,22 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Models
 {
+
+    //public enum StateLoadingPage
+    //{
+    //    Before,
+    //    Loading,
+    //    Okay,
+    //    Fault,
+    //    Warning
+    //}
+
     public class ViewModelStateItem : BaseItem
     {
         private Color? _color;
-
-
         private SvgIconTarget _icon;
-
         private bool _isRunning;
-        public ICommand _showCurrentCmd;
+        private ICommand _showCurrentCmd;
 
         public ViewModelStateItem(IViewModel viewModel)
         {

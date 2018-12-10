@@ -39,14 +39,14 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <controls:RoundBoxView Grid.Row="0"
+                <!--<controls:RoundBoxView Grid.Row="0"
                                        Grid.Column="0"
                                        Grid.RowSpan="2"
                                        WidthRequest="40"
                                        HeightRequest="40"
                                        IsVisible="{Binding IsRunning}"
                                        Style="{StaticResource BoxViewIndicatorStyle}"
-                                       BackgroundColor="{Binding Color, Mode=OneWay}" />
+                                       BackgroundColor="{Binding Color, Mode=OneWay}" />-->
                 <forms:SvgCachedImage
                     Source="{Binding Icon.ResourceFile,Mode=OneWay}"
                     Grid.Row="0"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using Doods.Framework.Ssh.Std.Converters;
 using Doods.Framework.Ssh.Std.Queries;
 using Doods.Framework.Std.Utilities;
 
@@ -11,7 +12,9 @@ namespace Doods.Framework.Ssh.Std.Serializers
         internal static readonly SshConverter[] BuiltInConverters =
         {
             new SshToStringConverter(),
-            new SshToCpuInfoConverter()
+            new SshToCpuInfoConverter(),
+            new SshToDiskUsageConverter(),
+            new SshToAptListConverter() 
         }; //TODO
 
         private readonly ThreadSafeStore<Type, SshContract> _contractCache;
