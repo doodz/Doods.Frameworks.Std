@@ -1,4 +1,6 @@
-﻿using Doods.Framework.Mobile.Std.Interfaces;
+﻿using Autofac.Features.AttributeFilters;
+using Doods.Framework.Mobile.Std.Config;
+using Doods.Framework.Mobile.Std.Interfaces;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std
@@ -7,7 +9,7 @@ namespace Doods.Framework.Mobile.Std
     {
         private readonly INavigationService _navigationService;
 
-        public ModalNavigationPage(INavigationService navigationService, Page root) : base(root)
+        public ModalNavigationPage([KeyFilter(NavigationServiceType.ViewNavigation)]INavigationService navigationService, Page root) : base(root)
         {
             _navigationService = navigationService;
         }

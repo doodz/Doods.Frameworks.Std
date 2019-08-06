@@ -18,6 +18,7 @@ namespace Doods.Framework.Ssh.Std
         public long ContentLength { get; set; }
         public string Content { get; set; }
         public Exception ErrorException { get; set; }
+        public int StatusCode { get; set; }
         public string ErrorMessage { get; set; }
         public int ExitStatus { get; set; }
         public ISshRequest Request { get; set; }

@@ -15,6 +15,11 @@ namespace Doods.Framework.Ssh.Std.Serializers
             _serializer = new DoodsSshRequestSerializer();
         }
 
+        public SshSerializer(SshSerializerSettings settings)
+        {
+            _serializer = DoodsSshRequestSerializer.CreateDefault(settings);
+        }
+
         public T Deserialize<T>(ISshResponse response)
         {
             return Deserialize<T>(response.Content);

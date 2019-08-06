@@ -86,7 +86,7 @@ namespace Doods.Framework.Ssh.Std.Queries
                 if (memoryData.TryGetValue(KEY_AVAILABLE, out long memAvailable))
                 {
                     //LOGGER.debug("Using MemAvailable for calculation of free memory.");
-                    return new OsMemoryBean(memTotal, memTotal - memAvailable);
+                    return new OsMemoryBean(memTotal, memTotal - memAvailable, memoryData);
                 }
                 // maybe Linux Kernel < 3.14
                 // estimate "used": MemTotal - (MemFree + Buffers + Cached)
@@ -98,20 +98,20 @@ namespace Doods.Framework.Ssh.Std.Queries
                 {
                     var memUsed = memTotal - (memoryData[KEY_FREE] + memoryData[KEY_BUFFERS] + memoryData[KEY_CACHED]);
                     //LOGGER.debug("Using MemFree,Buffers and Cached for calculation of free memory.");
-                    return new OsMemoryBean(memTotal, memUsed);
+                    return new OsMemoryBean(memTotal, memUsed, memoryData);
                 }
 
             }
-
-            return ProduceError(output);
+            
+            return ProduceError(output, memoryData);
 
         }
 
-        private OsMemoryBean ProduceError(string output)
+        private OsMemoryBean ProduceError(string output, Dictionary<string, long>  memoryData)
         {
             Client.Logger.Error($"Expected a different output of command: {MEMORY_INFO_CMD}");
             Client.Logger.Error($"Output was : {output}");
-            return new OsMemoryBean(MEMORY_UNKNOWN_OUPUT);
+            return new OsMemoryBean(MEMORY_UNKNOWN_OUPUT, memoryData);
         }
     }
 }

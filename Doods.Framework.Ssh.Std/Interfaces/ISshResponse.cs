@@ -30,5 +30,8 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         ResponseStatus ResponseStatus { get; set; }
 
         ISshRequest Request { get; set; }
+
+
+        int StatusCode { get; set; }
     }
 }

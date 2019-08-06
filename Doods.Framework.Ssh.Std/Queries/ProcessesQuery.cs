@@ -83,7 +83,7 @@ namespace Doods.Framework.Ssh.Std.Queries
                         processes.Add(new ProcessBean(
                             int.Parse(cols[0]), cols[1], cols[2],cols[3], cmd));
                     }
-                    catch (FormatException e)
+                    catch (FormatException)
                     {
                         Client.Logger.Error("Could not parse processes.");
                         Client.Logger.Error($"Error occured on following line: {line}");

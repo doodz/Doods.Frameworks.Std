@@ -14,6 +14,7 @@ namespace Doods.Framework.Ssh.Std.Extensions
                 //Cookies = response.Cookies,
                 ErrorException = response.ErrorException,
                 ErrorMessage = response.ErrorMessage,
+                StatusCode = response.StatusCode,
                 //Headers = response.Headers,
                 //RawBytes = response.RawBytes,
                 ResponseStatus = response.ResponseStatus,

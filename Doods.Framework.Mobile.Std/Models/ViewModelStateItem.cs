@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Doods.Framework.Mobile.Std.Enum;
 using Doods.Framework.Mobile.Std.Interfaces;
 using Xamarin.Forms;
@@ -15,7 +16,13 @@ namespace Doods.Framework.Mobile.Std.Models
     //    Warning
     //}
 
-    public class ViewModelStateItem : BaseItem
+    public interface IStateItem
+    {
+        bool IsRunning { get; }
+
+    }
+
+    public class ViewModelStateItem : BaseItem, IStateItem
     {
         private Color? _color;
         private SvgIconTarget _icon;
@@ -35,6 +42,21 @@ namespace Doods.Framework.Mobile.Std.Models
             set => SetProperty(ref _showCurrentCmd, value);
         }
 
+        public TResult RunFunc<TResult>(Func<TResult> myFunc)
+        {
+            _isRunning = true;
+            var result =myFunc.Invoke();
+            _isRunning = false;
+            return result;
+        }
+
+        public void RunAction(Action myAction)
+        {
+            _isRunning = true;
+            myAction.Invoke();
+            _isRunning = false;
+
+        }
 
         public IViewModel ViewModel { get; }
 

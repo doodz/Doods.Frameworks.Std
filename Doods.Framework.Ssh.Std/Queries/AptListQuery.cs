@@ -4,6 +4,7 @@ using Doods.Framework.Ssh.Std.Base.Queries;
 using Doods.Framework.Ssh.Std.Beans;
 using Doods.Framework.Ssh.Std.Converters;
 using Doods.Framework.Ssh.Std.Interfaces;
+using Doods.Framework.Ssh.Std.Requests;
 
 namespace Doods.Framework.Ssh.Std.Queries
 {

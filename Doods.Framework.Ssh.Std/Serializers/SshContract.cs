@@ -24,7 +24,7 @@ namespace Doods.Framework.Ssh.Std.Serializers
         }
 
         public Type UnderlyingType { get; }
-        public SshConverter Converter { get; set; }
-        internal SshConverter InternalConverter { get; set; }
+        public ISshConverter Converter { get; set; }
+        internal ISshConverter InternalConverter { get; set; }
     }
 }

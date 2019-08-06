@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Doods.Framework.Ssh.Std.Base.Queries;
 using Doods.Framework.Ssh.Std.Beans;
+using Doods.Framework.Ssh.Std.Converters;
 using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.Ssh.Std.Queries
@@ -25,39 +26,8 @@ namespace Doods.Framework.Ssh.Std.Queries
 
         protected override IEnumerable<LastloginBean> PaseResult(string result)
         {
-            var lst = new List<LastloginBean>();
-            var lines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-
-            var pattern = @"\s{2,}|\s-\s";
-
-            foreach (var line in lines)
-            {
-                var splitsStrings = Regex.Split(line, pattern);
-
-                var l = new LastloginBean
-                {
-                    UserName = splitsStrings[0],
-                    LogedOn = splitsStrings[1],
-                    Date = splitsStrings[2]
-                };
-                if (splitsStrings.Length == 6)
-                {
-                    l.StillLogged = splitsStrings[3];
-                    l.LogedIn = splitsStrings[4];
-                    l.LogedFrom = splitsStrings[5];
-                }
-                else if (splitsStrings.Length == 5)
-                {
-                    l.StillLogged = splitsStrings[3];
-                    l.LogedFrom = splitsStrings[4];
-                }
-
-
-                lst.Add(l);
-            }
-
-            return lst;
+            return(IEnumerable<LastloginBean>) new SshToLastloginConverter().Read(result, typeof(IEnumerable<LastloginBean>));
+          
         }
     }
 }

@@ -323,8 +323,11 @@
             </Grid>
         </ViewCell>
     </DataTemplate>
-
-
+    <!--DataTemplate pour TitledFrameView-->
+    <Style x:Key="TitledFrameView.NewSubTitleStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="BlueViolet" />
+    </Style>
 
     <!--DataTemplate pour ListView.ItemTemplate-->
 

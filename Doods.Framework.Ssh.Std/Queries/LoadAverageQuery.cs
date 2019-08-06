@@ -61,7 +61,7 @@ namespace Doods.Framework.Ssh.Std.Queries
                         // got load average, continue with next line
                         continue;
                     }
-                    catch (FormatException e)
+                    catch (FormatException)
                     {
                         //LOGGER.debug("Skipping line: {}", line);
                     }

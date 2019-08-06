@@ -8,19 +8,18 @@ namespace Doods.Framework.Ssh.Std.Serializers
     public class DoodsSshRequestSerializer
     {
         internal IContractResolver _contractResolver;
-        internal Collection<SshConverter> _converters;
+        internal Collection<ISshConverter> _converters;
 
         public DoodsSshRequestSerializer()
         {
             _contractResolver = DefaultContractResolver.Instance;
         }
 
-        public virtual Collection<SshConverter> Converters
+        public virtual Collection<ISshConverter> Converters
         {
             get
             {
-                if (_converters == null) _converters = new Collection<SshConverter>();
-
+                if (_converters == null) _converters = new Collection<ISshConverter>();
                 return _converters;
             }
         }
@@ -35,7 +34,6 @@ namespace Doods.Framework.Ssh.Std.Serializers
         {
             var serializer = CreateDefault();
             if (settings != null) ApplySerializerSettings(serializer, settings);
-
             return serializer;
         }
 
@@ -65,22 +63,18 @@ namespace Doods.Framework.Ssh.Std.Serializers
         internal virtual object DeserializeInternal(string reader, Type objectType)
         {
             ValidationUtils.ArgumentNotNull(reader, nameof(reader));
-
-
             var serializerReader = new DoodsSshRequestSerializerInternalReader(this);
             var value = serializerReader.Deserialize(reader, objectType);
-
-
             return value;
         }
 
 
-        internal SshConverter GetMatchingConverter(Type type)
+        internal ISshConverter GetMatchingConverter(Type type)
         {
             return GetMatchingConverter(_converters, type);
         }
 
-        internal static SshConverter GetMatchingConverter(IList<SshConverter> converters, Type objectType)
+        internal static ISshConverter GetMatchingConverter(IList<ISshConverter> converters, Type objectType)
         {
 #if DEBUG
             ValidationUtils.ArgumentNotNull(objectType, nameof(objectType));
@@ -90,7 +84,6 @@ namespace Doods.Framework.Ssh.Std.Serializers
                 for (var i = 0; i < converters.Count; i++)
                 {
                     var converter = converters[i];
-
                     if (converter.CanConvert(objectType)) return converter;
                 }
 

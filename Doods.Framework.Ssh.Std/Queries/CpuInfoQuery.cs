@@ -3,6 +3,7 @@ using System.Globalization;
 using Doods.Framework.Ssh.Std.Base.Queries;
 using Doods.Framework.Ssh.Std.Converters;
 using Doods.Framework.Ssh.Std.Interfaces;
+using Doods.Framework.Ssh.Std.Requests;
 using Doods.Framework.Std.Utilities;
 
 namespace Doods.Framework.Ssh.Std.Queries

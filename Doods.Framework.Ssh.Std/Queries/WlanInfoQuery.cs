@@ -53,7 +53,7 @@ namespace Doods.Framework.Ssh.Std.Queries
                     {
                         linkQualityInt = int.Parse(linkQuality);
                     }
-                    catch (FormatException e)
+                    catch (FormatException)
                     {
                         Client.Logger.Warning( $"Could not parse link quality field for input: {linkQuality}.");
                     }

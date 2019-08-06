@@ -74,7 +74,9 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             get => _isVisible;
             set => SetProperty(ref _isVisible, value);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected CancellationToken Token => _cts.Token;
 
         /// <summary>

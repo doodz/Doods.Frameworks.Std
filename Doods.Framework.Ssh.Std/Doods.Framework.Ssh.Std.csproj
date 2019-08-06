@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="var\" />
+    <Compile Remove="var\**" />
+    <EmbeddedResource Remove="var\**" />
+    <None Remove="var\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +17,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Doods.Frameworks.Std\Doods.Framework.ApiClientBase.Std\Doods.Framework.ApiClientBase.Std.csproj" />
     <ProjectReference Include="..\..\Doods.Frameworks.Std\Doods.Framework.Std\Doods.Framework.Std.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Requests\Unix\" />
+    <Folder Include="Requests\Raspberry\" />
   </ItemGroup>
 
 </Project>

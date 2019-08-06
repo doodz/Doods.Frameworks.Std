@@ -8,6 +8,9 @@ namespace Doods.Framework.Std
 
         string HockeyAppKey { get; }
         string NumeroVersion { get; }
+
+        string AdsKey { get; }
+        string RewardedVideoKey { get; }
         void LoadConfiguration(XmlReader xmlContent);
     }
 }

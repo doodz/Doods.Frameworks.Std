@@ -1,4 +1,6 @@
-﻿namespace Doods.Framework.Std.Extensions
+﻿using System.Text.RegularExpressions;
+
+namespace Doods.Framework.Std.Extensions
 {
     public static class StringExtensions
     {
@@ -32,7 +34,7 @@
         public static int? ToNullableInteger(this string value)
         {
             int testValue;
-            return int.TryParse(value, out testValue) ? (int?)testValue : null;
+            return int.TryParse(value, out testValue) ? (int?) testValue : null;
         }
 
         /// <summary>
@@ -43,7 +45,7 @@
         public static long? ToNullableLong(this string value)
         {
             long testValue;
-            return long.TryParse(value, out testValue) ? (long?)testValue : null;
+            return long.TryParse(value, out testValue) ? (long?) testValue : null;
         }
 
         /// <summary>
@@ -65,7 +67,7 @@
         public static short ToShort(this string value)
         {
             short testValue;
-            return short.TryParse(value, out testValue) ? testValue : (short)0;
+            return short.TryParse(value, out testValue) ? testValue : (short) 0;
         }
 
         /// <summary>
@@ -139,6 +141,7 @@
                 if (tempVal < 0) returnValue = -1;
                 return tempVal;
             }
+
             // separateur decimal égale (,)
             value = value.Replace('.', ',');
 
@@ -148,6 +151,7 @@
                 if (tempVal < 0) returnValue = -1;
                 return tempVal;
             }
+
             returnValue = 0;
             return 0M;
         }
@@ -190,6 +194,20 @@
             a[0] = char.ToUpper(a[0]);
 
             return new string(a);
+        }
+
+
+        public static string RemoveAllWhitespace(this string s, char replace)
+        {
+            return RemoveAllWhitespace(s, $"{replace}");
+        }
+
+        public static string RemoveAllWhitespace(this string s, string replace)
+        {
+            var r = replace;
+            if (string.IsNullOrWhiteSpace(replace))
+                r = "_";
+            return Regex.Replace(s, @"\s+", r);
         }
 
         public static bool ToBoolean(this string s)

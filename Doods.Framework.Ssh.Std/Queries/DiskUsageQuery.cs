@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Doods.Framework.Ssh.Std.Converters;
+using Doods.Framework.Ssh.Std.Requests;
 
 namespace Doods.Framework.Ssh.Std.Queries
 {

@@ -35,7 +35,7 @@ namespace Doods.Framework.Ssh.Std.Serializers
             }
         }
 
-        private object DeserializeConvertable(SshConverter converter, string reader, Type objectType)
+        private object DeserializeConvertable(ISshConverter converter, string reader, Type objectType)
         {
             var value = converter.Read(reader, objectType);
 
@@ -51,12 +51,12 @@ namespace Doods.Framework.Ssh.Std.Serializers
         }
 
 
-        private SshConverter GetConverter(SshContract contract)
+        private ISshConverter GetConverter(SshContract contract)
         {
-            SshConverter converter = null;
+            ISshConverter converter = null;
             if (contract != null)
             {
-                SshConverter matchingConverter;
+                ISshConverter matchingConverter;
                 if (contract.Converter != null)
                     converter = contract.Converter;
                 else if ((matchingConverter = Serializer.GetMatchingConverter(contract.UnderlyingType)) != null)

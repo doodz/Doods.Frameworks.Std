@@ -1,10 +1,10 @@
-﻿using Doods.Framework.Mobile.Std.Interfaces;
-using Doods.Framework.Std;
-using Doods.Framework.Std.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using Doods.Framework.Mobile.Std.Interfaces;
+using Doods.Framework.Std;
+using Doods.Framework.Std.Extensions;
 
 namespace Doods.Framework.Mobile.Std.Config
 {
@@ -25,29 +25,28 @@ namespace Doods.Framework.Mobile.Std.Config
         public Configuration(IDeviceInfo deviceInfo)
         {
             _deviceInfo = deviceInfo;
-           
         }
 
+        public bool ClearLocalData => GetBoolean(nameof(ClearLocalData));
 
 
-
+        public string AdsKey => GetString(nameof(AdsKey));
+        public string RewardedVideoKey => GetString(nameof(RewardedVideoKey));
         public string MobileCenterKey => GetString(nameof(MobileCenterKey));
 
         public string HockeyAppKey => GetString(nameof(HockeyAppKey));
 
-        public bool ClearLocalData => GetBoolean(nameof(ClearLocalData));
-
         public string NumeroVersion => $"{_deviceInfo.Version}.{_deviceInfo.Build}";
-
-        public bool IsExcluded(string propertyName)
-        {
-            return _excludePropertyName.Contains(propertyName);
-        }
 
         public void LoadConfiguration(XmlReader xmlContent)
         {
             _config = new XmlSerializer(typeof(ConfigLoader)).Deserialize(xmlContent) as ConfigLoader;
             _values = _config?.Settings.ToDictionary(c => c.Key, c => c.Value);
+        }
+
+        public bool IsExcluded(string propertyName)
+        {
+            return _excludePropertyName.Contains(propertyName);
         }
 
         private string GetString(string key)
@@ -70,7 +69,5 @@ namespace Doods.Framework.Mobile.Std.Config
         {
             return _values.ContainsKey(key) ? _values[key].ToInteger() : 0;
         }
-
-
     }
 }

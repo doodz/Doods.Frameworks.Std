@@ -30,7 +30,7 @@ namespace Doods.Framework.Ssh.Std.Converters
             {
                 return true;
             }
-           ;
+           
 
             return objectType == typeof(DiskUsageBean);
         }

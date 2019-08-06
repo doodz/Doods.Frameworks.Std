@@ -100,6 +100,7 @@ namespace Doods.Framework.Ssh.Std
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 taskCompletionSource.TrySetException(ex);
             }
 
@@ -123,14 +124,25 @@ namespace Doods.Framework.Ssh.Std
         {
             lock (_lockObj)
             {
-                if (_client == null) GetSshClient();
+                if (_client == null)
+                {
+                    GetSshClient();
+                }
+                else
+                {
+                    if (_client.IsConnected)
+                        _client.Disconnect();
+                    _client = null;
+                    GetSshClient();
+                }
 
                 try
                 {
+
                     _client.Connect();
                 }
                 catch
-                {
+                {//TODO THE Renci.SshNet.Common.SshOperationTimeoutException 
                     throw;
                 }
 
@@ -272,6 +284,7 @@ namespace Doods.Framework.Ssh.Std
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 var restResponse2 = new SshResponse<T>();
                 restResponse2.Request = request;
                 restResponse2.ResponseStatus = ResponseStatus.Error;
@@ -300,6 +313,7 @@ namespace Doods.Framework.Ssh.Std
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 restResponse.ResponseStatus = ResponseStatus.Error;
                 restResponse.ErrorMessage = ex.Message;
                 restResponse.ErrorException = ex;
@@ -334,11 +348,11 @@ namespace Doods.Framework.Ssh.Std
             return asyncHandle;
         }
 
-        private static void ProcessResponse(ISshRequest request, SshResponse httpResponse,
+        private static void ProcessResponse(ISshRequest request, SshResponse sshResponse,
             SshRequestAsyncHandle asyncHandle, Action<ISshResponse, SshRequestAsyncHandle> callback)
         {
             // SshResponse restResponse = ConvertToRestResponse(request, httpResponse);
-            var sshResponse = httpResponse;
+            //var sshResponse = httpResponse;
             sshResponse.Request = request;
 
             callback(sshResponse, asyncHandle);
@@ -351,6 +365,7 @@ namespace Doods.Framework.Ssh.Std
 
             var asyncResult =
                 test.BeginExecute((AsyncCallback) (result => ResponseCallback(result, responseCb)), (object) test);
+            var b = asyncResult.IsCompleted;
             return test;
         }
 
@@ -366,11 +381,13 @@ namespace Doods.Framework.Ssh.Std
                 var cmd = (SshCommand) result.AsyncState;
                 str = cmd.EndExecute(result);
                 response.Content = str;
-                PopulateErrorForIncompleteResponse(cmd);
+                
                 ExtractResponseData(response, cmd);
+                PopulateErrorForIncompleteResponse(response, cmd);
             }
             catch (Exception e)
             {
+                
                 response = ResponseCallbackError(e);
             }
 
@@ -406,16 +423,20 @@ namespace Doods.Framework.Ssh.Std
         {
             using (sshCommand)
             {
-                response.ErrorMessage = sshCommand.Error;
-                response.ErrorMessage = sshCommand.CommandText;
-                response.ExitStatus = sshCommand.ExitStatus;
                 response.Content = sshCommand.Result;
+                response.ResponseStatus = ResponseStatus.Completed;
+                response.StatusCode = sshCommand.ExitStatus;
             }
         }
 
-        private static void PopulateErrorForIncompleteResponse(SshCommand response)
+        private static void PopulateErrorForIncompleteResponse(SshResponse response, SshCommand sshCommand)
         {
-            if (response.Error == null) return;
+            if (sshCommand.ExitStatus > 0)
+            {
+                response.ResponseStatus = ResponseStatus.Error;
+                response.ErrorMessage = sshCommand.Error;
+                response.ExitStatus = sshCommand.ExitStatus;
+            }
 
             //response.ErrorException = (Exception)response.ResponseStatus.ToWebException();
             //response.ErrorMessage = response.ErrorException.Message;

@@ -9,35 +9,19 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Servicies
 {
-    public class ViewNavigationService : INavigationService
+    public class ViewNavigationService : NavigationBaseService,INavigationService
     {
-        private readonly ILogger _looger;
-        private readonly ITelemetryService _telemetry;
-        public ViewNavigationService(ILogger looger, ITelemetryService telemetryService)
+     
+        public ViewNavigationService(ILogger looger, ITelemetryService telemetryService):base(looger,telemetryService)
         {
-            _looger = looger;
-            _telemetry = telemetryService;
+            
         }
-        private readonly object _sync = new object();
-        private readonly Dictionary<string, Type> _pagesByKey = new Dictionary<string, Type>();
+      
         private readonly Stack<NavigationPage> _navigationPageStack =
             new Stack<NavigationPage>();
         private NavigationPage CurrentNavigationPage => _navigationPageStack.Peek();
 
-        public void Configure(string pageKey, Type pageType)
-        {
-            lock (_sync)
-            {
-                if (_pagesByKey.ContainsKey(pageKey))
-                {
-                    _pagesByKey[pageKey] = pageType;
-                }
-                else
-                {
-                    _pagesByKey.Add(pageKey, pageType);
-                }
-            }
-        }
+        
 
         public Page SetRootPage(string rootPageKey)
         {
@@ -61,8 +45,8 @@ namespace Doods.Framework.Mobile.Std.Servicies
 
                     var pageType = CurrentNavigationPage.CurrentPage.GetType();
 
-                    return _pagesByKey.ContainsValue(pageType)
-                        ? _pagesByKey.First(p => p.Value == pageType).Key
+                    return _routes.ContainsValue(pageType)
+                        ? _routes.First(p => p.Value == pageType).Key
                         : null;
                 }
             }
@@ -120,13 +104,13 @@ namespace Doods.Framework.Mobile.Std.Servicies
             _telemetry.Event($"Navigation: {pageKey}");
             lock (_sync)
             {
-                if (!_pagesByKey.ContainsKey(pageKey))
+                if (!_routes.ContainsKey(pageKey))
                 {
                     throw new ArgumentException(
                         $"No such page: {pageKey}. Did you forget to call NavigationService.Configure?");
                 }
 
-                var type = _pagesByKey[pageKey];
+                var type = _routes[pageKey];
                 ConstructorInfo constructor;
                 object[] parameters;
 

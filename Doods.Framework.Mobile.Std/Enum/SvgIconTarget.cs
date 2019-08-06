@@ -1,4 +1,8 @@
-﻿using Doods.Framework.Mobile.Std.Converters;
+﻿using System;
+using Doods.Framework.Mobile.Std.Converters;
+using FFImageLoading.Forms;
+using FFImageLoading.Svg.Forms;
+using FFImageLoading.Work;
 
 namespace Doods.Framework.Mobile.Std.Enum
 {
@@ -16,17 +20,29 @@ namespace Doods.Framework.Mobile.Std.Enum
         public static readonly SvgIconTarget ChevronRight = new SvgIconTarget(nameof(ChevronRight), "ic_chevron_right_24px.svg");
         public static readonly SvgIconTarget Computer = new SvgIconTarget(nameof(Computer), "ic_computer_24px.svg");
 
+        public static readonly SvgIconTarget Delete = new SvgIconTarget(nameof(Delete), "ic_delete_24px.svg");
+        public static readonly SvgIconTarget DeleteForever = new SvgIconTarget(nameof(DeleteForever), "ic_delete_forever_24px.svg");
+        public static readonly SvgIconTarget ModeEdit = new SvgIconTarget(nameof(DeleteForever), "ic_mode_edit_24px.svg");
+
+
+
         public readonly string IconName;
         public readonly string IconFile;
        
         public  string ResourceFile { get; }
+        public EmbeddedResourceImageSource ImageSource { get; }
+        public Xamarin.Forms.ImageSource ImageSource2 { get; }
         private SvgIconTarget(string iconName,string iconFile)
         {
             IconName = iconName;
             IconFile = iconFile;
             
            
-            ResourceFile = (string)ImageEnumEmbeddedResourceConverter.Convert(iconFile, null, null, null);  
+            ResourceFile = (string)ImageEnumEmbeddedResourceConverter.Convert(iconFile, null, null, null);
+
+            ImageSource = new EmbeddedResourceImageSource(new Uri(ResourceFile));
+            ImageSource2 = Xamarin.Forms.Svg.SvgImageSource.FromSvgResource(ResourceFile);
+
         }
 
 

@@ -37,7 +37,7 @@ namespace Doods.Framework.Ssh.Std.Queries
                     {
                         return double.Parse(split[0], CultureInfo.InvariantCulture);
                     }
-                    catch (FormatException e)
+                    catch (FormatException)
                     {
                         Client.Logger.Debug($"Skipping line: {line}");
                     }

@@ -2,7 +2,14 @@
 
 namespace Doods.Framework.Ssh.Std.Serializers
 {
-    public abstract class SshConverter
+
+    public interface ISshConverter
+    {
+        bool CanConvert(Type objectType);
+        object Read(string reader, Type objectType);
+    }
+
+    public abstract class SshConverter : ISshConverter
     {
         public abstract bool CanConvert(Type objectType);
         public abstract object Read(string reader, Type objectType);

@@ -12,5 +12,8 @@
         public bool IsOmvServer { get; set; }
         public bool IsRpi { get; set; }
         public bool IsSsh { get; set; }
+
+        public string Description => $"{UserName}@{Url}:{Port}";
     }
 }
+

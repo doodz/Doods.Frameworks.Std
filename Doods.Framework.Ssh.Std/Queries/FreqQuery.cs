@@ -52,7 +52,7 @@ namespace Doods.Framework.Ssh.Std.Queries
                 {
                     formatted = long.Parse(splitted[1]);
                 }
-                catch (FormatException e)
+                catch (FormatException)
                 {
                     Client.Logger.Error("Could not parse frequency.");
                     Client.Logger.Error(
