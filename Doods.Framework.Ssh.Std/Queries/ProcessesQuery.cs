@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Doods.Framework.Ssh.Std.Converters;
 
 namespace Doods.Framework.Ssh.Std.Queries
 {
+
     /// <summary>
     /// 
     /// </summary>
@@ -45,58 +47,8 @@ namespace Doods.Framework.Ssh.Std.Queries
 
         protected override IEnumerable<ProcessBean> PaseResult(string result)
         {
-            return ParseProcesses(result);
-        }
-
-        /// <summary>
-        /// Parses the output of the ps command.
-        /// </summary>
-        /// <param name="output"></param>
-        /// <returns></returns>
-        private IEnumerable<ProcessBean> ParseProcesses(string output)
-        {
-            //var lines = output.Split('\n');
-
-            var lines = output.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            var processes = new List<ProcessBean>();
-            var count = 0;
-            foreach (var line in lines)
-            {
-                if (count == 0)
-                {
-                    // first line
-                    count++;
-                    continue;
-                }
-                // split line at whitespaces
-
-                var cols = line.Trim().Split().Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
-                if (cols.Length >= 4)
-                {
-                    try
-                    {
-                        // command may contain whitespace, so join again
-                        var sb = new StringBuilder();
-
-                        var cmd = string.Join(" ", cols);
-
-                        processes.Add(new ProcessBean(
-                            int.Parse(cols[0]), cols[1], cols[2],cols[3], cmd));
-                    }
-                    catch (FormatException)
-                    {
-                        Client.Logger.Error("Could not parse processes.");
-                        Client.Logger.Error($"Error occured on following line: {line}");
-                    }
-                }
-                else
-                {
-                    Client.Logger.Error($"Line[] length: {cols.Length}");
-                    Client.Logger.Error($"Expcected another output of ps. Skipping line: {line}");
-                        
-                }
-            }
-            return processes;
+            return (IEnumerable<ProcessBean>)new SshToProcessConverter().Read(result,typeof(IEnumerable<ProcessBean>));
+           
         }
     }
 }

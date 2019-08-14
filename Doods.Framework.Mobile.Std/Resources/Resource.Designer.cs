@@ -151,11 +151,29 @@ namespace Doods.Framework.Mobile.Std.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à View running processes.
+        /// </summary>
+        internal static string ShowProcesses {
+            get {
+                return ResourceManager.GetString("ShowProcesses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à There are {0} items can be updated.
         /// </summary>
         internal static string ThereAre_0_ItemsCanBeUpdated {
             get {
                 return ResourceManager.GetString("ThereAre_0_ItemsCanBeUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à There are {0} processes..
+        /// </summary>
+        internal static string ThereAre_0_Processes {
+            get {
+                return ResourceManager.GetString("ThereAre_0_Processes", resourceCulture);
             }
         }
         

@@ -17,7 +17,8 @@ namespace Doods.Framework.Ssh.Std.Serializers
             new SshToAptListConverter(),
             new SshToSimpleStringConverter(),
             new SshToMemoryUsageConverter(), 
-            new SshToLastloginConverter(), 
+            new SshToLastloginConverter(),
+            new SshToProcessConverter()
         }; //TODO
 
         private readonly ThreadSafeStore<Type, SshContract> _contractCache;

@@ -165,4 +165,10 @@
   <data name="Settings" xml:space="preserve">
     <value>Réglages</value>
   </data>
+  <data name="ThereAre_0_Processes" xml:space="preserve">
+    <value>Il y a {0} processus.</value>
+  </data>
+  <data name="ShowProcesses" xml:space="preserve">
+    <value>Afficher les processus en cours</value>
+  </data>
 </root>

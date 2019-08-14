@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Controls
 {
@@ -7,18 +8,24 @@ namespace Doods.Framework.Mobile.Std.Controls
     /// </summary>
     public class TitleTemplate : ContentView
     {
+
+        public Label titleLabel;
+        public Label subTitleLabel;
+
         public TitleTemplate()
         {
-            var titleLabel = new Label();
+            titleLabel = new Label();
             titleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.Title)));
             titleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.TitleStyle)));
+            titleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
 
-            var subTitleLabel = new Label();
+            subTitleLabel = new Label();
             subTitleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.SubTitle)));
             subTitleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.SubTitleStyle)));
-
+            subTitleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
             Content = new StackLayout
             {
+                
                 Children =
                 {
                     new StackLayout
@@ -32,7 +39,12 @@ namespace Doods.Framework.Mobile.Std.Controls
                     new ContentPresenter()
                 }
             };
+         this.BindingContextChanged+=OnBindingContextChanged;   
+        }
 
+        private void OnBindingContextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

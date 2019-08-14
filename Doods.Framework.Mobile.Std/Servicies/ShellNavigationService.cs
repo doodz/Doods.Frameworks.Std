@@ -25,16 +25,21 @@ namespace Doods.Framework.Mobile.Std.Servicies
 
         }
 
-
         public override void Configure(string pageKey, Type pageType)
         {
            base.Configure(pageKey,pageType);
            Routing.RegisterRoute(pageKey, pageType);
         }
 
-        public Task GoBack()
+        public  Task GoBack()
         {
-            throw new NotImplementedException();
+           
+            return Shell.Current.Navigation.PopAsync();
+        }
+
+        public  Task GoToRootAsync()
+        {
+            return Shell.Current.Navigation.PopToRootAsync();
         }
 
         public Task NavigateModalAsync(string pageKey, bool animated = true)

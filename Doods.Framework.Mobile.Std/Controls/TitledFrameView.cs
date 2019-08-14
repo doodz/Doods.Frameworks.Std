@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Linq;
+using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Controls
 {
@@ -6,7 +8,7 @@ namespace Doods.Framework.Mobile.Std.Controls
     {
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title),
             typeof(string),
-            typeof(TitledFrameView));
+            typeof(TitledFrameView), propertyChanged: TitlePropertyChanged);
 
         public static readonly BindableProperty TitleStyleProperty = BindableProperty.Create(nameof(TitleStyle),
             typeof(Style),
@@ -15,8 +17,24 @@ namespace Doods.Framework.Mobile.Std.Controls
 
         public static readonly BindableProperty SubTitleProperty = BindableProperty.Create(nameof(SubTitle),
             typeof(string),
-            typeof(TitledFrameView));
+            typeof(TitledFrameView),propertyChanged: SubTitlePropertyChanged);
 
+        private static void TitlePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var control = (TitledFrameView)bindable;
+            if (control.Children.First() is TitleTemplate temp)
+            {
+                temp.titleLabel.Text = newvalue.ToString();
+            }
+        }
+        private static void SubTitlePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var control = (TitledFrameView)bindable;
+            if (control.Children.First() is TitleTemplate temp)
+            {
+                temp.subTitleLabel.Text = newvalue.ToString();
+            }
+        }
         public static readonly BindableProperty SubTitleStyleProperty = BindableProperty.Create(nameof(SubTitleStyle),
             typeof(Style),
             typeof(TitledFrameView),
@@ -29,7 +47,12 @@ namespace Doods.Framework.Mobile.Std.Controls
             CornerRadius = 8;
             Padding = new Thickness(8);
             ControlTemplate = _titleTemplate;
+            var tapGestureRecognizer = new TapGestureRecognizer();
+           
+           
         }
+
+
 
         private static Style DefaultTitleStyle =>
             new Style(typeof(Label))
@@ -78,7 +101,7 @@ namespace Doods.Framework.Mobile.Std.Controls
                     }
                 }
             };
-
+       
         public string Title
         {
             get => (string) GetValue(TitleProperty);

@@ -2,13 +2,13 @@
 {
     public class LastloginBean
     {
-        public string UserName { get; set; }
-        public string LogedOn { get; set; }
+        public string UserName { get; internal set; }
+        public string LogedOn { get; internal set; }
 
-        public string Date { get; set; }
+        public string Date { get; internal set; }
 
-        public string StillLogged { get; set; }
-        public string LogedIn { get; set; }
-        public string LogedFrom { get; set; }
+        public string StillLogged { get; internal set; }
+        public string LogedIn { get; internal set; }
+        public string LogedFrom { get; internal set; }
     }
 }

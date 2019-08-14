@@ -25,7 +25,7 @@ namespace Doods.Framework.Mobile.Std.Servicies
         protected internal readonly ILogger _looger;
         protected internal readonly ITelemetryService _telemetry;
         protected internal readonly object _sync = new object();
-        public NavigationBaseService(ILogger looger, ITelemetryService telemetryService)
+        public NavigationBaseService( ILogger looger, ITelemetryService telemetryService)
         {
             _looger = looger;
             _telemetry = telemetryService;

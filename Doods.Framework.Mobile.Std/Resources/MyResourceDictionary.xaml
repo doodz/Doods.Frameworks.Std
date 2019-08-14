@@ -309,6 +309,12 @@
                 Value="10" />
     </Style>
 
+    <!-- Style pour bouton  -->
+    <Style TargetType="Button"
+           >
+        <Setter Property="BackgroundColor" Value="#96d1ff" />
+        <Setter Property="TextColor" Value="White" />
+    </Style>
     <!--DataTemplate pour ListView.GroupHeaderTemplate-->
 
     <DataTemplate x:Key="DefaultGroupHeaderStyle">
@@ -323,11 +329,7 @@
             </Grid>
         </ViewCell>
     </DataTemplate>
-    <!--DataTemplate pour TitledFrameView-->
-    <Style x:Key="TitledFrameView.NewSubTitleStyle" TargetType="Label">
-        <Setter Property="FontAttributes" Value="None" />
-        <Setter Property="TextColor" Value="BlueViolet" />
-    </Style>
+ 
 
     <!--DataTemplate pour ListView.ItemTemplate-->
 

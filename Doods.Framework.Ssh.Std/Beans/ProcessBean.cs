@@ -22,25 +22,25 @@ namespace Doods.Framework.Ssh.Std.Beans
         public int Pid
         {
             get => _pId;
-            set => SetProperty(ref _pId, value);
+            internal set => SetProperty(ref _pId, value);
         }
 
         public string Tty
         {
             get => _tty;
-            set => SetProperty(ref _tty, value);
+            internal set => SetProperty(ref _tty, value);
         }
 
         public string CpuTime
         {
             get => _cpuTime;
-            set => SetProperty(ref _cpuTime, value);
+            internal set => SetProperty(ref _cpuTime, value);
         }
 
         public string Command
         {
             get => _command;
-            set => SetProperty(ref _command, value);
+            internal set => SetProperty(ref _command, value);
         }
     }
 }
