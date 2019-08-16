@@ -11,6 +11,8 @@
   <ItemGroup>
     <None Remove="Resources\Svg\ic_add_box_24px.svg" />
     <None Remove="Resources\Svg\ic_add_circle_24px.svg" />
+    <None Remove="Resources\Svg\ic_check_box_24px.svg" />
+    <None Remove="Resources\Svg\ic_check_box_outline_blank_24px.svg" />
     <None Remove="Resources\Svg\ic_chevron_right_24px.svg" />
     <None Remove="Resources\Svg\ic_computer_24px.svg" />
     <None Remove="Resources\Svg\ic_delete_24px.svg" />
@@ -21,6 +23,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Svg\ic_add_box_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_add_circle_24px.svg" />
+    <EmbeddedResource Include="Resources\Svg\ic_check_box_24px.svg" />
+    <EmbeddedResource Include="Resources\Svg\ic_check_box_outline_blank_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_chevron_right_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_computer_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_delete_24px.svg" />
@@ -42,6 +46,7 @@
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
     <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
     <PackageReference Include="Xam.Plugin.DeviceInfo" Version="4.1.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />

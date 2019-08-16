@@ -24,7 +24,8 @@ namespace Doods.Framework.Mobile.Std.Enum
         public static readonly SvgIconTarget DeleteForever = new SvgIconTarget(nameof(DeleteForever), "ic_delete_forever_24px.svg");
         public static readonly SvgIconTarget ModeEdit = new SvgIconTarget(nameof(DeleteForever), "ic_mode_edit_24px.svg");
 
-
+        public static readonly SvgIconTarget Checked = new SvgIconTarget(nameof(DeleteForever), "ic_check_box_24px.svg");
+        public static readonly SvgIconTarget Unchecked = new SvgIconTarget(nameof(DeleteForever), "ic_check_box_outline_blank_24px.svg");
 
         public readonly string IconName;
         public readonly string IconFile;

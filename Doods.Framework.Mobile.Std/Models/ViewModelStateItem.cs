@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Doods.Framework.Mobile.Std.Enum;
 using Doods.Framework.Mobile.Std.Interfaces;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Models
@@ -42,19 +44,45 @@ namespace Doods.Framework.Mobile.Std.Models
             set => SetProperty(ref _showCurrentCmd, value);
         }
 
+
+
+
+        public async Task RunActionAsync(Func<Task> myAction, Action before, Action after)
+        {
+            before?.Invoke();
+            MainThread.BeginInvokeOnMainThread(() => { IsRunning = true; });
+            await myAction.Invoke();
+            MainThread.BeginInvokeOnMainThread(() => { IsRunning = false; });
+            after?.Invoke();
+        }
+
+        public void RunActions(Action myAction, Action before, Action after)
+        {
+            before?.Invoke();
+            RunAction(myAction);
+            after?.Invoke();
+        }
+        public TResult RunFunc<TResult>(Func<TResult> myFunc, Action before, Action after)
+        {
+            before?.Invoke();
+            var result=RunFunc(myFunc);
+            after?.Invoke();
+            return result;
+        }
+
         public TResult RunFunc<TResult>(Func<TResult> myFunc)
         {
-            _isRunning = true;
+            IsRunning = true;
             var result =myFunc.Invoke();
-            _isRunning = false;
+            IsRunning = false;
             return result;
         }
 
         public void RunAction(Action myAction)
         {
-            _isRunning = true;
+            IsRunning = true;
             myAction.Invoke();
-            _isRunning = false;
+            IsRunning = false;
 
         }
 

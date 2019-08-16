@@ -97,6 +97,15 @@ namespace Doods.Framework.Mobile.Std.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Check.
+        /// </summary>
+        internal static string Check {
+            get {
+                return ResourceManager.GetString("Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Commands.
         /// </summary>
         internal static string Commands {

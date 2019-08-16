@@ -171,4 +171,7 @@
   <data name="ShowProcesses" xml:space="preserve">
     <value>View running processes</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
 </root>
