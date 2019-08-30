@@ -25,6 +25,11 @@ namespace Doods.Framework.Ssh.Std.Serializers
             return Deserialize<T>(response.Content);
         }
 
+        public T DeserializeError<T>(ISshResponse response)
+        {
+            return Deserialize<T>(response.ErrorMessage);
+        }
+
         public T Deserialize<T>(string content)
         {
             try

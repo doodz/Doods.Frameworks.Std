@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asmodat.Standard.SSH.NET" Version="1.0.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Doods.Frameworks.Std\Doods.Framework.ApiClientBase.Std\Doods.Framework.ApiClientBase.Std.csproj" />
     <ProjectReference Include="..\..\Doods.Frameworks.Std\Doods.Framework.Std\Doods.Framework.Std.csproj" />
   </ItemGroup>
@@ -22,6 +18,10 @@
   <ItemGroup>
     <Folder Include="Requests\Unix\" />
     <Folder Include="Requests\Raspberry\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asmodat.Standard.SSH.NET" Version="1.0.0.1" />
   </ItemGroup>
 
 </Project>

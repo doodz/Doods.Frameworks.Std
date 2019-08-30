@@ -44,9 +44,6 @@ namespace Doods.Framework.Mobile.Std.Models
             set => SetProperty(ref _showCurrentCmd, value);
         }
 
-
-
-
         public async Task RunActionAsync(Func<Task> myAction, Action before, Action after)
         {
             before?.Invoke();

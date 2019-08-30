@@ -32,5 +32,7 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         /// <exception cref="T:DoodsApiConnectionExceptionn">SSH session could not be established.</exception>
         /// <exception cref="T:DoodsApiAuthenticationException">Authentication of SSH session failed.</exception>
         bool TestConnection(IConnection connection, bool throwException);
+
+        ScpClient GetScpClient();
     }
 }

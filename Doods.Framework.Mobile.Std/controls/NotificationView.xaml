@@ -57,7 +57,7 @@
                     IsVisible="{Binding IsRunning, Converter={StaticResource InverseBoolean}}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
-                <ActivityIndicator Grid.Row="2"
+                <ActivityIndicator Grid.Row="0"
                                    Grid.Column="0"
                                    Grid.RowSpan="2"
                                    WidthRequest="40"
