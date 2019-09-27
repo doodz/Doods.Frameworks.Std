@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Resources;
 using System.Text;
+using Doods.Framework.Std.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Doods.Framework.Mobile.Std.Resources
 {
     [ContentProperty(nameof(Text))]
-    public class TranslateExtension : IMarkupExtension
+    public class TranslateExtension : TranslateService, IMarkupExtension
     {
-        readonly CultureInfo ci = null;
-        const string ResourceId = "Doods.Framework.Mobile.Std.Resources";
+     
 
-        //static readonly Lazy<ResourceManager> ResMgr = new Lazy<ResourceManager>(
-        //    () => new ResourceManager(ResourceId, IntrospectionExtensions.GetTypeInfo(typeof(TranslateExtension)).Assembly));
-
+       
         public string Text { get; set; }
 
-        public TranslateExtension()
+        public TranslateExtension() : base(new ResourceManager("Doods.Framework.Mobile.Std.Resources.Resource", typeof(Resource).Assembly))
         {
 
         }
@@ -27,22 +26,7 @@ namespace Doods.Framework.Mobile.Std.Resources
         {
             if (Text == null)
                 return string.Empty;
-
-
-            var translation = Resource.ResourceManager.GetString(Text);
-
-            //var translation = ResMgr.Value.GetString(Text, ci);
-            if (translation == null)
-            {
-#if DEBUG
-                throw new ArgumentException(
-                    $"Key '{Text}' was not found in resources '{ResourceId}' for culture '{ci.Name}'.",
-                    "Text");
-#else
-                translation = Text; // HACK: returns the key, which GETS DISPLAYED TO THE USER
-#endif
-            }
-            return translation;
+            return this.Translate(Text);
         }
     }
 }

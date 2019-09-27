@@ -12,21 +12,34 @@ namespace Doods.Framework.Std.Services
         public TranslateService(System.Resources.ResourceManager resourceManager)
         {
             _resourceManager = resourceManager;
+            
            
         }
 
         public string Translate(string resourceName)
         {
-          var translation = _resourceManager.GetString(resourceName);
+            return Translate(resourceName, _resourceManager);
+        }
+
+
+        public string Translate(string resourceName, System.Resources.ResourceManager resourceManager)
+        {
+            return Translate(resourceName, resourceManager, CultureInfo.CurrentCulture);
+
+        }
+
+        public string Translate(string resourceName, System.Resources.ResourceManager resourceManager,CultureInfo culture)
+        {
+            var translation = resourceManager.GetString(resourceName, culture);
 
             //var translation = ResMgr.Value.GetString(Text, ci);
             if (translation == null)
             {
 #if DEBUG
                 throw new ArgumentException(
-                    $"Key '{resourceName}' was not found in resources '{ _resourceManager.GetType().Assembly}' for culture '{CultureInfo.CurrentCulture.Name}'.");
+                    $"Key '{resourceName}' was not found in resources '{ resourceManager.GetType().Assembly}' for culture '{culture.Name}'.");
 #else
-                translation = Text; // HACK: returns the key, which GETS DISPLAYED TO THE USER
+                translation = resourceName; // HACK: returns the key, which GETS DISPLAYED TO THE USER
 #endif
             }
             return translation;

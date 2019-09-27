@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 namespace Doods.Framework.Mobile.Std.Servicies
 {
-    public class SettingsServiceBase : ISettingsService
+    public class SettingsServiceBase :ISettingsBase, ISettingsService
     {
+        public bool TelemetryIsActive { get; set; } = true;
         public Task AddOrUpdateValue(string key, bool value) => AddOrUpdateValueInternal(key, value);
         public Task AddOrUpdateValue(string key, string value) => AddOrUpdateValueInternal(key, value);
         public bool GetValueOrDefault(string key, bool defaultValue) => GetValueOrDefaultInternal(key, defaultValue);

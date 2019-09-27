@@ -2,307 +2,215 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Doods.Framework.Mobile.Std.Interfaces;
 using Doods.Framework.Std;
 using Doods.Framework.Std.Extensions;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace Doods.Framework.Mobile.Std.Servicies
 {
     //internal class TelemetryService2 : ITelemetryService
     //{
-    //    private readonly IKeysOptions _keysOption;
-    //    private readonly string _cloudRoleNameBase;
-    //    private readonly string _cloudRoleIntanceBase;
+    //    private readonly ISettingsBase _settings;
 
-    //    private TelemetryClient _client;
-
-    //    private Guid _sessionId = Guid.NewGuid();
-
-    //    public TelemetryService(IKeysOptions options)
+    //    public TelemetryService2(IConfiguration config, ISettingsBase settings)
     //    {
-    //        _keysOption = options;
-    //        var appInsightKey = options?.AppInsightKey;
-    //        if (string.IsNullOrEmpty(appInsightKey)) return;
-
-    //        IsActive = true;
-    //        _cloudRoleNameBase = options.AppInsightCloudRoleName;
-    //        _cloudRoleIntanceBase = options.AppInsightCloudRoleInstance;
+    //        _settings = settings;
+    //        if (_settings.TelemetryIsActive && !string.IsNullOrEmpty(config.MobileCenterKey))
+    //        {
+    //            IsActive = true;
+    //        }
     //    }
 
-    //    protected string ApplicationName { get; set; }
+    //    public bool IsActive { get; }
 
-    //    protected string ModuleName { get; set; }
-
-    //    protected string UtilisateurId { get; set; }
-
-    //    protected string StructureId { get; set; }
-
-    //    protected string SocieteAgricoleId { get; set; }
-
-    //    protected string CycleProductionId { get; set; }
-
-    //    public bool IsActive { get; protected set; }
+    //    private Guid _sessionId = Guid.NewGuid();
 
     //    public Guid SessionId
     //    {
     //        get => _sessionId;
-    //        set
-    //        {
-    //            _sessionId = value;
-    //            _client = null;
-    //        }
+    //        set => _sessionId = value;
     //    }
 
-    //    public void SetContext(string applicationName, string utilisateurName, int utilisateurId, string structureName,
-    //        int structureId, int societeAgricoleId, int cycleProductionId)
+    //    public void Event(string name, Dictionary<string, string> properties = null,
+    //        Dictionary<string, double> measures = null, Guid? operationId = null)
     //    {
     //        if (!IsActive) return;
 
-    //        ApplicationName = applicationName;
-    //        UtilisateurId = utilisateurId > 0 ? $"{utilisateurId}" : string.Empty;
-    //        SocieteAgricoleId = societeAgricoleId > 0 ? $"{societeAgricoleId}" : string.Empty;
-    //        StructureId = structureId > 0 ? $"{structureId}" : string.Empty;
-    //        CycleProductionId = cycleProductionId > 0 ? $"{cycleProductionId}" : string.Empty;
-
-    //        Reset();
+    //        try
+    //        {
+    //            var p = UpdateProperties(properties, measures);
+    //            Analytics.TrackEvent(name, p);
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Exception(e);
+    //        }
     //    }
 
-    //    public void SetContext(string moduleName)
+    //    private Dictionary<string, string> UpdateProperties(Dictionary<string, string> properties,
+    //        Dictionary<string, double> measures)
     //    {
-    //        ModuleName = moduleName;
+    //        var final = new Dictionary<string, string>(5);
 
-    //        Reset();
+    //        if (!string.IsNullOrEmpty(_settings.BaseId))
+    //        {
+    //            var context = new StringBuilder();
+    //            context.Append($"baseId={_settings.BaseId}");
+
+    //            if (_settings.TypeMembreId.HasValue)
+    //            {
+    //                context.Append($";typeMembreId={_settings.TypeMembreId}");
+    //            }
+
+    //            final.Add("context", context.ToString());
+    //        }
+
+    //        var p = ExtractValues(properties);
+    //        if (!string.IsNullOrEmpty(p))
+    //        {
+    //            final.Add("properties", p);
+    //        }
+
+    //        var m = ExtractValues(measures);
+    //        if (!string.IsNullOrEmpty(m))
+    //        {
+    //            final.Add("measures", m);
+    //        }
+
+    //        //if (_settings.IncludeLocationInTelemetry)
+    //        //{
+    //        //    var location = App.LocationChangedEvent?.Location?.ToString();
+    //        //    if (!string.IsNullOrEmpty(location))
+    //        //    {
+    //        //        final.Add("location", location);
+    //        //    }
+    //        //}
+
+    //        return final;
     //    }
 
-    //    private void Reset()
+    //    private string ExtractValues<T>(Dictionary<string, T> values)
     //    {
-    //        _client = null;
+    //        if (values.IsEmpty()) return null;
+
+    //        var p = new StringBuilder();
+    //        foreach (var property in values)
+    //        {
+    //            p.Append($"{property.Key}={property.Value};");
+    //        }
+
+    //        return p.ToString();
     //    }
 
-    //    public void Error(Exception e, Guid? operationId)
+    //    public void Metric(string name, double value, Dictionary<string, string> properties = null,
+    //        Guid? operationId = null)
     //    {
-    //        TraceException(e, "Error", operationId);
-    //    }
+    //        if (!IsActive) return;
 
-    //    public void Fatal(Exception e, Guid? operationId)
-    //    {
-    //        TraceException(e, "Fatal", operationId);
-    //    }
-
-    //    public void Warning(Exception e, Guid? operationId)
-    //    {
-    //        TraceException(e, "Warning", operationId);
-    //    }
-
-    //    public void Event(string message, Dictionary<string, string> properties = null,
-    //        Dictionary<string, double> measures = null, Guid? operationId = null)
-    //    {
-    //        if (!IsActive)
-    //            return;
-
-    //        var client = GetClient(operationId);
-    //        client.TrackEvent(message, properties, measures);
-    //    }
-
-    //    public void Page(string name, TimeSpan duration, Dictionary<string, string> properties = null,
-    //        Dictionary<string, double> measures = null, Guid? operationId = null)
-    //    {
-    //        if (!IsActive)
-    //            return;
-
-    //        var client = GetClient(operationId);
-    //        var page = new PageViewTelemetry(name);
-    //        page.Duration = duration;
-    //        if (properties.IsNotEmpty()) page.Properties.AddRange(properties);
-
-    //        if (measures.IsNotEmpty()) page.Metrics.AddRange(measures);
-
-    //        client.TrackPageView(page);
-    //    }
-
-    //    public void Metric(string name, double value, Dictionary<string, string> properties = null, Guid? operationId = null)
-    //    {
-    //        if (!IsActive)
-    //            return;
-
-    //        var client = GetClient(operationId);
-    //        client.TrackMetric(name, value, properties);
+    //        try
+    //        {
+    //            var measures = new Dictionary<string, double> {{name, value}};
+    //            var p = UpdateProperties(properties, measures);
+    //            Analytics.TrackEvent(name, p);
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Exception(e);
+    //        }
     //    }
 
     //    public void Dependency(string type, string target, string name, string message, DateTimeOffset start,
-    //        TimeSpan duration,
-    //        string resultcode, bool success, Guid? operationId = null)
+    //        TimeSpan duration, string resultcode, bool success, Guid? operationId)
     //    {
-    //        if (!IsActive)
-    //            return;
-
-    //        var client = GetClient(operationId);
-    //        client.TrackDependency(type, target, name, message, start, duration, resultcode, success);
+    //        if (!IsActive) return;
+    //        throw new NotImplementedException();
     //    }
 
     //    public void Exception(Exception exception, Dictionary<string, string> properties = null,
     //        Dictionary<string, double> measures = null, Guid? operationId = null)
     //    {
-    //        if (!IsActive)
-    //            return;
+    //        if (!IsActive) return;
 
-    //        var client = GetClient(operationId);
-    //        client.TrackException(exception, properties, measures);
+    //        properties = UpdateProperties(properties, measures);
+    //        Crashes.TrackError(exception, properties);
     //    }
 
-    //    public void Request(string name, DateTimeOffset start, TimeSpan duration, string responseCode, bool success, Guid? operationId = null)
+    //    public void Request(string name, DateTimeOffset start, TimeSpan duration, string responseCode, bool success,
+    //        Guid? operationId)
     //    {
-    //        if (!IsActive)
-    //            return;
-
-    //        var client = GetClient(operationId);
-    //        client.TrackRequest(name, start, duration, responseCode, success);
+    //        if (!IsActive) return;
+    //        throw new NotImplementedException();
     //    }
 
-    //    private TelemetryClient GetClient(Guid? operationId)
+    //    public void Dispose()
     //    {
-    //        if (_client != null && operationId != null && !Equals(_client.Context.Operation.Id, $"{operationId}"))
-    //        {
-    //            Reset();
-    //        }
 
-    //        if (_client == null)
-    //        {
-    //            _client = new TelemetryClient();
-    //            _client.Context.Session.Id = SessionId.ToString();
-    //            _client.InstrumentationKey = _keysOption.AppInsightKey;
-
-    //            _client.Context.Cloud.RoleName = FormatCloudRoleName();
-    //            _client.Context.Cloud.RoleInstance = FormatCloudRoleInstance();
-
-    //            if (!string.IsNullOrEmpty(UtilisateurId))
-    //            {
-    //                _client.Context.User.AccountId = $"{UtilisateurId}";
-    //                _client.Context.User.AuthenticatedUserId = $"{UtilisateurId}";
-    //                _client.Context.Properties.Add("uti", UtilisateurId);
-    //            }
-
-    //            if (!string.IsNullOrEmpty(SocieteAgricoleId)) _client.Context.Properties.Add("sai", SocieteAgricoleId);
-
-    //            if (!string.IsNullOrEmpty(CycleProductionId)) _client.Context.Properties.Add("cpi", CycleProductionId);
-
-    //            if (!string.IsNullOrEmpty(StructureId)) _client.Context.Properties.Add("sti", StructureId);
-
-    //            if (operationId != null)
-    //            {
-    //                _client.Context.Operation.Id = $"{operationId}";
-    //            }
-    //        }
-
-    //        return _client;
     //    }
 
-    //    private string FormatCloudRoleInstance()
+
+    //    /// <summary>
+    //    /// TODO : Smarties
+    //    /// </summary>
+    //    /// <param name="applicationName"></param>
+    //    /// <param name="utilisateurName"></param>
+    //    /// <param name="utilisateurId"></param>
+    //    /// <param name="structureName"></param>
+    //    /// <param name="structureId"></param>
+    //    /// <param name="societeAgricoleId"></param>
+    //    /// <param name="cycleProductionId"></param>
+    //    public void SetContext(string applicationName, string utilisateurName, int utilisateurId, string structureName,
+    //        int structureId,
+    //        int societeAgricoleId, int cycleProductionId)
     //    {
-    //        var value = new[]
-    //            {
-    //                _cloudRoleIntanceBase,
-    //                ModuleName
-    //            }.Where(e => !string.IsNullOrEmpty(e))
-    //            .Join(":");
 
-    //        if (string.IsNullOrEmpty(value))
-    //        {
-    //            value = "NONE";
-    //        }
-
-    //        return value.ToUpperInvariant();
     //    }
 
-    //    private string FormatCloudRoleName()
+    //    public void SetContext(string moduleName)
     //    {
-    //        var value = new[]
-    //            {
-    //                _cloudRoleNameBase,
-    //                string.IsNullOrEmpty(ApplicationName) ? GetDefaultCloudRoleName() : ApplicationName
-    //            }.Where(e => !string.IsNullOrEmpty(e))
-    //            .Join(":");
-
-    //        if (string.IsNullOrEmpty(value))
-    //        {
-    //            value = "NONE";
-    //        }
-
-    //        return value.ToUpperInvariant();
     //    }
 
-    //    private string GetDefaultCloudRoleName()
+    //    /// <summary>
+    //    /// TODO : Smarties
+    //    /// </summary>
+    //    /// <param name="e"></param>
+    //    public void Error(Exception e, Guid? operationId)
     //    {
-    //        var appinsight = WiuzParameterManager.Default.Read(ParameterManagerBase.AppInsightKey);
-    //        if (string.IsNullOrEmpty(appinsight))
-    //        {
-    //            appinsight = WiuzParameterManager.Default.Read(ParameterManagerBase.NomLogicielKey);
-    //        }
-    //        return string.IsNullOrEmpty(appinsight)
-    //            ? string.IsNullOrEmpty(_cloudRoleNameBase)
-    //                ? "WIUZ"
-    //                : string.Empty
-    //            : appinsight;
+
     //    }
 
-    //    private void TraceException(Exception e, string niveau, Guid? operationId)
+    //    /// <summary>
+    //    /// TODO : Smarties
+    //    /// </summary>
+    //    /// <param name="e"></param>
+    //    public void Fatal(Exception e, Guid? operationId)
     //    {
-    //        if (!IsActive)
-    //            return;
-
-    //        var client = GetClient(operationId);
-    //        client.TrackException(e, new Dictionary<string, string>
-    //        {
-    //            {
-    //                "Niveau", niveau
-    //            }
-    //        });
+    //        Exception(new UnHandledException(e));
     //    }
 
-    //    public void Dependency(string type, string target, string name, string data, DateTime start, TimeSpan duration,
-    //        string code, bool success, Guid? operationId)
+    //    /// <summary>
+    //    /// TODO : Smarties
+    //    /// </summary>
+    //    /// <param name="e"></param>
+    //    public void Warning(Exception e, Guid? operationId)
     //    {
-    //        if (!IsActive)
-    //            return;
 
-    //        var client = GetClient(operationId);
-    //        client.TrackDependency(type, target, name, data, start, duration, code, success);
     //    }
 
-    //    public void Request(string name, DateTime start, TimeSpan duration, string code, bool success, Guid? operationId)
+
+    //    /// <summary>
+    //    /// TODO : Smarties
+    //    /// </summary>
+    //    /// <param name="name"></param>
+    //    /// <param name="duration"></param>
+    //    /// <param name="properties"></param>
+    //    /// <param name="measures"></param>
+    //    public void Page(string name, TimeSpan duration, Dictionary<string, string> properties,
+    //        Dictionary<string, double> measures, Guid? operationId)
     //    {
-    //        if (!IsActive)
-    //            return;
 
-    //        var client = GetClient(operationId);
-    //        client.TrackRequest(name, start, duration, code, success);
     //    }
-
-    //    #region IDisposable Support
-
-    //    private bool _disposedValue;
-
-    //    protected virtual void InternalDispose(bool disposing)
-    //    {
-    //        if (!_disposedValue)
-    //        {
-    //            if (disposing) _client = null;
-
-    //            _disposedValue = true;
-    //        }
-    //    }
-
-    //    ~TelemetryService2()
-    //    {
-    //        // Ne modifiez pas ce code. Placez le code de nettoyage dans InternalDispose(bool disposing) ci-dessus.
-    //        InternalDispose(false);
-    //    }
-
-    //    void IDisposable.Dispose()
-    //    {
-    //        InternalDispose(true);
-    //        GC.SuppressFinalize(this);
-    //    }
-
-    //    #endregion
     //}
 }
