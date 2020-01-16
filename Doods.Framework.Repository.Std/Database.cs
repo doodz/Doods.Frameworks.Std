@@ -30,7 +30,11 @@ namespace Doods.Framework.Repository.Std
 
         private IEnumerable<IMigration> Migrations
         {
-            get { yield return new Migration1(); }
+            get
+            {
+                yield return new Migration1();
+                //yield return new Migration2();
+            }
         }
 
         public bool IsInitialize { get; private set; }

@@ -22,10 +22,16 @@ namespace Doods.Framework.Mobile.Std.Enum
 
         public static readonly SvgIconTarget Delete = new SvgIconTarget(nameof(Delete), "ic_delete_24px.svg");
         public static readonly SvgIconTarget DeleteForever = new SvgIconTarget(nameof(DeleteForever), "ic_delete_forever_24px.svg");
-        public static readonly SvgIconTarget ModeEdit = new SvgIconTarget(nameof(DeleteForever), "ic_mode_edit_24px.svg");
+        public static readonly SvgIconTarget ModeEdit = new SvgIconTarget(nameof(ModeEdit), "ic_mode_edit_24px.svg");
 
-        public static readonly SvgIconTarget Checked = new SvgIconTarget(nameof(DeleteForever), "ic_check_box_24px.svg");
-        public static readonly SvgIconTarget Unchecked = new SvgIconTarget(nameof(DeleteForever), "ic_check_box_outline_blank_24px.svg");
+        public static readonly SvgIconTarget Checked = new SvgIconTarget(nameof(Checked), "ic_check_box_24px.svg");
+        public static readonly SvgIconTarget Unchecked = new SvgIconTarget(nameof(Unchecked), "ic_check_box_outline_blank_24px.svg");
+        public static readonly SvgIconTarget Done = new SvgIconTarget(nameof(Done), "ic_done_24px.svg");
+        public static readonly SvgIconTarget Highlight = new SvgIconTarget(nameof(Highlight), "ic_highlight_off_24px.svg");
+
+        public static readonly SvgIconTarget ErrorOutline = new SvgIconTarget(nameof(ErrorOutline), "ic_error_outline_24px.svg");
+        public static readonly SvgIconTarget Error = new SvgIconTarget(nameof(Error), "ic_error_24px.svg");
+        public static readonly SvgIconTarget CheckCircle = new SvgIconTarget(nameof(CheckCircle), "ic_check_circle_24px.svg");
 
         public readonly string IconName;
         public readonly string IconFile;

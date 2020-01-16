@@ -141,8 +141,9 @@ namespace Doods.Framework.Ssh.Std
                 {
                     _client.Connect();
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Logger.Debug(ex.Message);
                     //TODO THE Renci.SshNet.Common.SshOperationTimeoutException 
                     throw;
                 }

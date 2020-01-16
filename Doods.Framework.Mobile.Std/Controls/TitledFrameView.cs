@@ -4,6 +4,7 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Controls
 {
+
     public class TitledFrameView : Frame
     {
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title),
@@ -51,8 +52,6 @@ namespace Doods.Framework.Mobile.Std.Controls
            
            
         }
-
-
 
         private static Style DefaultTitleStyle =>
             new Style(typeof(Label))

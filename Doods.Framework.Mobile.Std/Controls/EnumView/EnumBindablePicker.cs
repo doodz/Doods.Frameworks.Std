@@ -12,8 +12,7 @@ namespace Doods.Framework.Mobile.Std.Controls
         public EnumBindablePicker()
         {
             SelectedIndexChanged += OnSelectedIndexChanged;
-            foreach (var value in System.Enum.GetValues(typeof(T))) Items.Add(value.ToString());
-            SelectedIndex = 0;
+            LoadList();
         }
 
         public new T SelectedItem
@@ -22,7 +21,19 @@ namespace Doods.Framework.Mobile.Std.Controls
             set => SetValue(SelectedItemProperty, value);
         }
 
-        private void OnSelectedIndexChanged(object sender, EventArgs eventArgs)
+        protected internal void LoadList()
+        {
+            Items.Clear();
+            foreach (var value in System.Enum.GetValues(typeof(T))) Items.Add(ValueToString(value));
+            SelectedIndex = 0;
+        }
+
+        internal virtual string ValueToString(object value)
+        {
+            return value.ToString();
+        }
+
+        internal virtual void OnSelectedIndexChanged(object sender, EventArgs eventArgs)
         {
             SelectedItem = SelectedIndex < 0 || SelectedIndex > Items.Count - 1
                 ? default
