@@ -1,8 +1,8 @@
-﻿using Doods.Framework.Std;
-using Renci.SshNet;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Doods.Framework.ApiClientBase.Std.Models;
+using Doods.Framework.ApiClientBase.Std.Interfaces;
+using Doods.Framework.Std;
+using Renci.SshNet;
 
 namespace Doods.Framework.Ssh.Std.Interfaces
 {
@@ -11,6 +11,7 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         SemaphoreSlim ReadLock { get; }
 
         SshClient Client { get; }
+        ILogger Logger { get; }
         bool Connect();
         Task<bool> ConnectAsync();
         bool IsConnected();
@@ -21,9 +22,9 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         Task<ISshResponse<T>> ExecuteTaskAsync<T>(ISshRequest request, CancellationToken token);
         Task<ISshResponse<T>> ExecuteTaskAsync<T>(ISshRequest request);
         ShellStream CreateShell();
-        ILogger Logger { get; }
+
         /// <summary>
-        /// Try to connect to client
+        ///     Try to connect to client
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="throwException"></param>

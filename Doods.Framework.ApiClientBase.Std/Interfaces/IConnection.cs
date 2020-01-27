@@ -1,6 +1,7 @@
 ﻿using Doods.Framework.ApiClientBase.Std.Authentication;
+using Doods.Framework.ApiClientBase.Std.Models;
 
-namespace Doods.Framework.ApiClientBase.Std.Models
+namespace Doods.Framework.ApiClientBase.Std.Interfaces
 {
     public interface IConnection
     {
@@ -10,4 +11,5 @@ namespace Doods.Framework.ApiClientBase.Std.Models
         Credentials Credentials { get; }
         ConnectionType ConnectionType { get; }
     }
+
 }

@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Doods.Framework.ApiClientBase.Std.Exceptions
 {
     /// <summary>
-    /// The exception that is thrown when authentication failed.
+    ///     The exception that is thrown when authentication failed.
     /// </summary>
     public class DoodsApiAuthenticationException : DoodsApiException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:DoodsApiAuthenticationException" /> class.
+        ///     Initializes a new instance of the <see cref="T:DoodsApiAuthenticationException" /> class.
         /// </summary>
         public DoodsApiAuthenticationException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:DoodsApiAuthenticationException" /> class.
+        ///     Initializes a new instance of the <see cref="T:DoodsApiAuthenticationException" /> class.
         /// </summary>
         /// <param name="message">The message.</param>
         public DoodsApiAuthenticationException(string message)
@@ -26,7 +24,7 @@ namespace Doods.Framework.ApiClientBase.Std.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:DoodsApiAuthenticationException" /> class.
+        ///     Initializes a new instance of the <see cref="T:DoodsApiAuthenticationException" /> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="innerException">The inner exception.</param>

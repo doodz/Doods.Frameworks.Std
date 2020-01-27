@@ -1,29 +1,26 @@
-﻿using Doods.Framework.ApiClientBase.Std.Models;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Doods.Framework.ApiClientBase.Std.Classes;
+using Doods.Framework.ApiClientBase.Std.Exceptions;
+using Doods.Framework.ApiClientBase.Std.Interfaces;
 using Doods.Framework.Ssh.Std.Enums;
 using Doods.Framework.Ssh.Std.Extensions;
 using Doods.Framework.Ssh.Std.Interfaces;
 using Doods.Framework.Std;
 using Renci.SshNet;
-using System;
-using System.IO;
-using System.Net.Sockets;
-using System.Threading;
-using System.Threading.Tasks;
-using Doods.Framework.ApiClientBase.Std.Exceptions;
 using Renci.SshNet.Common;
 
 namespace Doods.Framework.Ssh.Std
 {
-    public class SshServiceBase : IDisposable, IClientSsh
+    public class SshServiceBase : APIServiceBase, IDisposable, IClientSsh
     {
         protected const int TimeoutInSecond = 60;
         private readonly object _lockObj;
-        private SshClient _client;
 
 
         private ShellStream _shell;
 
-        protected IConnection Connection;
 
         //private ConnectionInfo _connectionInfo;
         protected SshServiceBase(ILogger logger)
@@ -32,15 +29,15 @@ namespace Doods.Framework.Ssh.Std
             Logger = logger;
         }
 
-        public SemaphoreSlim ReadLock { get; private set; } = new SemaphoreSlim(1, 1);
+        public SemaphoreSlim ReadLock { get; } = new SemaphoreSlim(1, 1);
         public ILogger Logger { get; }
 
-        public SshClient Client => _client;
+        public SshClient Client { get; private set; }
 
 
         public Task<string> RunCommandAsync(SshCommand cmd, CancellationToken token)
         {
-            if (_client == null) return null;
+            if (Client == null) return null;
             try
             {
                 using (CancellationTokenSource.CreateLinkedTokenSource(token))
@@ -49,7 +46,7 @@ namespace Doods.Framework.Ssh.Std
                     //var request = _client.CreateCommand(cmdStr);
 
 
-                    var ret = Task.Run(() => _client.RunCommand(cmd.CommandText).Result, token);
+                    var ret = Task.Run(() => Client.RunCommand(cmd.CommandText).Result, token);
 
 
                     //var res = Task.Factory.FromAsync(cmd.BeginExecute, cmd.EndExecute, null);
@@ -61,10 +58,6 @@ namespace Doods.Framework.Ssh.Std
                 Logger.Error(ex);
 
                 throw ex;
-            }
-            finally
-            {
-                //_readLock.Release();
             }
 
             //return sshCommand.Result;
@@ -83,7 +76,7 @@ namespace Doods.Framework.Ssh.Std
             var taskCompletionSource = new TaskCompletionSource<ISshResponse<T>>();
             try
             {
-                var async = ExecuteAsync<T>(request,
+                var async = ExecuteAsync(request,
                     (Action<ISshResponse<T>, SshRequestAsyncHandle>) ((response, _) =>
                     {
                         if (token.IsCancellationRequested)
@@ -91,12 +84,12 @@ namespace Doods.Framework.Ssh.Std
                         else
                             taskCompletionSource.TrySetResult(response);
                     }));
-                var registration = token.Register((Action) (() =>
+                var registration = token.Register(() =>
                 {
                     async.Abort();
                     taskCompletionSource.TrySetCanceled();
-                }));
-                taskCompletionSource.Task.ContinueWith((Action<Task<ISshResponse<T>>>) (t => registration.Dispose()),
+                });
+                taskCompletionSource.Task.ContinueWith(t => registration.Dispose(),
                     token);
             }
             catch (Exception ex)
@@ -110,7 +103,7 @@ namespace Doods.Framework.Ssh.Std
 
         public SshCommand RunQuerry(string cmd)
         {
-            return _client.RunCommand(cmd);
+            return Client.RunCommand(cmd);
         }
 
 
@@ -125,30 +118,30 @@ namespace Doods.Framework.Ssh.Std
         {
             lock (_lockObj)
             {
-                if (_client == null)
+                if (Client == null)
                 {
                     GetSshClient();
                 }
                 else
                 {
-                    if (_client.IsConnected)
-                        _client.Disconnect();
-                    _client = null;
+                    if (Client.IsConnected)
+                        Client.Disconnect();
+                    Client = null;
                     GetSshClient();
                 }
 
                 try
                 {
-                    _client.Connect();
+                    Client.Connect();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Logger.Debug(ex.Message);
                     //TODO THE Renci.SshNet.Common.SshOperationTimeoutException 
                     throw;
                 }
 
-                return _client.IsConnected;
+                return Client.IsConnected;
             }
         }
 
@@ -160,32 +153,19 @@ namespace Doods.Framework.Ssh.Std
             }
         }
 
-        public bool CanConnect()
-        {
-            return Connection != null;
-        }
 
         public bool IsAuthenticated()
         {
             lock (_lockObj)
             {
-                if (_client == null) return false;
-                return _client.IsConnected;
+                if (Client == null) return false;
+                return Client.IsConnected;
             }
         }
 
         public ShellStream CreateShell()
         {
             return _shell = Client.CreateShellStream(nameof(SshServiceBase), 0, 0, 0, 0, 1024);
-        }
-
-        public void Dispose()
-        {
-            lock (_lockObj)
-            {
-                _client?.Dispose();
-                _client = null;
-            }
         }
 
         public ScpClient GetScpClient()
@@ -197,16 +177,8 @@ namespace Doods.Framework.Ssh.Std
             return new ScpClient(test);
         }
 
-        protected virtual SshClient GetSshClient()
-        {
-            var test =
-                new PasswordConnectionInfo(Connection.Host, Connection.Port, Connection.Credentials.Login,
-                    Connection.Credentials.Password) {Timeout = TimeSpan.FromSeconds(10)};
-            return _client ?? (_client = new SshClient(test));
-        }
-
         /// <summary>
-        /// Try to connect to client
+        ///     Try to connect to client
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="throwException"></param>
@@ -270,12 +242,29 @@ namespace Doods.Framework.Ssh.Std
             return testConnectionResult;
         }
 
+        public void Dispose()
+        {
+            lock (_lockObj)
+            {
+                Client?.Dispose();
+                Client = null;
+            }
+        }
+
+        protected virtual SshClient GetSshClient()
+        {
+            var test =
+                new PasswordConnectionInfo(Connection.Host, Connection.Port, Connection.Credentials.Login,
+                    Connection.Credentials.Password) {Timeout = TimeSpan.FromSeconds(10)};
+            return Client ?? (Client = new SshClient(test));
+        }
+
         public SshRequestAsyncHandle ExecuteAsync<T>(ISshRequest request,
             Action<ISshResponse<T>, SshRequestAsyncHandle> callback)
         {
             return ExecuteAsync(request,
-                (Action<ISshResponse, SshRequestAsyncHandle>) ((response, asyncHandle) =>
-                    DeserializeResponse<T>(request, callback, response, asyncHandle)));
+                (response, asyncHandle) =>
+                    DeserializeResponse(request, callback, response, asyncHandle));
         }
 
 
@@ -296,7 +285,7 @@ namespace Doods.Framework.Ssh.Std
                 restResponse2.ResponseStatus = ResponseStatus.Error;
                 restResponse2.ErrorMessage = ex.Message;
                 restResponse2.ErrorException = ex;
-                sshResponse1 = (ISshResponse<T>) restResponse2;
+                sshResponse1 = restResponse2;
             }
 
             callback(sshResponse1, asyncHandle);
@@ -332,7 +321,7 @@ namespace Doods.Framework.Ssh.Std
             Action<ISshResponse, SshRequestAsyncHandle> callback)
         {
             return ExecuteAsync(request, callback,
-                new Func<SshClient, ISshRequest, Action<SshResponse>, SshCommand>(DoAsGetAsync));
+                DoAsGetAsync);
         }
 
 
@@ -354,7 +343,7 @@ namespace Doods.Framework.Ssh.Std
             return asyncHandle;
         }
 
-        private  void ProcessResponse(ISshRequest request, SshResponse sshResponse,
+        private void ProcessResponse(ISshRequest request, SshResponse sshResponse,
             SshRequestAsyncHandle asyncHandle, Action<ISshResponse, SshRequestAsyncHandle> callback)
         {
             // SshResponse restResponse = ConvertToRestResponse(request, httpResponse);
@@ -364,25 +353,22 @@ namespace Doods.Framework.Ssh.Std
             callback(sshResponse, asyncHandle);
         }
 
-        
+
         //SshCommand cmd,
-        private  SshCommand DoAsGetAsync(SshClient ssh, ISshRequest request, Action<SshResponse> responseCb)
+        private SshCommand DoAsGetAsync(SshClient ssh, ISshRequest request, Action<SshResponse> responseCb)
         {
             var cmd = ssh.CreateCommand(request.CommandText);
 
             var asyncResult =
-                cmd.BeginExecute((AsyncCallback) (result =>
-                {
-                  
-                    ResponseCallback(result, responseCb, cmd);
-                }), (object)cmd);
+                cmd.BeginExecute(result => { ResponseCallback(result, responseCb, cmd); },
+                    cmd);
             var b = asyncResult.IsCompleted;
             return cmd;
         }
 
-        private  void ResponseCallback(IAsyncResult result, Action<SshResponse> callback,SshCommand sshCommand)
+        private void ResponseCallback(IAsyncResult result, Action<SshResponse> callback, SshCommand sshCommand)
         {
-            var response = new SshResponse()
+            var response = new SshResponse
             {
                 ResponseStatus = ResponseStatus.None
             };
@@ -413,17 +399,17 @@ namespace Doods.Framework.Ssh.Std
             callback(response);
         }
 
-        private  void ExecuteCallback(SshResponse response, Action<SshResponse> callback)
+        private void ExecuteCallback(SshResponse response, Action<SshResponse> callback)
         {
             callback(response);
         }
 
-        private  SshResponse ResponseCallbackError(Exception e)
+        private SshResponse ResponseCallbackError(Exception e)
         {
             return CreateErrorResponse(e);
         }
 
-        private  SshResponse CreateErrorResponse(Exception ex)
+        private SshResponse CreateErrorResponse(Exception ex)
         {
             var sshResponse = new SshResponse();
             //WebException webException;
@@ -438,17 +424,14 @@ namespace Doods.Framework.Ssh.Std
             return sshResponse;
         }
 
-        private  void ExtractResponseData(SshResponse response, SshCommand sshCommand)
+        private void ExtractResponseData(SshResponse response, SshCommand sshCommand)
         {
-           
-                response.Content = sshCommand.Result;
-                response.ResponseStatus = ResponseStatus.Completed;
-                response.StatusCode = sshCommand.ExitStatus;
-               
-            
+            response.Content = sshCommand.Result;
+            response.ResponseStatus = ResponseStatus.Completed;
+            response.StatusCode = sshCommand.ExitStatus;
         }
 
-        private  void PopulateErrorForIncompleteResponse(SshResponse response, SshCommand sshCommand)
+        private void PopulateErrorForIncompleteResponse(SshResponse response, SshCommand sshCommand)
         {
             if (sshCommand.ExitStatus > 0)
             {

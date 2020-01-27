@@ -1,4 +1,5 @@
 ﻿using Doods.Framework.ApiClientBase.Std.Authentication;
+using Doods.Framework.ApiClientBase.Std.Interfaces;
 
 namespace Doods.Framework.ApiClientBase.Std.Models
 {
