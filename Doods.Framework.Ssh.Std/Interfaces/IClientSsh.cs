@@ -19,8 +19,8 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         bool IsAuthenticated();
         SshCommand RunQuerry(string cmd);
         Task<string> RunCommandAsync(SshCommand cmdStr, CancellationToken token);
-        Task<ISshResponse<T>> ExecuteTaskAsync<T>(ISshRequest request, CancellationToken token);
-        Task<ISshResponse<T>> ExecuteTaskAsync<T>(ISshRequest request);
+        Task<ISshApiResponse<T>> ExecuteTaskAsync<T>(ISshRequest request, CancellationToken token);
+        Task<ISshApiResponse<T>> ExecuteTaskAsync<T>(ISshRequest request);
         ShellStream CreateShell();
 
         /// <summary>
