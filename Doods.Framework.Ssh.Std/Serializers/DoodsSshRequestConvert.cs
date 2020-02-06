@@ -5,12 +5,12 @@ namespace Doods.Framework.Ssh.Std.Serializers
 {
     public static class DoodsSshRequestConvert
     {
-        //public T Deserialize<T>(ISshResponse response)
+        //public T Deserialize<T>(ISshApiResponse apiResponse)
         //{
 
         //    if (typeof(T) == typeof(CpuInfoBean))
         //    {
-        //        return new SshToCpuInfoConverter().Deserialize(response.Content);
+        //        return new SshToCpuInfoConverter().Deserialize(apiResponse.Content);
         //    }
 
         //    return default(T);

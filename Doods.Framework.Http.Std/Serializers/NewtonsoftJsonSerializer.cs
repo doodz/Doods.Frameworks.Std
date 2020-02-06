@@ -20,7 +20,7 @@ namespace Doods.Framework.Http.Std.Serializers
             _serializer = new JsonSerializer
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,
-                NullValueHandling = NullValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Include,
                 DefaultValueHandling = DefaultValueHandling.Include
             };
         }

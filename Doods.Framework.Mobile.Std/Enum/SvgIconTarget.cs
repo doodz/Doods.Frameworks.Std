@@ -32,6 +32,9 @@ namespace Doods.Framework.Mobile.Std.Enum
         public static readonly SvgIconTarget ErrorOutline = new SvgIconTarget(nameof(ErrorOutline), "ic_error_outline_24px.svg");
         public static readonly SvgIconTarget Error = new SvgIconTarget(nameof(Error), "ic_error_24px.svg");
         public static readonly SvgIconTarget CheckCircle = new SvgIconTarget(nameof(CheckCircle), "ic_check_circle_24px.svg");
+        
+        public static readonly SvgIconTarget Eject = new SvgIconTarget(nameof(Eject), "ic_eject_24px.svg");
+        public static readonly SvgIconTarget PlayArrow = new SvgIconTarget(nameof(PlayArrow), "ic_play_arrow_24px.svg");
 
         public readonly string IconName;
         public readonly string IconFile;

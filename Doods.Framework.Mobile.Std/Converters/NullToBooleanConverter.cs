@@ -6,7 +6,6 @@ namespace Doods.Framework.Mobile.Std.Converters
 {
     public class NullToBooleanConverter : IValueConverter
     {
-        public static NullToBooleanConverter Default = new NullToBooleanConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

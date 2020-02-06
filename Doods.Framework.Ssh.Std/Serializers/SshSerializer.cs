@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.Ssh.Std.Serializers
@@ -20,14 +18,14 @@ namespace Doods.Framework.Ssh.Std.Serializers
             _serializer = DoodsSshRequestSerializer.CreateDefault(settings);
         }
 
-        public T Deserialize<T>(ISshResponse response)
+        public T Deserialize<T>(IApiResponse apiResponse)
         {
-            return Deserialize<T>(response.Content);
+            return Deserialize<T>(apiResponse.Content);
         }
 
-        public T DeserializeError<T>(ISshResponse response)
+        public T DeserializeError<T>(IApiResponse apiResponse)
         {
-            return Deserialize<T>(response.ErrorMessage);
+            return Deserialize<T>(apiResponse.ErrorMessage);
         }
 
         public T Deserialize<T>(string content)

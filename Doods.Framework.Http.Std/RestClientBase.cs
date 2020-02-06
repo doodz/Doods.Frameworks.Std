@@ -10,7 +10,13 @@ using RestSharp;
 
 namespace Doods.Framework.Http.Std
 {
-    public abstract class RestClientBase : RestClient
+    public interface IHttpClient
+    {
+        Task<IRestResponse> ExecuteAsync(IRestRequest request);
+        Task<IRestResponse<T>> ExecuteAsync<T>(IRestRequest request);
+    }
+
+    public abstract class RestClientBase : RestClient,IHttpClient
     {
         //TODO logger
         //private readonly ILog _logger =
@@ -30,28 +36,33 @@ namespace Doods.Framework.Http.Std
             AddHandler("text/javascript", () => serializer);
             AddHandler("*+json", () => serializer);
 
+           
+
             var auth = new Authenticator(connection.Credentials);
             Authenticator = auth.CreatedAuthenticator;
             FollowRedirects = false;
             CookieContainer = new CookieContainer();
         }
 
+
+
         public async Task<IRestResponse> ExecuteAsync(IRestRequest request)
         {
             //_logger.Info($"Calling ExecuteTaskAsync. BaseUrl: {BaseUrl} Resource: {request.Resource} Parameters: {string.Join(", ", request.Parameters)}");
             AddHeaders(request);
-            var response = await base.ExecuteAsync(request);
-            response = await RedirectIfNeededAndGetResponseAsync(response, request).ConfigureAwait(false);
+            var response = await base.ExecuteAsync(request).ConfigureAwait(false);
+            response = await CheckRedirectsHeaderAsync(response, request).ConfigureAwait(false);
             CheckResponseStatusCode(response);
             return response;
         }
 
         public async Task<IRestResponse<T>> ExecuteAsync<T>(IRestRequest request)
         {
+           
             //_logger.Info($"Calling ExecuteTaskAsync. BaseUrl: {BaseUrl} Resource: {request.Resource} Parameters: {string.Join(", ", request.Parameters)}");
             AddHeaders(request);
             var response = await base.ExecuteAsync<T>(request).ConfigureAwait(false);
-            response = await RedirectIfNeededAndGetResponseAsync(response, request);
+            response = await CheckRedirectsHeaderAsync(response, request).ConfigureAwait(false);
             CheckResponseStatusCode(response);
             return response;
         }
@@ -90,6 +101,57 @@ namespace Doods.Framework.Http.Std
         }
 
 
+        private async Task<IRestResponse> CheckRedirectsHeaderAsync(IRestResponse response,
+            IRestRequest request)
+        {
+            var responsenew = await RedirectIfNeededAndGetResponseAsync(response, request).ConfigureAwait(false);
+            return responsenew = await RedirectIfMovedPermanentlyAndGetResponseAsync(response, request).ConfigureAwait(false);
+        }
+
+        private async Task<IRestResponse<T>> CheckRedirectsHeaderAsync<T>(IRestResponse<T> response,
+            IRestRequest request)
+        {
+            var responsenew = await RedirectIfNeededAndGetResponseAsync(response, request).ConfigureAwait(false);
+            return responsenew = await RedirectIfMovedPermanentlyAndGetResponseAsync(response, request).ConfigureAwait(false);
+        }
+        private async Task<IRestResponse<T>> RedirectIfMovedPermanentlyAndGetResponseAsync<T>(IRestResponse<T> response,
+            IRestRequest request)
+        {
+            while (response.StatusCode == HttpStatusCode.MovedPermanently)
+            {
+                var newLocation = GetNewLocationFromHeader(response);
+
+                if (newLocation == null)
+                    return response;
+
+                request.Resource = RemoveBaseUrl(newLocation);
+                response = await base.ExecuteAsync<T>(request).ConfigureAwait(false);
+            }
+
+            return response;
+        }
+
+
+
+
+        private async Task<IRestResponse> RedirectIfMovedPermanentlyAndGetResponseAsync(IRestResponse response,
+            IRestRequest request)
+        {
+            while (response.StatusCode == HttpStatusCode.MovedPermanently)
+            {
+                var newLocation = GetNewLocationFromHeader(response);
+
+                if (newLocation == null)
+                    return response;
+
+                request.Resource = RemoveBaseUrl(newLocation);
+                response = await base.ExecuteAsync(request).ConfigureAwait(false);
+            }
+
+            return response;
+        }
+
+
         private async Task<IRestResponse<T>> RedirectIfNeededAndGetResponseAsync<T>(IRestResponse<T> response,
             IRestRequest request)
         {
@@ -106,6 +168,9 @@ namespace Doods.Framework.Http.Std
 
             return response;
         }
+
+       
+
 
         private async Task<IRestResponse> RedirectIfNeededAndGetResponseAsync(IRestResponse response,
             IRestRequest request)

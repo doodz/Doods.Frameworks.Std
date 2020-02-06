@@ -14,10 +14,10 @@ namespace Doods.Framework.Http.Std
             Logger = logger;
         }
 
-        protected virtual IRestClient GetHttpClient()
-        {
+        //protected virtual IRestClient GetHttpClient()
+        //{
             
-           return _client ?? (_client = new RestClientBase(Connection));
-        }
+        //   return _client ?? (_client = new RestClientBase(Connection));
+        //}
     }
 }

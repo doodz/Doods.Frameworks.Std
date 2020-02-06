@@ -1,9 +1,12 @@
-﻿namespace Doods.Framework.ApiClientBase.Std.Interfaces
+﻿using System.Threading.Tasks;
+using Doods.Framework.Ssh.Std.Interfaces;
+
+namespace Doods.Framework.ApiClientBase.Std.Interfaces
 {
     public interface IApiClient
     {
 
-        //Task<IRestResponse> ExecuteTaskAsync(IRestRequest request);
-        //Task<IRestResponse<T>> ExecuteTaskAsync<T>(IRestRequest request)
+        Task<IApiResponse> ExecuteTaskAsync(IApiRequest request);
+        Task<IApiResponse<T>> ExecuteTaskAsync<T>(IApiRequest request);
     }
 }

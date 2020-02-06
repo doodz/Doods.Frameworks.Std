@@ -64,20 +64,20 @@ namespace Doods.Framework.Ssh.Std
         }
 
 
-        public Task<ISshResponse<T>> ExecuteTaskAsync<T>(ISshRequest request)
+        public Task<ISshApiResponse<T>> ExecuteTaskAsync<T>(ISshRequest request)
         {
             return ExecuteTaskAsync<T>(request, CancellationToken.None);
         }
 
-        public Task<ISshResponse<T>> ExecuteTaskAsync<T>(ISshRequest request, CancellationToken token)
+        public Task<ISshApiResponse<T>> ExecuteTaskAsync<T>(ISshRequest request, CancellationToken token)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
-            var taskCompletionSource = new TaskCompletionSource<ISshResponse<T>>();
+            var taskCompletionSource = new TaskCompletionSource<ISshApiResponse<T>>();
             try
             {
                 var async = ExecuteAsync(request,
-                    (Action<ISshResponse<T>, SshRequestAsyncHandle>) ((response, _) =>
+                    (Action<ISshApiResponse<T>, SshRequestAsyncHandle>) ((response, _) =>
                     {
                         if (token.IsCancellationRequested)
                             taskCompletionSource.TrySetCanceled();
@@ -260,7 +260,7 @@ namespace Doods.Framework.Ssh.Std
         }
 
         public SshRequestAsyncHandle ExecuteAsync<T>(ISshRequest request,
-            Action<ISshResponse<T>, SshRequestAsyncHandle> callback)
+            Action<ISshApiResponse<T>, SshRequestAsyncHandle> callback)
         {
             return ExecuteAsync(request,
                 (response, asyncHandle) =>
@@ -269,33 +269,33 @@ namespace Doods.Framework.Ssh.Std
 
 
         private void DeserializeResponse<T>(ISshRequest request,
-            Action<ISshResponse<T>, SshRequestAsyncHandle> callback, ISshResponse response,
+            Action<ISshApiResponse<T>, SshRequestAsyncHandle> callback, ISshApiResponse apiResponse,
             SshRequestAsyncHandle asyncHandle)
         {
-            ISshResponse<T> sshResponse1;
+            ISshApiResponse<T> sshApiResponse1;
             try
             {
-                sshResponse1 = Deserialize<T>(request, response);
+                sshApiResponse1 = Deserialize<T>(request, apiResponse);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
-                var restResponse2 = new SshResponse<T>();
+                var restResponse2 = new SshApiResponse<T>();
                 restResponse2.Request = request;
                 restResponse2.ResponseStatus = ResponseStatus.Error;
                 restResponse2.ErrorMessage = ex.Message;
                 restResponse2.ErrorException = ex;
-                sshResponse1 = restResponse2;
+                sshApiResponse1 = restResponse2;
             }
 
-            callback(sshResponse1, asyncHandle);
+            callback(sshApiResponse1, asyncHandle);
         }
 
 
-        private ISshResponse<T> Deserialize<T>(ISshRequest request, ISshResponse raw)
+        private ISshApiResponse<T> Deserialize<T>(ISshRequest request, ISshApiResponse raw)
         {
             //request.OnBeforeDeserialization(raw);
-            var restResponse = (ISshResponse<T>) new SshResponse<T>();
+            var restResponse = (ISshApiResponse<T>) new SshApiResponse<T>();
             try
             {
                 restResponse = raw.ToAsyncResponse<T>();
@@ -318,7 +318,7 @@ namespace Doods.Framework.Ssh.Std
         }
 
         public SshRequestAsyncHandle ExecuteAsync(ISshRequest request,
-            Action<ISshResponse, SshRequestAsyncHandle> callback)
+            Action<ISshApiResponse, SshRequestAsyncHandle> callback)
         {
             return ExecuteAsync(request, callback,
                 DoAsGetAsync);
@@ -326,13 +326,13 @@ namespace Doods.Framework.Ssh.Std
 
 
         private SshRequestAsyncHandle ExecuteAsync(ISshRequest request,
-            Action<ISshResponse, SshRequestAsyncHandle> callback,
-            Func<SshClient, ISshRequest, Action<SshResponse>, SshCommand> getSshRequest)
+            Action<ISshApiResponse, SshRequestAsyncHandle> callback,
+            Func<SshClient, ISshRequest, Action<SshApiResponse>, SshCommand> getSshRequest)
         {
             //ISsh ssh= this.ConfigureSsh(request);
             var asyncHandle = new SshRequestAsyncHandle();
             var action =
-                (Action<SshResponse>) (r => ProcessResponse(request, r, asyncHandle, callback));
+                (Action<SshApiResponse>) (r => ProcessResponse(request, r, asyncHandle, callback));
             //if (this.UseSynchronizationContext && SynchronizationContext.Current != null)
             //{
             //    SynchronizationContext ctx = SynchronizationContext.Current;
@@ -343,19 +343,19 @@ namespace Doods.Framework.Ssh.Std
             return asyncHandle;
         }
 
-        private void ProcessResponse(ISshRequest request, SshResponse sshResponse,
-            SshRequestAsyncHandle asyncHandle, Action<ISshResponse, SshRequestAsyncHandle> callback)
+        private void ProcessResponse(ISshRequest request, SshApiResponse sshApiResponse,
+            SshRequestAsyncHandle asyncHandle, Action<ISshApiResponse, SshRequestAsyncHandle> callback)
         {
-            // SshResponse restResponse = ConvertToRestResponse(request, httpResponse);
-            //var sshResponse = httpResponse;
-            sshResponse.Request = request;
+            // SshApiResponse restResponse = ConvertToRestResponse(request, httpResponse);
+            //var sshApiResponse = httpResponse;
+            sshApiResponse.Request = request;
 
-            callback(sshResponse, asyncHandle);
+            callback(sshApiResponse, asyncHandle);
         }
 
 
         //SshCommand cmd,
-        private SshCommand DoAsGetAsync(SshClient ssh, ISshRequest request, Action<SshResponse> responseCb)
+        private SshCommand DoAsGetAsync(SshClient ssh, ISshRequest request, Action<SshApiResponse> responseCb)
         {
             var cmd = ssh.CreateCommand(request.CommandText);
 
@@ -366,9 +366,9 @@ namespace Doods.Framework.Ssh.Std
             return cmd;
         }
 
-        private void ResponseCallback(IAsyncResult result, Action<SshResponse> callback, SshCommand sshCommand)
+        private void ResponseCallback(IAsyncResult result, Action<SshApiResponse> callback, SshCommand sshCommand)
         {
-            var response = new SshResponse
+            var response = new SshApiResponse
             {
                 ResponseStatus = ResponseStatus.None
             };
@@ -384,7 +384,7 @@ namespace Doods.Framework.Ssh.Std
 
                 //var b = result.IsCompleted;
 
-                //response.Content = str;
+                //apiResponse.Content = str;
                 using (sshCommand)
                 {
                     ExtractResponseData(response, sshCommand);
@@ -399,19 +399,19 @@ namespace Doods.Framework.Ssh.Std
             callback(response);
         }
 
-        private void ExecuteCallback(SshResponse response, Action<SshResponse> callback)
+        private void ExecuteCallback(SshApiResponse apiResponse, Action<SshApiResponse> callback)
         {
-            callback(response);
+            callback(apiResponse);
         }
 
-        private SshResponse ResponseCallbackError(Exception e)
+        private SshApiResponse ResponseCallbackError(Exception e)
         {
             return CreateErrorResponse(e);
         }
 
-        private SshResponse CreateErrorResponse(Exception ex)
+        private SshApiResponse CreateErrorResponse(Exception ex)
         {
-            var sshResponse = new SshResponse();
+            var sshResponse = new SshApiResponse();
             //WebException webException;
             //if ((webException = ex as WebException) != null && webException.Status == WebExceptionStatus.RequestCanceled)
             //{
@@ -424,24 +424,24 @@ namespace Doods.Framework.Ssh.Std
             return sshResponse;
         }
 
-        private void ExtractResponseData(SshResponse response, SshCommand sshCommand)
+        private void ExtractResponseData(SshApiResponse apiResponse, SshCommand sshCommand)
         {
-            response.Content = sshCommand.Result;
-            response.ResponseStatus = ResponseStatus.Completed;
-            response.StatusCode = sshCommand.ExitStatus;
+            apiResponse.Content = sshCommand.Result;
+            apiResponse.ResponseStatus = ResponseStatus.Completed;
+            apiResponse.StatusCode = sshCommand.ExitStatus;
         }
 
-        private void PopulateErrorForIncompleteResponse(SshResponse response, SshCommand sshCommand)
+        private void PopulateErrorForIncompleteResponse(SshApiResponse apiResponse, SshCommand sshCommand)
         {
             if (sshCommand.ExitStatus > 0)
             {
-                response.ResponseStatus = ResponseStatus.Error;
-                response.ErrorMessage = sshCommand.Error;
-                response.ExitStatus = sshCommand.ExitStatus;
+                apiResponse.ResponseStatus = ResponseStatus.Error;
+                apiResponse.ErrorMessage = sshCommand.Error;
+                apiResponse.ExitStatus = sshCommand.ExitStatus;
             }
 
-            //response.ErrorException = (Exception)response.ResponseStatus.ToWebException();
-            //response.ErrorMessage = response.ErrorException.Message;
+            //apiResponse.ErrorException = (Exception)apiResponse.ResponseStatus.ToWebException();
+            //apiResponse.ErrorMessage = apiResponse.ErrorException.Message;
         }
     }
 }
