@@ -14,6 +14,7 @@
     <None Remove="Resources\Svg\ic_check_box_24px.svg" />
     <None Remove="Resources\Svg\ic_check_box_outline_blank_24px.svg" />
     <None Remove="Resources\Svg\ic_chevron_right_24px.svg" />
+    <None Remove="Resources\Svg\ic_cloud_download_24px.svg" />
     <None Remove="Resources\Svg\ic_computer_24px.svg" />
     <None Remove="Resources\Svg\ic_delete_24px.svg" />
     <None Remove="Resources\Svg\ic_delete_forever_24px.svg" />
@@ -23,6 +24,7 @@
     <None Remove="Resources\Svg\ic_error_outline_24px.svg" />
     <None Remove="Resources\Svg\ic_highlight_off_24px.svg" />
     <None Remove="Resources\Svg\ic_mode_edit_24px.svg" />
+    <None Remove="Resources\Svg\ic_sync_24px.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +33,7 @@
     <EmbeddedResource Include="Resources\Svg\ic_check_box_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_check_box_outline_blank_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_chevron_right_24px.svg" />
+    <EmbeddedResource Include="Resources\Svg\ic_cloud_download_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_computer_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_delete_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_delete_forever_24px.svg" />
@@ -42,6 +45,7 @@
     <EmbeddedResource Include="Resources\Svg\ic_info_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_info_outline_24px.svg" />
     <EmbeddedResource Include="Resources\Svg\ic_mode_edit_24px.svg" />
+    <EmbeddedResource Include="Resources\Svg\ic_sync_24px.svg" />
   </ItemGroup>
 
   <ItemGroup>

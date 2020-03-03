@@ -35,7 +35,9 @@ namespace Doods.Framework.Mobile.Std.Enum
         
         public static readonly SvgIconTarget Eject = new SvgIconTarget(nameof(Eject), "ic_eject_24px.svg");
         public static readonly SvgIconTarget PlayArrow = new SvgIconTarget(nameof(PlayArrow), "ic_play_arrow_24px.svg");
-
+        public static readonly SvgIconTarget CloudDownload = new SvgIconTarget(nameof(CloudDownload), "ic_cloud_download_24px.svg");
+        public static readonly SvgIconTarget Sync = new SvgIconTarget(nameof(Sync), "ic_sync_24px.svg");
+        
         public readonly string IconName;
         public readonly string IconFile;
        
