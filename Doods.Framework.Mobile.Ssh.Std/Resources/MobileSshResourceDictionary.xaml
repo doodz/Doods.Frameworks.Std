@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std"
              xmlns:controls1="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Controls;assembly=Doods.Framework.Mobile.Ssh.Std"
              xmlns:resources="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Resources;assembly=Doods.Framework.Mobile.Ssh.Std"
-             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             
              xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std">
 
     <Style x:Key="NewSubTitleStyle" TargetType="Label">
@@ -43,7 +43,7 @@
                         <Label Grid.Column="1" Grid.Row="1"  Text="{Binding Pid,Mode=OneWay}"/>
                         <Label Grid.Column="0" Text="{Binding Tty,Mode=OneWay}"/>
                         <Label Grid.Column="1" Text="{Binding CpuTime,Mode=OneWay}"/>
-                        <forms:SvgCachedImage
+                <controls:DoodsSvgImage
                                             Grid.Column="2"
                                             Grid.Row="0"
                                             Source="{Binding ResourceFile,Source={ x:Static enum:SvgIconTarget.Delete}}"
@@ -76,7 +76,7 @@
                             <!--<forms:SvgCachedImage.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.StopProcessCommand,Mode=OneWay, Source={x:Reference Page}}" CommandParameter="{Binding .}"  />
                             </forms:SvgCachedImage.GestureRecognizers>-->
-                        </forms:SvgCachedImage>
+                        </controls:DoodsSvgImage>
                     </Grid>
                 </controls:TitledFrameView>
             </DataTemplate>

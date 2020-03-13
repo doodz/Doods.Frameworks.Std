@@ -10,7 +10,7 @@ namespace Doods.Framework.Mobile.Std.Validation
         private string _title;
         private Keyboard _keyboard = Keyboard.Default;
         public ICommand ValidateCommand => new Command(() => Validate());
-
+        public ICommand OnNextCommand => new Command(() => OnNext());
         public string Title
         {
             get => _title;
@@ -33,6 +33,14 @@ namespace Doods.Framework.Mobile.Std.Validation
         public ValidatableObjectView(string title ,bool autoValidation) : base(autoValidation)
         {
             Title = title;
+        }
+
+        public void OnNext()
+        {
+            //var arg = new FocusRequestArgs { Focus = true };
+            //FocusChangeRequested(this, arg);
+            //return arg.Result;
+            //NextEntry?.Focus();
         }
     }
 }

@@ -2,7 +2,9 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std">
+             xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std">
     
     <Color x:Key="GrayUltraLight">#FFFFFF</Color>
     <Color x:Key="GrayLight">#F2F2F2</Color>
@@ -314,6 +316,10 @@
            >
         <Setter Property="BackgroundColor" Value="#96d1ff" />
         <Setter Property="TextColor" Value="White" />
+    </Style>
+
+    <Style TargetType="forms:SvgCachedImage">
+        <Setter Property="ReplaceStringMap" Value="{x:Static enum:SvgIconTarget.ReplaceColor}" />
     </Style>
     <!--DataTemplate pour ListView.GroupHeaderTemplate-->
 

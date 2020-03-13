@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Doods.Framework.Mobile.Std.Converters;
 using FFImageLoading.Forms;
 using FFImageLoading.Svg.Forms;
@@ -11,6 +12,8 @@ namespace Doods.Framework.Mobile.Std.Enum
     /// </summary>
     public sealed class SvgIconTarget
     {
+
+        public static Dictionary<string, string> ReplaceColor = new Dictionary<string, string> {{ "#ff0000", "#000000" } };
         private static readonly ImageEnumEmbeddedResourceConverter ImageEnumEmbeddedResourceConverter = new ImageEnumEmbeddedResourceConverter();
         public static readonly SvgIconTarget AddBox = new SvgIconTarget(nameof(AddBox), "ic_add_box_24px.svg");
         public static readonly SvgIconTarget AddCircle = new SvgIconTarget(nameof(AddCircle), "ic_add_circle_24px.svg");
