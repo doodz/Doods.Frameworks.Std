@@ -11,6 +11,8 @@ namespace Doods.Framework.Mobile.Std.Controls
 
         public DoodsSvgImage()
         {
+            //Xamarin.Forms.Color redButtonStyle = (Xamarin.Forms.Color)this.Resources["MyColorButton"];
+            
             ReplaceStringMap = SvgIconTarget.ReplaceColor;
         }
     }

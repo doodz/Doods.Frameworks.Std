@@ -4,9 +4,6 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.controls
 {
- 
-   
-    
     public class CommandItem
     {
         public CommandItem(CommandId id)

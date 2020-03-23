@@ -29,6 +29,9 @@
     <Color x:Key="ErrorColor">#ff5252</Color>
     <Color x:Key="BlackColor">#000000</Color>
     <Color x:Key="GreenColor">#00A69C</Color>
+
+    <Color x:Key="MyColorButton">#96d1ff</Color>
+
     <x:Int32 x:Key="BorderThicknessStatutConseil">3</x:Int32>
 
     <!-- Style OnPlatform-->
@@ -314,7 +317,7 @@
     <!-- Style pour bouton  -->
     <Style TargetType="Button"
            >
-        <Setter Property="BackgroundColor" Value="#96d1ff" />
+        <Setter Property="BackgroundColor" Value="{StaticResource MyColorButton}" />
         <Setter Property="TextColor" Value="White" />
     </Style>
 
