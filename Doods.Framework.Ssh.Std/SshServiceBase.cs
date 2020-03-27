@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Doods.Framework.ApiClientBase.Std.Classes;
@@ -163,6 +166,7 @@ namespace Doods.Framework.Ssh.Std
             }
         }
 
+
         public ShellStream CreateShell()
         {
             return _shell = Client.CreateShellStream(nameof(SshServiceBase), 0, 0, 0, 0, 1024);
@@ -249,6 +253,56 @@ namespace Doods.Framework.Ssh.Std
                 Client?.Dispose();
                 Client = null;
             }
+        }
+
+        public Task<IEnumerable<byte[]>> GetFilesAsync(IEnumerable<string> filesPath)
+        {
+            var lst = new List<byte[]>();
+            var scp = GetScpClient();
+            if (!scp.IsConnected) scp.Connect();
+            scp.RemotePathTransformation = RemotePathTransformation.ShellQuote;
+
+            foreach (var filepath in filesPath)
+                using (var ms = new MemoryStream())
+                {
+                    try
+                    {
+                        scp.Download(filepath.Trim(), ms);
+                        var byteArray = ms.ToArray();
+                        lst.Add(byteArray);
+                    }
+                    catch 
+                    {
+                      
+                    }
+                  
+                }
+            scp.Dispose();
+            return Task.FromResult(lst.AsEnumerable());
+        }
+
+        public Task<byte[]> GetFileAsync(string filePath)
+        {
+            var scp = GetScpClient();
+            if (!scp.IsConnected) scp.Connect();
+            scp.RemotePathTransformation = RemotePathTransformation.ShellQuote;
+            using (var ms = new MemoryStream())
+            {
+                try
+                {
+
+                    scp.Download(filePath.Trim(), ms);
+                    var byteArray = ms.ToArray();
+                    return Task.FromResult(byteArray);
+                }
+                finally
+                {
+                    scp.Dispose();
+                }
+              
+            }
+
+            return Task.FromResult(default(byte[]));
         }
 
         protected virtual SshClient GetSshClient()
