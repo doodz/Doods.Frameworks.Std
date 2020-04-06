@@ -3,13 +3,13 @@ using SQLite;
 
 namespace Doods.Framework.Repository.Std.Migrations
 {
-    internal class Migration1 : IMigration
+    internal class Migration2 : IMigration
     {
-        public int VersionNumber => 1;
+        public int VersionNumber => 2;
 
         public void Run(SQLiteConnection connection)
         {
-            connection.CreateCommand("ALTER TABLE Host ADD COLUMN Url VARCHAR(255)");
+            connection.CreateCommand("ALTER TABLE Host ADD COLUMN IsSynoServer integer");
         }
     }
 }

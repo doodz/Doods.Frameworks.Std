@@ -12,7 +12,7 @@ namespace Doods.Framework.Mobile.Std.Enum
     /// </summary>
     public sealed class SvgIconTarget
     {
-
+        //blue app #96d1ff
         public static Dictionary<string, string> ReplaceColor = new Dictionary<string, string> {{ "#ff0000", "#000000" } };
         private static readonly ImageEnumEmbeddedResourceConverter ImageEnumEmbeddedResourceConverter = new ImageEnumEmbeddedResourceConverter();
         public static readonly SvgIconTarget AddBox = new SvgIconTarget(nameof(AddBox), "ic_add_box_24px.svg");

@@ -50,6 +50,8 @@ namespace Doods.Framework.Mobile.Std.Servicies
         public Task NavigateModalAsync(string pageKey, object parameter, bool animated = true)
         {
             throw new NotImplementedException();
+            
+           
         }
 
         public async Task NavigateAsync(string pageKey, bool animated = true)
@@ -69,7 +71,7 @@ namespace Doods.Framework.Mobile.Std.Servicies
             }
             else
             {
-                throw new InvalidOperationException("You nedd pass a IQueryShellNavigationObject");
+                throw new InvalidOperationException("You need pass a IQueryShellNavigationObject");
             }
         }
     }

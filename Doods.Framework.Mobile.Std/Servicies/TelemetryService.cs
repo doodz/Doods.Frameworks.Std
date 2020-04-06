@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Device = Xamarin.Forms.Device;
+
 namespace Doods.Framework.Mobile.Std.Servicies
 {
     internal class TelemetryService : ITelemetryService
     {
-       
 
         public TelemetryService(IConfiguration config)
         {
@@ -77,8 +77,6 @@ namespace Doods.Framework.Mobile.Std.Servicies
                 final.Add("measures", m.ToString());
             }
 
-           
-
             return final;
         }
 
@@ -101,7 +99,12 @@ namespace Doods.Framework.Mobile.Std.Servicies
 
             properties = UpdateProperties(properties, measures);
 
-            Crashes.TrackError(exception, properties);
+            var attachments = new ErrorAttachmentLog[]
+            {
+                ErrorAttachmentLog.AttachmentWithText(nameof(exception.Message), exception.Message),
+            };
+
+            Crashes.TrackError(exception, properties, attachments);
         }
 
         public void Request(string name, DateTimeOffset start, TimeSpan duration, string responseCode, bool success)
@@ -109,7 +112,6 @@ namespace Doods.Framework.Mobile.Std.Servicies
             if (!IsActive) return;
             throw new NotImplementedException();
         }
-
 
     }
 }

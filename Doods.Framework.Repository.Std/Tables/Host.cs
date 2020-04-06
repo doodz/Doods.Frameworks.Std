@@ -33,6 +33,11 @@ namespace Doods.Framework.Repository.Std.Tables
         /// <summary>
         /// 
         /// </summary>
+        public bool IsSynoServer { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsRpi { get; set; }
         /// <summary>
         /// 

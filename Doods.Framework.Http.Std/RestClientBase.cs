@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Doods.Framework.ApiClientBase.Std.Exceptions;
 using Doods.Framework.ApiClientBase.Std.Interfaces;
 using Doods.Framework.Http.Std.Authentication;
+using Doods.Framework.Http.Std.Extensions;
 using Doods.Framework.Http.Std.Serializers;
 using RestSharp;
 
@@ -24,10 +25,13 @@ namespace Doods.Framework.Http.Std
 
         protected readonly IConnection Connection;
 
-        public RestClientBase(IConnection connection) : base(connection.Host)
+        public RestClientBase(IConnection connection)
         {
+            var baseUrl = new Uri(connection.Host);
+            BaseUrl = baseUrl.SetPort(connection.Port);
+           
             Connection = connection;
-
+           
             var serializer = new NewtonsoftJsonSerializer();
             AddHandler("application/json", () => serializer);
             AddHandler("text/json", () => serializer);
