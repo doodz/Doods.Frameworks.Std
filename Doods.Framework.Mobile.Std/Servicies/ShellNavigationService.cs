@@ -71,7 +71,7 @@ namespace Doods.Framework.Mobile.Std.Servicies
             }
             else
             {
-                throw new InvalidOperationException("You need pass a IQueryShellNavigationObject");
+                throw new InvalidOperationException($"You need pass a {nameof(IQueryShellNavigationObject)}");
             }
         }
     }
