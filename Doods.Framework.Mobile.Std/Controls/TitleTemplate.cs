@@ -9,23 +9,22 @@ namespace Doods.Framework.Mobile.Std.Controls
     public class TitleTemplate : ContentView
     {
 
-        public Label titleLabel;
-        public Label subTitleLabel;
-
+        public readonly Label TitleLabel;
+        public readonly Label SubTitleLabel;
+       
         public TitleTemplate()
         {
-            titleLabel = new Label();
-            titleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.Title)));
-            titleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.TitleStyle)));
-            titleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
+            TitleLabel = new Label();
+            TitleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.Title)));
+            TitleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.TitleStyle)));
+            TitleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
 
-            subTitleLabel = new Label();
-            subTitleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.SubTitle)));
-            subTitleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.SubTitleStyle)));
-            subTitleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
+            SubTitleLabel = new Label();
+            SubTitleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.SubTitle)));
+            SubTitleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.SubTitleStyle)));
+            SubTitleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
             Content = new StackLayout
             {
-                
                 Children =
                 {
                     new StackLayout
@@ -34,11 +33,12 @@ namespace Doods.Framework.Mobile.Std.Controls
                         BackgroundColor = Color.CornflowerBlue,
                         Orientation = StackOrientation.Horizontal,
                         Spacing = 10,
-                        Children = {titleLabel, subTitleLabel}
+                        Children = {TitleLabel, SubTitleLabel}
                     },
                     new ContentPresenter()
                 }
             };
+          
          this.BindingContextChanged+=OnBindingContextChanged;   
         }
 
