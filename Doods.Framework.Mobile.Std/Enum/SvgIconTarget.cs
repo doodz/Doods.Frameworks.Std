@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Doods.Framework.Mobile.Std.Converters;
 using FFImageLoading.Forms;
-using FFImageLoading.Svg.Forms;
-using FFImageLoading.Work;
 
 namespace Doods.Framework.Mobile.Std.Enum
 {
@@ -12,7 +10,14 @@ namespace Doods.Framework.Mobile.Std.Enum
     /// </summary>
     public sealed class SvgIconTarget
     {
-        //blue app #96d1ff
+        // blue app #96d1ff
+        // red #ff0000
+        // black #000000
+        public static Dictionary<string, string> ReplaceColorToRed = new Dictionary<string, string> { { "#ff0000", "#ff0000" } };
+        
+        /// <summary>
+        /// Red to black 
+        /// </summary>
         public static Dictionary<string, string> ReplaceColor = new Dictionary<string, string> {{ "#ff0000", "#000000" } };
         private static readonly ImageEnumEmbeddedResourceConverter ImageEnumEmbeddedResourceConverter = new ImageEnumEmbeddedResourceConverter();
         public static readonly SvgIconTarget AddBox = new SvgIconTarget(nameof(AddBox), "ic_add_box_24px.svg");
@@ -40,7 +45,7 @@ namespace Doods.Framework.Mobile.Std.Enum
         public static readonly SvgIconTarget PlayArrow = new SvgIconTarget(nameof(PlayArrow), "ic_play_arrow_24px.svg");
         public static readonly SvgIconTarget CloudDownload = new SvgIconTarget(nameof(CloudDownload), "ic_cloud_download_24px.svg");
         public static readonly SvgIconTarget Sync = new SvgIconTarget(nameof(Sync), "ic_sync_24px.svg");
-        
+        public static readonly SvgIconTarget Bullet = new SvgIconTarget(nameof(Bullet), "Bullet.svg");
         public readonly string IconName;
         public readonly string IconFile;
        

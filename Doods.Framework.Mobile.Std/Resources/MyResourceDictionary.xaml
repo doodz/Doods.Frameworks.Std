@@ -4,106 +4,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std"
              xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std">
-    
-    <Color x:Key="GrayUltraLight">#FFFFFF</Color>
-    <Color x:Key="GrayLight">#F2F2F2</Color>
-    <Color x:Key="GrayPrimary">#B9B9B9</Color>
-    <Color x:Key="GrayDark">#6E6E6E</Color>
-    <Color x:Key="White">White</Color>
-    <Color x:Key="ColorTransparent">#01FFFFFF</Color>
-
-    <Color x:Key="ColorPrimary">#4EAd33</Color>
-    <Color x:Key="ColorPrimaryDark">#0a7d00</Color>
-    <Color x:Key="ColorAccent">#FF4EAd33</Color>
-    <Color x:Key="ColorBlack">#FF4B3B40</Color>
-
-    <Color x:Key="ColorBee">#C6DFB0</Color>
-    <Color x:Key="ColorBeeOld">#feb702</Color>
-    <Color x:Key="ColorRed">#f24110</Color>
-    <Color x:Key="ColorWhite">#FFFFFF</Color>
-    <Color x:Key="ColorTextGray">#B9B9B9</Color>
+             xmlns:local="clr-namespace:Doods.Framework.Mobile.Std.Resources;assembly=Doods.Framework.Mobile.Std"
+             xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std"
+             xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std">
+    <!--<ResourceDictionary Source="pack://application:,,,/YourAssembly;component/Subfolder/YourResourceFile.xaml"/>-->
+    <ResourceDictionary.MergedDictionaries>
+        <local:DoodsMobileColor />
+        <local:DoodsMobileOnPlatform />
+        <local:DoodsMobileDataTemplate />
+    </ResourceDictionary.MergedDictionaries>
 
 
-    
-    <Color x:Key="ErrorColor">#ff5252</Color>
-    <Color x:Key="BlackColor">#000000</Color>
-    <Color x:Key="GreenColor">#00A69C</Color>
 
-    <Color x:Key="MyColorButton">#96d1ff</Color>
 
+
+    <Style TargetType="controls:TitledFrameView"  BaseResourceKey="FrameViewStyle">
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="BackgroundColor" Value="{DynamicResource WindowBackgroundColor}"/>
+    </Style>
+
+    <Style TargetType="controls:TitleSwitchView">
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="BackgroundColor" Value="{DynamicResource WindowBackgroundColor}"/>
+    </Style>
     <x:Int32 x:Key="BorderThicknessStatutConseil">3</x:Int32>
 
-    <!-- Style OnPlatform-->
-    <OnPlatform x:Key="LittleSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="11" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="12" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="MidMediumSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="12" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="14" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="MediumSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="14" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="16" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="LargeSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="16" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="18" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="LargerSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="18" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="20" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="BigSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="20" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="24" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="ExtraBigSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="24" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="32" />
-    </OnPlatform>
-
-    <OnPlatform x:Key="HugeSize"
-                x:TypeArguments="x:Double">
-        <On Platform="iOS" Value="32" />
-        <On Platform="Android, UWP, WinRT, WinPhone" Value="48" />
-    </OnPlatform>
-    <OnPlatform x:Key="GridInFrameStyleOnPlatform"
-                x:TypeArguments="Thickness">
-        <On Platform="iOS"
-            Value="10,10,5,15" />
-        <On Platform="Android"
-            Value="10" />
-    </OnPlatform>
-
-    <!--<OnPlatform x:Key="LabelFontOnPlatform"
-                        x:TypeArguments="Font">
-                <On Platform="iOS"
-                    Value="Micro" />
-            </OnPlatform>
-
-            <OnPlatform x:Key="LabelFontSizeOnPlatform"
-                        x:TypeArguments="FontAttributes">
-                <On Platform="Android"
-                    Value="14" />
-            </OnPlatform>-->
-
-
-
+  
+  
     <!--Style pour Frame-->
     <!--<Style TargetType="Frame">
         <Setter Property="Margin"
@@ -133,7 +64,7 @@
         <Setter Property="Margin"
                 Value="{StaticResource GridInFrameStyleOnPlatform}" />
         <Setter Property="BackgroundColor"
-                Value="{StaticResource White}">
+                Value="{DynamicResource WindowBackgroundColor}">
         </Setter>
     </Style>
 
@@ -142,14 +73,14 @@
         <Setter Property="Padding"
                 Value="7" />
         <Setter Property="BackgroundColor"
-                Value="{StaticResource White}">
+                Value="{DynamicResource WindowBackgroundColor}">
         </Setter>
     </Style>
 
     <Style TargetType="Grid"
            x:Key="GridInContexteStyle">
         <Setter Property="BackgroundColor"
-                Value="{StaticResource White}">
+                Value="{DynamicResource WindowBackgroundColor}">
         </Setter>
     </Style>
 
@@ -174,6 +105,8 @@
            BaseResourceKey="BodyStyle">
         <Setter Property="FontSize"
                 Value="14" />
+        <Setter Property="TextColor" Value="{DynamicResource WindowForegroundColor}"/>
+
     </Style>
 
 
@@ -241,7 +174,7 @@
     <Style x:Key="BoxViewSeparatorStyle"
            TargetType="BoxView">
         <Setter Property="BackgroundColor"
-                Value="{StaticResource ColorTextGray}" />
+                Value="{DynamicResource ColorTextGray}" />
         <Setter Property="HeightRequest"
                 Value="0.5" />
     </Style>
@@ -249,7 +182,7 @@
     <Style x:Key="BoxViewVerticalSeparatorStyle"
            TargetType="BoxView">
         <Setter Property="BackgroundColor"
-                Value="{StaticResource ColorTextGray}" />
+                Value="{DynamicResource ColorTextGray}" />
         <Setter Property="WidthRequest"
                 Value="0.5" />
     </Style>
@@ -260,10 +193,13 @@
     <Style x:Key="ValidationErrorLabelStyle"
            TargetType="{x:Type Label}">
         <Setter Property="TextColor"
-                Value="{StaticResource ErrorColor}" />
+                Value="{DynamicResource ErrorColor}" />
         <Setter Property="FontSize"
-                Value="{StaticResource LittleSize}" />
+                Value="{DynamicResource LittleSize}" />
     </Style>
+
+   
+  
 
     <Style x:Key="EntryValidatableStyle"  
            TargetType="{x:Type Entry}">
@@ -271,7 +207,7 @@
         <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"  
                 Value="True" />
         <Setter Property="behaviors:LineColorBehavior.LineColor"  
-                Value="{StaticResource BlackColor}" />
+                Value="{DynamicResource BlackColor}" />
         <Style.Triggers>
             <Trigger TargetType="Entry"
                      Property="IsFocused" 
@@ -293,7 +229,7 @@
                      Value="True">
                 <Setter Property="Opacity" Value="1" />
                 <Setter Property="behaviors:LineColorBehavior.LineColor"                        
-                        Value="{StaticResource GreenColor}" />
+                        Value="{DynamicResource GreenColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -317,58 +253,12 @@
     <!-- Style pour bouton  -->
     <Style TargetType="Button"
            >
-        <Setter Property="BackgroundColor" Value="{StaticResource MyColorButton}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource MyColorButton}" />
         <Setter Property="TextColor" Value="White" />
     </Style>
 
     <Style TargetType="forms:SvgCachedImage">
         <Setter Property="ReplaceStringMap" Value="{x:Static enum:SvgIconTarget.ReplaceColor}" />
     </Style>
-    <!--DataTemplate pour ListView.GroupHeaderTemplate-->
-
-    <DataTemplate x:Key="DefaultGroupHeaderStyle">
-        <ViewCell>
-            <Grid Padding="10,10,10,5">
-                <Label Text="{Binding Key.Text}"
-                       Style="{StaticResource DefaultSubtitleStyle}"
-                       HorizontalOptions="Start" />
-                <Label Text="{Binding Key.Count}"
-                       Style="{StaticResource DefaultSubtitleStyle}"
-                       HorizontalOptions="End" />
-            </Grid>
-        </ViewCell>
-    </DataTemplate>
- 
-
-    <!--DataTemplate pour ListView.ItemTemplate-->
-
-    <DataTemplate x:Key="MenuTemplate">
-        <ViewCell>
-            <ViewCell.View>
-                <Grid HeightRequest="50">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <BoxView BackgroundColor="{StaticResource GrayLight}"
-                             Grid.ColumnSpan="3"
-                             IsVisible="{Binding IsSelected, Mode=TwoWay}" />
-
-                    <Image Grid.Column="0"
-                           Margin="10,0"
-                           Source="{Binding Icon}"
-                           HeightRequest="30"
-                           WidthRequest="30" />
-
-                    <Label Grid.Column="2"
-                           Text="{Binding Title}"
-                           TextColor="{StaticResource ColorBlack}"
-                           VerticalTextAlignment="Center" />
-
-                </Grid>
-            </ViewCell.View>
-        </ViewCell>
-    </DataTemplate>
+    
 </ResourceDictionary>

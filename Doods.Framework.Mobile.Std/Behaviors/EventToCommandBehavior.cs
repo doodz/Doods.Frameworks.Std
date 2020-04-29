@@ -5,11 +5,6 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Behaviors
 {
-  
-
-
-
-
     public class EventToCommandBehavior : BehaviorBase<View>
     {
         public static readonly BindableProperty EventNameProperty = BindableProperty.Create(nameof(EventName),

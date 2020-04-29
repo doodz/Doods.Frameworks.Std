@@ -44,6 +44,7 @@ namespace Doods.Framework.Mobile.Std.Controls
                     {
                         Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center
                     }
+                    
                 }
             };
 
@@ -75,8 +76,6 @@ namespace Doods.Framework.Mobile.Std.Controls
 
         public TitledFrameView()
         {
-            CornerRadius = 8;
-            Padding = new Thickness(8);
             ControlTemplate = _titleTemplate;
             var tapGestureRecognizer = new TapGestureRecognizer();
         }

@@ -10,8 +10,7 @@ namespace Doods.Framework.Mobile.Std.Controls
         private readonly ControlTemplate _titleTemplate = new ControlTemplate(typeof(TitleSwitchTemplate));
         public TitleSwitchView()
         {
-            CornerRadius = 8;
-            Padding = new Thickness(8);
+           
             ControlTemplate = _titleTemplate;
             var tapGestureRecognizer = new TapGestureRecognizer();
         }

@@ -295,6 +295,10 @@ namespace Doods.Framework.Ssh.Std
                     var byteArray = ms.ToArray();
                     return Task.FromResult(byteArray);
                 }
+                catch
+                {
+
+                }
                 finally
                 {
                     scp.Dispose();

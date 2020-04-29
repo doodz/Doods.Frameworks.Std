@@ -23,23 +23,33 @@ namespace Doods.Framework.Mobile.Std.Controls
             SubTitleLabel.SetBinding(Label.TextProperty, new TemplateBinding(nameof(TitledFrameView.SubTitle)));
             SubTitleLabel.SetBinding(StyleProperty, new TemplateBinding(nameof(TitledFrameView.SubTitleStyle)));
             SubTitleLabel.HorizontalOptions = LayoutOptions.FillAndExpand;
-            Content = new StackLayout
+            SubTitleLabel.HorizontalTextAlignment = TextAlignment.End;
+
+            var frame = new Frame
             {
-                Children =
+                Margin = 0,
+                Padding = 0,
+                CornerRadius = 8,
+                Content = new StackLayout
                 {
-                    new StackLayout
+                    Children =
                     {
-                        Padding = 4,
-                        BackgroundColor = Color.CornflowerBlue,
-                        Orientation = StackOrientation.Horizontal,
-                        Spacing = 10,
-                        Children = {TitleLabel, SubTitleLabel}
-                    },
-                    new ContentPresenter()
+                        new StackLayout
+                        {
+                            Padding = 4,
+                            BackgroundColor = Color.CornflowerBlue,
+                            Orientation = StackOrientation.Horizontal,
+                            Spacing = 5,
+                            Children = {TitleLabel, SubTitleLabel}
+                        },
+                        new ContentPresenter()
+                    }
                 }
             };
-          
-         this.BindingContextChanged+=OnBindingContextChanged;   
+            Content = frame;
+
+
+         BindingContextChanged+=OnBindingContextChanged;   
         }
 
         private void OnBindingContextChanged(object sender, EventArgs e)
