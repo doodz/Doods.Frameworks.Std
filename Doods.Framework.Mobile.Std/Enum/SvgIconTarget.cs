@@ -13,8 +13,9 @@ namespace Doods.Framework.Mobile.Std.Enum
         // blue app #96d1ff
         // red #ff0000
         // black #000000
-        public static Dictionary<string, string> ReplaceColorToRed = new Dictionary<string, string> { { "#ff0000", "#ff0000" } };
-        
+        public static Dictionary<string, string> ReplaceColorToRed = new Dictionary<string, string> { { "#ff0000", "#FF3B30" } };
+        public static Dictionary<string, string> ReplaceColorToGreen = new Dictionary<string, string> { { "#ff0000", "#34C759" } };
+
         /// <summary>
         /// Red to black 
         /// </summary>

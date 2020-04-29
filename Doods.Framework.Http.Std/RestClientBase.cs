@@ -80,7 +80,7 @@ namespace Doods.Framework.Http.Std
             if (response.ErrorException != null)
                 throw response.ErrorException;
 
-            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new AuthorizationException();
+            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new AuthorizationException(response.Content);
 
             if (response.StatusCode == HttpStatusCode.Forbidden) throw new ForbiddenException(response.ErrorMessage);
 

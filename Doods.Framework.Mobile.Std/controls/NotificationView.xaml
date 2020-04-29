@@ -5,7 +5,7 @@
              
              x:Class="Doods.Framework.Mobile.Std.controls.NotificationView"
              xmlns:converters="clr-namespace:Doods.Framework.Mobile.Std.Converters;assembly=Doods.Framework.Mobile.Std"
-             
+            
              xmlns:controls1="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std">
     <ContentView.Resources>
         <ResourceDictionary>
@@ -21,6 +21,7 @@
     </ContentView.Resources>
     <ContentView.Content>
         <Frame Style="{StaticResource FrameTopBorderlessStyle}"
+              
                Padding="10,10,10,0">
 
             <Grid Style="{StaticResource GridInFrameStyle}"
@@ -50,6 +51,7 @@
                                        BackgroundColor="{Binding Color, Mode=OneWay}" />-->
                 <controls1:DoodsSvgImage
                     Source="{Binding Icon.ResourceFile,Mode=OneWay}"
+                    Color="{DynamicResource  SystemGreen}"
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.RowSpan="2"

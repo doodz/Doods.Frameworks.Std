@@ -15,7 +15,9 @@
     </ResourceDictionary.MergedDictionaries>
 
 
-
+    <Style TargetType="ContentView" >
+        <Setter Property="BackgroundColor" Value="{DynamicResource WindowBackgroundColor}"/>
+    </Style>
 
 
     <Style TargetType="controls:TitledFrameView"  BaseResourceKey="FrameViewStyle">
@@ -55,6 +57,8 @@
            x:Key="FrameTopBorderlessStyle">
         <Setter Property="Margin"
                 Value="-10,-10,-10,0" />
+        <Setter Property="BackgroundColor"
+                Value="{DynamicResource FabBackgroundColor}"/>
     </Style>
 
     <!--Style pour Grid-->
@@ -63,9 +67,7 @@
            x:Key="GridInFrameStyle">
         <Setter Property="Margin"
                 Value="{StaticResource GridInFrameStyleOnPlatform}" />
-        <Setter Property="BackgroundColor"
-                Value="{DynamicResource WindowBackgroundColor}">
-        </Setter>
+        
     </Style>
 
     <Style TargetType="Grid"
@@ -73,15 +75,13 @@
         <Setter Property="Padding"
                 Value="7" />
         <Setter Property="BackgroundColor"
-                Value="{DynamicResource WindowBackgroundColor}">
-        </Setter>
+                Value="{DynamicResource WindowBackgroundColor}"/>
     </Style>
 
     <Style TargetType="Grid"
            x:Key="GridInContexteStyle">
         <Setter Property="BackgroundColor"
-                Value="{DynamicResource WindowBackgroundColor}">
-        </Setter>
+                Value="{DynamicResource WindowBackgroundColor}"/>
     </Style>
 
 
