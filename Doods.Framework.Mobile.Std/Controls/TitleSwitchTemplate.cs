@@ -9,8 +9,8 @@ namespace Doods.Framework.Mobile.Std.Controls
         {
             Switch = new Switch();
             Switch.SetBinding(Switch.IsToggledProperty, new TemplateBinding(nameof(TitleSwitchView.IsToggled)));
-            TitleLabel.TextColor = default;
-            SubTitleLabel.TextColor = default;
+            //TitleLabel.TextColor = default;
+            //SubTitleLabel.TextColor = default;
 
             var grid = new Grid();
             var tapGestureRecognizer = new TapGestureRecognizer();

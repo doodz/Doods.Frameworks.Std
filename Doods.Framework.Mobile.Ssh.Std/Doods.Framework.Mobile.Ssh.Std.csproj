@@ -12,9 +12,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.1.4" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
-    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.1.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.495" />
+    <PackageReference Include="SkiaSharp" Version="1.68.2.1" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.2.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
   </ItemGroup>
 
   <ItemGroup>
