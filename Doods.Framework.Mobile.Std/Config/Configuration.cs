@@ -33,7 +33,8 @@ namespace Doods.Framework.Mobile.Std.Config
         public string AdsKey => GetString(nameof(AdsKey));
         public string RewardedVideoKey => GetString(nameof(RewardedVideoKey));
         public string MobileCenterKey => GetString(nameof(MobileCenterKey));
-
+        public string AppAdsKey => GetString(nameof(AppAdsKey));
+        public bool ModeOmvOnlyKey => GetBoolean(nameof(ModeOmvOnlyKey));
         public string HockeyAppKey => GetString(nameof(HockeyAppKey));
 
         public string NumeroVersion => $"{_deviceInfo.Version}.{_deviceInfo.Build}";
