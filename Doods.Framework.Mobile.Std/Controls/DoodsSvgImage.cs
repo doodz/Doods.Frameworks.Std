@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Doods.Framework.Mobile.Std.Enum;
 using FFImageLoading.Svg.Forms;
 using Xamarin.Forms;
@@ -28,7 +29,8 @@ namespace Doods.Framework.Mobile.Std.Controls
 
             if (newvalue is Color c)
             {
-                control.ReplaceStringMap = new Dictionary<string, string> { { "#ff0000", c.ToHex() } }; ;
+                control.ReplaceStringMap = new Dictionary<string, string> { { "#ff0000", c.ToHex() },{ "#000000",c.ToHex() } }; ;
+                //control.ReloadImage();
             }
         }
 

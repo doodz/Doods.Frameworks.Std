@@ -54,10 +54,14 @@ namespace Doods.Framework.Mobile.Std.Servicies
            
         }
 
+
+        
+
         public async Task NavigateAsync(string pageKey, bool animated = true)
         {
             var state = Shell.Current.CurrentState;
-            await Shell.Current.GoToAsync($"{state.Location}/{pageKey}", animated);
+            //await Shell.Current.GoToAsync($"{state.Location}/{pageKey}", animated);
+            await Shell.Current.GoToAsync($"{pageKey}", animated);
             Shell.Current.FlyoutIsPresented = false;
         }
 
@@ -65,8 +69,10 @@ namespace Doods.Framework.Mobile.Std.Servicies
         {
             if (parameter is IQueryShellNavigationObject shellNavigationObject)
             {
+                
                 var state = Shell.Current.CurrentState;
-                await Shell.Current.GoToAsync($"{state.Location}/{pageKey}?{shellNavigationObject.ToQuery()}", animated);
+                //await Shell.Current.GoToAsync($"{state.Location}/{pageKey}?{shellNavigationObject.ToQuery()}", animated);
+                await Shell.Current.GoToAsync($"{pageKey}?{shellNavigationObject.ToQuery()}", animated);
                 Shell.Current.FlyoutIsPresented = false;
             }
             else

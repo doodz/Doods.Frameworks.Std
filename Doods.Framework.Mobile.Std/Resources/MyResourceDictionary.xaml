@@ -46,7 +46,7 @@
         <Setter Property="Padding"
                 Value="0,0,0,0" />
     </Style>-->
-
+   
     <Style TargetType="Frame"
            x:Key="FrameActionStyle">
         <Setter Property="Margin"

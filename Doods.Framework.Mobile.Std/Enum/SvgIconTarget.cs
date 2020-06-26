@@ -10,17 +10,24 @@ namespace Doods.Framework.Mobile.Std.Enum
     /// </summary>
     public sealed class SvgIconTarget
     {
+
         // blue app #96d1ff
         // red #ff0000
         // black #000000
         public static Dictionary<string, string> ReplaceColorToRed = new Dictionary<string, string> { { "#ff0000", "#FF3B30" } };
         public static Dictionary<string, string> ReplaceColorToGreen = new Dictionary<string, string> { { "#ff0000", "#34C759" } };
-
         /// <summary>
         /// Red to black 
         /// </summary>
-        public static Dictionary<string, string> ReplaceColor = new Dictionary<string, string> {{ "#ff0000", "#000000" } };
+        public static Dictionary<string, string> ReplaceColor = new Dictionary<string, string> { { "#ff0000", "#000000" } };
         private static readonly ImageEnumEmbeddedResourceConverter ImageEnumEmbeddedResourceConverter = new ImageEnumEmbeddedResourceConverter();
+
+        public static readonly SvgIconTarget Update = new SvgIconTarget(nameof(Update), "ic_update_24px.svg");
+        public static readonly SvgIconTarget Input = new SvgIconTarget(nameof(Input), "ic_input_24px.svg");
+        public static readonly SvgIconTarget SystemUpdate = new SvgIconTarget(nameof(SystemUpdate), "ic_system_update_alt_24px.svg");
+        public static readonly SvgIconTarget Power = new SvgIconTarget(nameof(Power), "ic_power_24px.svg");
+        public static readonly SvgIconTarget PowerOff = new SvgIconTarget(nameof(PowerOff), "ic_power_off_24px.svg");
+
         public static readonly SvgIconTarget AddBox = new SvgIconTarget(nameof(AddBox), "ic_add_box_24px.svg");
         public static readonly SvgIconTarget AddCircle = new SvgIconTarget(nameof(AddCircle), "ic_add_circle_24px.svg");
 
