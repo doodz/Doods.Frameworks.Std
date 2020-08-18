@@ -46,8 +46,6 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             ((Entry) sender).TextColor = isValid ? Color.Default : InvalidColor;
         }
 
-        #region AllowDecimalProperty
-
         /// <summary>
         ///     Backing storage for the boolean flag which decides between
         ///     integer vs. double validation.
@@ -68,10 +66,7 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             set => SetValue(AllowDecimalProperty, value);
         }
 
-        #endregion
 
-
-        #region InvalidColorProperty
 
         /// <summary>
         ///     Backing storage for the color used when the
@@ -93,6 +88,5 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             set => SetValue(InvalidColorProperty, value);
         }
 
-        #endregion
     }
 }

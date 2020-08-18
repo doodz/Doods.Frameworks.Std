@@ -11,6 +11,7 @@
 // ---------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Doods.Framework.Mobile.Std.Interfaces;
 using Doods.Framework.Std;
@@ -18,6 +19,40 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Servicies
 {
+    public enum TelemetryEventType
+    {
+        None = 0,
+        Application = 1,
+        Navigation = 2,
+        Fonction = 3,
+        Synchronisation = 4,
+        Failure = 5,
+        BackgroundTask = 6,
+        RefreshToken
+    }
+    public static class ITelemetryServiceExtensions
+    {
+        public static void Event(this ITelemetryService telemetry, TelemetryEventType type, string message, Dictionary<string, string> properties = null,
+            Dictionary<string, double> measures = null)
+        {
+            telemetry.Event(TelemetryEventHelper.GetEvent(type, message), properties, measures);
+        }
+
+        public static void Metric(this ITelemetryService telemetry, TelemetryEventType type, string message, double value, Dictionary<string, string> properties = null)
+        {
+            telemetry.Metric(TelemetryEventHelper.GetEvent(type, message), value, properties);
+        }
+    }
+    /// <summary>
+    /// Helper pour formattage chaine envoyé à la télémétrie
+    /// </summary>
+    internal class TelemetryEventHelper
+    {
+        internal static string GetEvent(TelemetryEventType type, string message)
+        {
+            return $"{type}: {message}";
+        }
+    }
     public class ShellNavigationService : NavigationBaseService,INavigationService
     {
         public ShellNavigationService(ILogger logger, ITelemetryService telemetryService):base(logger, telemetryService)
@@ -33,12 +68,13 @@ namespace Doods.Framework.Mobile.Std.Servicies
 
         public  Task GoBack()
         {
-           
+            _telemetry.Event(TelemetryEventType.Navigation, "Go back");
             return Shell.Current.Navigation.PopAsync();
         }
 
         public  Task GoToRootAsync()
         {
+            _telemetry.Event(TelemetryEventType.Navigation, "Go to root");
             return Shell.Current.Navigation.PopToRootAsync();
         }
 
@@ -59,7 +95,8 @@ namespace Doods.Framework.Mobile.Std.Servicies
 
         public async Task NavigateAsync(string pageKey, bool animated = true)
         {
-            var state = Shell.Current.CurrentState;
+            _telemetry.Event(TelemetryEventType.Navigation, $"Go to pagekey {pageKey}");
+            //var state = Shell.Current.CurrentState;
             //await Shell.Current.GoToAsync($"{state.Location}/{pageKey}", animated);
             await Shell.Current.GoToAsync($"{pageKey}", animated);
             Shell.Current.FlyoutIsPresented = false;
@@ -69,8 +106,8 @@ namespace Doods.Framework.Mobile.Std.Servicies
         {
             if (parameter is IQueryShellNavigationObject shellNavigationObject)
             {
-                
-                var state = Shell.Current.CurrentState;
+                _telemetry.Event(TelemetryEventType.Navigation, $"Go to pagekey {pageKey}");
+                //var state = Shell.Current.CurrentState;
                 //await Shell.Current.GoToAsync($"{state.Location}/{pageKey}?{shellNavigationObject.ToQuery()}", animated);
                 await Shell.Current.GoToAsync($"{pageKey}?{shellNavigationObject.ToQuery()}", animated);
                 Shell.Current.FlyoutIsPresented = false;

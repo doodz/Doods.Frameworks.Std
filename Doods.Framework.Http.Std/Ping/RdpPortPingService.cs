@@ -23,7 +23,7 @@ namespace Doods.Framework.Http.Std.Ping
                 return true;
             }
             catch (Exception ex)
-                when (ex is SocketException || ex is ObjectDisposedException)
+                when (ex is SocketException || ex is ObjectDisposedException || ex is OperationCanceledException)
             {
                 return false;
             }

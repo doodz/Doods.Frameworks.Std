@@ -38,4 +38,14 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             BindingContext = AssociatedObject.BindingContext;
         }
     }
+
+    public enum AnimationType
+    {
+        Fade,
+        FlipHorizontal,
+        FlipVertical,
+        Rotate,
+        Scale,
+        Shake
+    }
 }
