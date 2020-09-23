@@ -109,11 +109,14 @@ namespace Doods.Framework.Ssh.Std
             return Client.RunCommand(cmd);
         }
 
-
-        public async Task<bool> ConnectAsync()
+        private Shell CreateShell(Stream imputStream, Stream outputStream,Stream extendedStream)
         {
-            var res = await Task.Run(() => Connect());
-            return IsConnected();
+            return Client.CreateShell(imputStream, outputStream, extendedStream);
+        }
+        public Task<bool> ConnectAsync()
+        {
+            return Task.Run(Connect).ContinueWith(task => IsConnected());
+            //return IsConnected();
             //await Task.Factory.StartNew(Connect);
         }
 
@@ -137,10 +140,14 @@ namespace Doods.Framework.Ssh.Std
                 {
                     Client.Connect();
                 }
+                catch (SshOperationTimeoutException ex)
+                {
+                    Logger.Debug(ex.Message);
+                }
                 catch (Exception ex)
                 {
                     Logger.Debug(ex.Message);
-                    //TODO THE Renci.SshNet.Common.SshOperationTimeoutException 
+                   
                     throw;
                 }
 

@@ -40,8 +40,6 @@ namespace Doods.Framework.Http.Std
             AddHandler("text/javascript", () => serializer);
             AddHandler("*+json", () => serializer);
 
-           
-
             var auth = new Authenticator(connection.Credentials);
             Authenticator = auth.CreatedAuthenticator;
             FollowRedirects = false;

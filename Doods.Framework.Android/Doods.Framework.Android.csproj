@@ -53,10 +53,10 @@
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.2.0.1" />
-    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.2.0.1" />
-    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.1" />
-    <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.1.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.2.0.2" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.2.0.2" />
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.2" />
+    <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.1.0.2" />
     <PackageReference Include="Xamarin.Android.Support.Design">
       <Version>28.0.0.3</Version>
     </PackageReference>
@@ -71,7 +71,7 @@
       <Version>28.0.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Migration">
-      <Version>1.0.6.1</Version>
+      <Version>1.0.6.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>4.8.0.1269</Version>

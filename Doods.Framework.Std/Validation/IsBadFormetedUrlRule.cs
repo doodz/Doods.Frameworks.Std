@@ -17,7 +17,7 @@ namespace Doods.Framework.Std.Validation
         public bool Check(T value)
         {
             if (value == null) return false;
-            var res = _haveHttpS.IsMatch(value.ToString());
+            var res = _haveHttpS.IsMatch(value.ToString().ToLower());
 
             if (!_needHttp) return !res;
             return res;
