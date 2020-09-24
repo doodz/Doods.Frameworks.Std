@@ -59,9 +59,9 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
                 Client.Logger.Info("Client not connected, Connect. for run in shell");
                 Client.Connect();
             }
-            shell = Client.CreateShell();
-            shell.DataReceived += ondataReseved;
-            shell.WriteLine(CmdString);
+            //shell = Client.CreateShell();
+            //shell.DataReceived += ondataReseved;
+            //shell.WriteLine(CmdString);
         }
     }
 }

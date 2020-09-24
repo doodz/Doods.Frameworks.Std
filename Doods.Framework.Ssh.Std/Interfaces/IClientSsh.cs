@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Doods.Framework.ApiClientBase.Std.Interfaces;
 using Doods.Framework.Std;
@@ -21,7 +22,8 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         Task<string> RunCommandAsync(SshCommand cmdStr, CancellationToken token);
         Task<ISshApiResponse<T>> ExecuteTaskAsync<T>(ISshRequest request, CancellationToken token);
         Task<ISshApiResponse<T>> ExecuteTaskAsync<T>(ISshRequest request);
-        ShellStream CreateShell();
+        ShellClient CreateShell();
+        Shell CreateShell(Stream imputStream, Stream outputStream, Stream extendedStream);
 
         /// <summary>
         ///     Try to connect to client
@@ -35,5 +37,6 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         bool TestConnection(IConnection connection, bool throwException);
 
         ScpClient GetScpClient();
+        
     }
 }

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Doods.Framework.ApiClientBase.Std.Classes;
 using Doods.Framework.ApiClientBase.Std.Exceptions;
 using Doods.Framework.ApiClientBase.Std.Interfaces;
@@ -16,13 +18,193 @@ using Renci.SshNet.Common;
 
 namespace Doods.Framework.Ssh.Std
 {
+    public interface ISubject<T>: IObservable<T>
+    {
+        void OnNext(T tempData);
+    }
+    //https://github.com/SuperJMN/UniversalSSH/blob/master/UwpApp/MainViewModel.cs
+    public class Subject<T> : ISubject<T>
+    {
+        List<IObserver<T>> observers;
+
+        public Subject()
+        {
+            observers = new List<IObserver<T>>();
+        }
+        public IDisposable Subscribe(IObserver<T> observer)
+        {
+            if (!observers.Contains(observer))
+                observers.Add(observer);
+
+            return new Unsubscriber<T>(observers, observer);
+        }
+
+        public void OnNext(T tempData)
+        {
+            foreach (var observer in observers)
+                observer.OnNext(tempData);
+        }
+
+        private class Unsubscriber<T> : IDisposable
+        {
+            private List<IObserver<T>> _observers;
+            private IObserver<T> _observer;
+
+            public Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer)
+            {
+                this._observers = observers;
+                this._observer = observer;
+            }
+
+            public void Dispose()
+            {
+                if (_observer != null) _observers.Remove(_observer);
+            }
+        }
+    }
+
+
+    public class StreamPoller : IDisposable
+    {
+        private System.Timers.Timer myTimer;
+        private readonly Stream output;
+        private readonly ISubject<string> textReceivedSubject = new Subject<string>();
+        private readonly IDisposable updater;
+
+        public StreamPoller(Stream output)
+        {
+            this.output = output;
+
+            SetTimer();
+        }
+
+        private  void SetTimer()
+        {
+            // Create a timer with a 1 second interval.
+            myTimer = new System.Timers.Timer(1000);
+            // Hook up the Elapsed event for the timer. 
+            myTimer.Elapsed += OnTimedEvent;
+            myTimer.AutoReset = true;
+            myTimer.Enabled = true;
+        }
+
+        private  void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Read();
+        }
+
+        private void Read()
+        {
+            var bufflen = output.Length - output.Position;
+            var buffer = new byte[bufflen];
+            output.Read(buffer, (int)output.Position, (int)bufflen);
+
+            var str = Encoding.UTF8.GetString(buffer);
+            if (str != string.Empty)
+            {
+                textReceivedSubject.OnNext(str);
+            }
+        }
+
+        public IObservable<string> TextReceived => textReceivedSubject;
+        public void Dispose()
+        {
+            myTimer.Elapsed -= OnTimedEvent;
+            //updater?.Dispose();
+        }
+    }
+
+
+    public abstract class ShellReporter : IObserver<string>
+    {
+        public virtual void OnCompleted()
+        {
+            
+        }
+
+        public virtual void OnError(Exception error)
+        {
+           
+        }
+
+        public virtual void OnNext(string value)
+        {
+            
+        }
+    }
+
+    public class ShellClient : ShellReporter,IDisposable
+    {
+        private readonly SshClient _client;
+        private Shell shell;
+        private StreamPoller outputReader;
+        private readonly ISubject<string> textReceivedSubject = new Subject<string>();
+        private IDisposable textUpdater;
+        private readonly StreamWriter outputStreamWriter;
+        private readonly Stream extendedOuput = new PipeStream();
+        private readonly Stream output = new PipeStream();
+        private readonly Stream input = new PipeStream();
+
+        public ShellClient(SshClient client)
+        {
+            _client = client;
+            outputStreamWriter = new StreamWriter(input) { AutoFlush = true };
+        }
+
+        public void Connect()
+        {
+            if(!_client.IsConnected)
+                _client.Connect();
+            shell = _client.CreateShell(input, output, extendedOuput);
+            shell.Start();
+            outputReader = new StreamPoller(output);
+            textUpdater = outputReader.TextReceived.Subscribe(this);
+        }
+
+        public void SendText(string text)
+        {
+            outputStreamWriter.WriteLine(text);
+        }
+
+        public IDisposable SubscribeTextReceived(IObserver<string> obs)
+        {
+            return outputReader.TextReceived.Subscribe(obs);
+        }
+
+        public void Stop()
+        {
+            shell?.Stop();
+            outputReader?.Dispose();
+            textUpdater?.Dispose();
+            extendedOuput?.Dispose();
+            //outputStreamWriter?.Dispose();
+            output?.Dispose();
+            input?.Dispose();
+        }
+
+        public void Dispose()
+        {
+            //client?.Dispose();
+            shell?.Dispose();
+            outputReader?.Dispose();
+            textUpdater?.Dispose();
+            //outputStreamWriter?.Dispose();
+            extendedOuput?.Dispose();
+            output?.Dispose();
+            input?.Dispose();
+        }
+    }
+
+
+
+
     public class SshServiceBase : APIServiceBase, IDisposable, IClientSsh
     {
         protected const int TimeoutInSecond = 60;
         private readonly object _lockObj;
 
 
-        private ShellStream _shell;
+        private ShellClient _shell;
 
 
         //private ConnectionInfo _connectionInfo;
@@ -109,10 +291,7 @@ namespace Doods.Framework.Ssh.Std
             return Client.RunCommand(cmd);
         }
 
-        private Shell CreateShell(Stream imputStream, Stream outputStream,Stream extendedStream)
-        {
-            return Client.CreateShell(imputStream, outputStream, extendedStream);
-        }
+        
         public Task<bool> ConnectAsync()
         {
             return Task.Run(Connect).ContinueWith(task => IsConnected());
@@ -173,10 +352,20 @@ namespace Doods.Framework.Ssh.Std
             }
         }
 
-
-        public ShellStream CreateShell()
+       
+        public Shell CreateShell(Stream imputStream, Stream outputStream, Stream extendedStream)
         {
-            return _shell = Client.CreateShellStream(nameof(SshServiceBase), 0, 0, 0, 0, 1024);
+
+           
+
+            return Client.CreateShell(imputStream, outputStream, extendedStream);
+        }
+
+        public ShellClient CreateShell()
+        {
+          
+            //_shell?.Stop();
+            return _shell =new ShellClient(Client);
         }
 
         public ScpClient GetScpClient()
@@ -258,7 +447,9 @@ namespace Doods.Framework.Ssh.Std
             lock (_lockObj)
             {
                 Client?.Dispose();
+                _shell?.Dispose();
                 Client = null;
+                _shell = null;
             }
         }
 
