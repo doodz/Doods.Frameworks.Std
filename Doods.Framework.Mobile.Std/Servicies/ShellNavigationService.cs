@@ -86,12 +86,7 @@ namespace Doods.Framework.Mobile.Std.Servicies
         public Task NavigateModalAsync(string pageKey, object parameter, bool animated = true)
         {
             throw new NotImplementedException();
-            
-           
         }
-
-
-        
 
         public async Task NavigateAsync(string pageKey, bool animated = true)
         {
@@ -99,7 +94,6 @@ namespace Doods.Framework.Mobile.Std.Servicies
             //var state = Shell.Current.CurrentState;
             //await Shell.Current.GoToAsync($"{state.Location}/{pageKey}", animated);
             await Shell.Current.GoToAsync($"{pageKey}", animated);
-            Shell.Current.FlyoutIsPresented = false;
         }
 
         public async Task NavigateAsync(string pageKey, object parameter, bool animated = true)
@@ -110,7 +104,6 @@ namespace Doods.Framework.Mobile.Std.Servicies
                 //var state = Shell.Current.CurrentState;
                 //await Shell.Current.GoToAsync($"{state.Location}/{pageKey}?{shellNavigationObject.ToQuery()}", animated);
                 await Shell.Current.GoToAsync($"{pageKey}?{shellNavigationObject.ToQuery()}", animated);
-                Shell.Current.FlyoutIsPresented = false;
             }
             else
             {

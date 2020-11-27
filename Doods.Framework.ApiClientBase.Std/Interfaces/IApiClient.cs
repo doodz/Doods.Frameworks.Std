@@ -3,6 +3,9 @@ using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.ApiClientBase.Std.Interfaces
 {
+
+
+
     public interface IApiClient
     {
 

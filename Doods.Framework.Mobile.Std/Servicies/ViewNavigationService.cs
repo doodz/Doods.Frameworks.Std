@@ -52,9 +52,6 @@ namespace Doods.Framework.Mobile.Std.Servicies
             }
         }
 
-      
-
-
         public async Task GoBack()
         {
             var navigationStack = CurrentNavigationPage.Navigation;
