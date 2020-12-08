@@ -1,9 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Doods.Framework.Ssh.Std.Converters;
-using Doods.Framework.Ssh.Std.Requests.YetRequest;
 using Doods.Framework.Ssh.Std.Serializers;
 
 namespace Doods.Framework.Ssh.Std.Requests
@@ -17,12 +14,9 @@ namespace Doods.Framework.Ssh.Std.Requests
     /// </example>
     public class UptimeRequest : SshRequestBase
     {
-
+       
         private class UptimeRequestConverter : ISshConverter
         {
-           
-
-          
             public bool CanConvert(Type objectType)
             {
                 if (objectType == typeof(string)) return true;
@@ -72,16 +66,12 @@ namespace Doods.Framework.Ssh.Std.Requests
                 return 0D;
             }
 
-
-
-
         }
         public const string RequestString = "cat /proc/uptime";
         public UptimeRequest() : base(RequestString)
         {
             _SshSerializer = new SshSerializer(new SshSerializerSettings() { Converters = new List<ISshConverter>() { new UptimeRequestConverter() } });
         }
-
 
     }
 }

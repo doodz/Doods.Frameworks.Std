@@ -9,17 +9,28 @@ namespace Doods.Framework.Mobile.Std.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+           
+
             if (value is bool b)
             {
                 return b ? SvgIconTarget.Checked.ResourceFile : SvgIconTarget.Unchecked.ResourceFile;
             }
 
-            return null;
+            return SvgIconTarget.Unchecked.ResourceFile;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        static bool IsNullable<T>(T obj)
+        {
+            if (obj == null) return true; // obvious
+            Type type = typeof(T);
+            if (!type.IsValueType) return true; // ref-type
+            if (Nullable.GetUnderlyingType(type) != null) return true; // Nullable<T>
+            return false; // value-type
         }
     }
 
