@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std"
              xmlns:controls1="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Controls;assembly=Doods.Framework.Mobile.Ssh.Std"
              xmlns:resources="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Resources;assembly=Doods.Framework.Mobile.Ssh.Std"
-             
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std">
 
     <Style x:Key="NewSubTitleStyle" TargetType="Label">
@@ -125,4 +125,6 @@
 
         </controls:TitledFrameView>
     </DataTemplate>
+  
+    
 </ResourceDictionary>

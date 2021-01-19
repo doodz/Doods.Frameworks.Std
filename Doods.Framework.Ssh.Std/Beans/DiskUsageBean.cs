@@ -1,21 +1,17 @@
-﻿
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Doods.Framework.Std;
 
 namespace Doods.Framework.Ssh.Std.Beans
 {
-
-
     public class DiskUsageBeanWhapper : NotifyPropertyChangedBase
     {
-        private ICollection<DiskUsageBean> _diskUsages;
-        public ICollection<DiskUsageBean> DiskUsages
+        private IEnumerable<DiskUsageBean> _diskUsages;
+        public IEnumerable<DiskUsageBean> DiskUsages
         {
             get => _diskUsages;
             internal set => SetProperty(ref _diskUsages, value);
         }
-        public DiskUsageBeanWhapper(ICollection<DiskUsageBean> diskUsages)
+        public DiskUsageBeanWhapper(IEnumerable<DiskUsageBean> diskUsages)
         {
             DiskUsages = diskUsages;
         }

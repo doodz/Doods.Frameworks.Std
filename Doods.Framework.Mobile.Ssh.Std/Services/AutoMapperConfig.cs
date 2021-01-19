@@ -22,6 +22,7 @@ namespace Doods.Framework.Mobile.Ssh.Std.Services
 
         {
             CreateMap<CpuInfoBean, CpuInfo>();
+            CreateMap<HostnamectlBean, Hostnamectl>();
             CreateMap<DiskUsageBean, DiskUsage>();
             CreateMap<UpgradableBean, Upgradable>();
             CreateMap<OsMemoryBean, MemoryUsage>();

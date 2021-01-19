@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Doods.Framework.Ssh.Std.Base.Queries;
+using Doods.Framework.Ssh.Std.Beans;
 using Doods.Framework.Ssh.Std.Converters;
 using Doods.Framework.Ssh.Std.Interfaces;
 using Doods.Framework.Ssh.Std.Requests;
@@ -51,24 +52,7 @@ namespace Doods.Framework.Ssh.Std.Queries
     ///  L2 cache:              512K
     ///  NUMA node0 CPU(s):     0,1
     /// </example>
-    public class CpuInfoBean
-    {
-        public string Architecture { get; internal set; }
-        public string ByteOrder { get; internal set; }
-        public int Cpu { get; internal set; }
-        public string OnlineCpuList { get; internal set; }
-        public int ThreadPerCore { get; internal set; }
-        public int CorePerSocket { get; internal set; }
-        public int Socket { get; internal set; }
-        public string ModelName { get; internal set; }
-        public double CpuMaxMHz { get; internal set; }
-        public double CpuMinMHz { get; internal set; }
-    
-        public string CpuOpMode { get; internal set; }
-        public string VendorId { get; internal set; }
-
-    }
-
+   
     public class CpuInfoQuery : GenericQuery<CpuInfoBean>
     {
         public CpuInfoQuery(IClientSsh client) : base(client)
