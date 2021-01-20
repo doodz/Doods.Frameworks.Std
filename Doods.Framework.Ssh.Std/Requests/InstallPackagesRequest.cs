@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Doods.Framework.Ssh.Std.Queries;
+﻿using System.Collections.Generic;
 
 namespace Doods.Framework.Ssh.Std.Requests
 {

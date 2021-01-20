@@ -67,8 +67,5 @@ namespace Doods.Framework.Std
             OnPropertyChanged(name);
             return true;
         }
-
-
-      
     }
 }
