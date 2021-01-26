@@ -34,6 +34,7 @@ namespace Doods.Framework.Repository.Std
             {
                 yield return new Migration1();
                 yield return new Migration2();
+                yield return new Migration3();
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using Doods.Framework.ApiClientBase.Std.Classes;
-using Doods.Framework.ApiClientBase.Std.Models;
 using Doods.Framework.Std;
 using RestSharp;
 

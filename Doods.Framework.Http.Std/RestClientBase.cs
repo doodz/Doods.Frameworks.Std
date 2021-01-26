@@ -25,14 +25,18 @@ namespace Doods.Framework.Http.Std
 
         protected readonly IConnection Connection;
 
-        public RestClientBase(IConnection connection)
+        public RestClientBase(IConnection connection):this(connection,new NewtonsoftJsonSerializer())
+        {
+            
+        }
+
+        public RestClientBase(IConnection connection, NewtonsoftJsonSerializer serializer)
         {
             var baseUrl = new Uri(connection.Host);
             BaseUrl = baseUrl.SetPort(connection.Port);
-           
+
             Connection = connection;
-           
-            var serializer = new NewtonsoftJsonSerializer();
+
             AddHandler("application/json", () => serializer);
             AddHandler("text/json", () => serializer);
             AddHandler("text/plain", () => serializer);
@@ -45,8 +49,6 @@ namespace Doods.Framework.Http.Std
             FollowRedirects = false;
             CookieContainer = new CookieContainer();
         }
-
-
 
         public async Task<IRestResponse> ExecuteAsync(IRestRequest request)
         {
