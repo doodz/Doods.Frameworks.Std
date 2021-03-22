@@ -51,11 +51,12 @@ namespace Doods.Framework.Mobile.Std.Controls
                 .SingleOrDefault();
             if (attribute != null)
             {
-                if((bool)GetValue(DescriptionsHasPrecedenceProperty))
+                if ((bool) GetValue(DescriptionsHasPrecedenceProperty))
                     return attribute.Description;
                 var match2 = Translate?.Translate($"{attribute.Description}");
                 return !string.IsNullOrWhiteSpace(match2) ? match2 : result;
             }
+
             var match = Translate?.Translate($"{typeof(T).Name}_{value}");
             //var match = Translate?.ProvideValue($"openmediavault::{value}");
             return !string.IsNullOrWhiteSpace(match) ? match : result;

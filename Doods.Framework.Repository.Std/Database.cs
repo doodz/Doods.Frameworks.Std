@@ -1,14 +1,14 @@
-﻿using Doods.Framework.Repository.Std.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Doods.Framework.Repository.Std.Interfaces;
 using Doods.Framework.Repository.Std.Migrations;
 using Doods.Framework.Repository.Std.Tables;
 using Doods.Framework.Std;
 using Doods.Framework.Std.Extensions;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Doods.Framework.Repository.Std
 {
@@ -25,7 +25,7 @@ namespace Doods.Framework.Repository.Std
                 SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.FullMutex);
 
             _logger = looger;
-            _telemetry = telemetryService;  
+            _telemetry = telemetryService;
         }
 
         private IEnumerable<IMigration> Migrations

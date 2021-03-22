@@ -8,7 +8,7 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
         {
             BackgroundColor = StyleKit.CardFooterBackgroundColor;
 
-            Content = new Image()
+            Content = new Image
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,

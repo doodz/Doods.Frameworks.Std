@@ -4,18 +4,19 @@ namespace Doods.Framework.Mobile.Ssh.Std.Models
 {
     public class Process : NotifyPropertyChangedBase
     {
-        private string _commandName;
         private string _command;
+        private string _commandName;
         private string _cpuTime;
         private int _pId;
         private string _tty;
 
-      
+
         public string CommandName
         {
             get => _commandName;
             set => SetProperty(ref _commandName, value);
         }
+
         public int Pid
         {
             get => _pId;

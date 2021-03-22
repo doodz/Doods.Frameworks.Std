@@ -27,6 +27,7 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
                     statusBoxView.BackgroundColor = StyleKit.Status.UnresolvedColor;
                     break;
             }
+
             ;
 
             Content = statusBoxView;

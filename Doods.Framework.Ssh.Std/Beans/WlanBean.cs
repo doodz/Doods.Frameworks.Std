@@ -6,13 +6,14 @@ namespace Doods.Framework.Ssh.Std.Beans
     {
         private int _linkQuality;
 
+        private int _signalLevel;
+
         public int LinkQuality
         {
             get => _linkQuality;
             set => SetProperty(ref _linkQuality, value);
         }
 
-        private int _signalLevel;
         public int SignalLevel
         {
             get => _signalLevel;

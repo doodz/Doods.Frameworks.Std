@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Doods.Framework.Ssh.Std.Beans;
 using Doods.Framework.Ssh.Std.Serializers;
 
@@ -29,7 +28,7 @@ namespace Doods.Framework.Ssh.Std.Converters
 
         public override object Read(string content, Type objectType)
         {
-            var lines = content.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            var lines = content.Split(new[] {"\r\n", "\n"}, StringSplitOptions.None);
             var processes = new List<ProcessBean>();
             var count = 0;
             foreach (var line in lines)
@@ -61,13 +60,8 @@ namespace Doods.Framework.Ssh.Std.Converters
                         //Client.Logger.Error($"Error occured on following line: {line}");
                     }
                 }
-                else
-                {
-                    //Client.Logger.Error($"Line[] length: {cols.Length}");
-                    //Client.Logger.Error($"Expcected another output of ps. Skipping line: {line}");
-
-                }
             }
+
             return processes;
         }
     }

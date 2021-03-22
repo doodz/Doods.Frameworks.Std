@@ -8,57 +8,6 @@
     <ContentView.Resources>
 
         <ResourceDictionary>
-            <DataTemplate x:Key="CpuInfoDataTemplate">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Label Grid.Column="0" Grid.Row="0" Text="{resources:Translate Text=ModelName}"/>
-        <Label Grid.Column="1" Grid.Row="0" Text="{Binding ModelName,Mode=OneWay}"/>
-
-        <Label Grid.Column="0" Grid.Row="1" Text="{resources:Translate Text=Architecture}"/>
-        <Label Grid.Column="1" Grid.Row="1" Text="{Binding Architecture,Mode=OneWay}"/>
-
-        <Label Grid.Column="0" Grid.Row="2" Text="{resources:Translate Text=Cpu}"/>
-        <Label Grid.Column="1" Grid.Row="2" Text="{Binding Cpu,Mode=OneWay}"/>
-        <!--<ContentPresenter ... />-->
-       
-
-    </Grid>
-            </DataTemplate>
-
-            <ControlTemplate x:Key="CpuInfoTemplate">
-                <Grid
-                    >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Column="0" Grid.Row="0" Text="{resources:Translate Text=ModelName}"/>
-                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding ModelName,Mode=OneWay}"/>
-
-                    <Label Grid.Column="0" Grid.Row="1" Text="{resources:Translate Text=Architecture}"/>
-                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding Architecture,Mode=OneWay}"/>
-
-                    <Label Grid.Column="0" Grid.Row="2" Text="{resources:Translate Text=Cpu}"/>
-                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding Cpu,Mode=OneWay}"/>
-                    <!--<ContentPresenter ... />-->
-</Grid>
-
-</ControlTemplate>
 
         </ResourceDictionary>
     </ContentView.Resources>
@@ -66,23 +15,23 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="0" Grid.Row="0" Text="{resources:Translate Text=ModelName}"/>
-        <Label Grid.Column="1" Grid.Row="0" Text="{Binding ModelName,Mode=OneWay}"/>
+        <Label Grid.Column="0" Grid.Row="0" Text="{resources:Translate Text=ModelName}" />
+        <Label Grid.Column="1" Grid.Row="0" Text="{Binding ModelName,Mode=OneWay}" />
 
-        <Label Grid.Column="0" Grid.Row="1" Text="{resources:Translate Text=Architecture}"/>
-        <Label Grid.Column="1" Grid.Row="1" Text="{Binding Architecture,Mode=OneWay}"/>
+        <Label Grid.Column="0" Grid.Row="1" Text="{resources:Translate Text=Architecture}" />
+        <Label Grid.Column="1" Grid.Row="1" Text="{Binding Architecture,Mode=OneWay}" />
 
-        <Label Grid.Column="0" Grid.Row="2" Text="{resources:Translate Text=Cpu}"/>
-        <Label Grid.Column="1" Grid.Row="2" Text="{Binding Cpu,Mode=OneWay}"/>
+        <Label Grid.Column="0" Grid.Row="2" Text="{resources:Translate Text=Cpu}" />
+        <Label Grid.Column="1" Grid.Row="2" Text="{Binding Cpu,Mode=OneWay}" />
         <!--<ContentPresenter ... />-->
 
 

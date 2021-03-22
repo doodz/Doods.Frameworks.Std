@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <?xaml-comp compile="true" ?>
+
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="Doods.Framework.Mobile.Std.Resources.Styles.DarkTheme">
@@ -41,7 +42,7 @@
     <!--Frame-->
     <Color x:Key="FrameBackgroundColor">#1E2222</Color>
     <Color x:Key="FrameBorderColor">#5A5C60</Color>
-    
+
     <!--Entry-->
     <Color x:Key="EntryBackgroundColor">#3B4042</Color>
 

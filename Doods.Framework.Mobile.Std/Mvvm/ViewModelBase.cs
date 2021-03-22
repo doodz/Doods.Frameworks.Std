@@ -1,11 +1,11 @@
-﻿using Doods.Framework.Mobile.Std.controls;
-using Doods.Framework.Mobile.Std.Interfaces;
-using Doods.Framework.Std;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Doods.Framework.Mobile.Std.controls;
+using Doods.Framework.Mobile.Std.Interfaces;
+using Doods.Framework.Std;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Mvvm
@@ -14,15 +14,15 @@ namespace Doods.Framework.Mobile.Std.Mvvm
     {
         private const int _waitingDurationIsSeconds = 200;
         private int _busyCount;
+        protected IColorPalette _colorPalette;
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private bool _isLoaded;
         private bool _isLoading;
         private bool _isVisible;
 
         private string _title;
-        protected IColorPalette _colorPalette;
         private ViewModelState _viewModelState;
-        public abstract IColorPalette ColorPalette { get; }
+
         protected ViewModelBase(ILogger logger, ITelemetryService telemetryService)
         {
             Logger = logger;
@@ -74,8 +74,8 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             get => _isVisible;
             set => SetProperty(ref _isVisible, value);
         }
+
         /// <summary>
-        /// 
         /// </summary>
         protected CancellationToken Token => _cts.Token;
 
@@ -89,6 +89,8 @@ namespace Doods.Framework.Mobile.Std.Mvvm
             get => _title;
             set => SetProperty(ref _title, value);
         }
+
+        public abstract IColorPalette ColorPalette { get; }
 
         public virtual ICommand CmdState { get; set; }
 
@@ -258,7 +260,7 @@ namespace Doods.Framework.Mobile.Std.Mvvm
                 if (!safeExecution) throw;
             }
 
-            return default(T);
+            return default;
         }
 
         protected async Task ExecuteAsync(Func<CancellationToken, Task> action, bool safeExecution = false)

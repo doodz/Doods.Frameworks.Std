@@ -8,29 +8,30 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
         {
             BackgroundColor = Color.White;
 
-            Label TitleText = new Label()
+            var TitleText = new Label
             {
                 FormattedText = card.Title,
                 FontSize = 18,
                 TextColor = StyleKit.LightTextColor
             };
 
-            Label DescriptionText = new Label()
+            var DescriptionText = new Label
             {
                 FormattedText = card.Description,
                 FontSize = 12,
                 TextColor = StyleKit.LightTextColor
             };
 
-            var stack = new StackLayout()
+            var stack = new StackLayout
             {
                 Spacing = 0,
                 Padding = new Thickness(10, 0, 0, 0),
                 VerticalOptions = LayoutOptions.CenterAndExpand,
-                Children = {
+                Children =
+                {
                     TitleText,
                     DescriptionText,
-                    new DateTimeView (card)
+                    new DateTimeView(card)
                 }
             };
 

@@ -39,7 +39,7 @@ namespace Doods.Framework.Std.Extensions
         }
 
         public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key,
-            TValue @default = default(TValue))
+            TValue @default = default)
         {
             TValue value;
             if (!dictionary.TryGetValue(key, out value)) value = @default;
@@ -54,7 +54,7 @@ namespace Doods.Framework.Std.Extensions
             var value = default(TValue);
 
             if (dictionary.TryGetValue(key, out temp))
-                value = (TValue)temp;
+                value = (TValue) temp;
             {
                 if (create)
                 {
@@ -73,7 +73,7 @@ namespace Doods.Framework.Std.Extensions
             object temp;
 
             if (dictionary.TryGetValue(key, out temp))
-                value = (TValue)temp;
+                value = (TValue) temp;
 
             return value;
         }

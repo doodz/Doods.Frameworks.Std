@@ -4,12 +4,13 @@ namespace Doods.Framework.Mobile.Ssh.Std.Models
 {
     public class Upgradable : NotifyPropertyChangedBase
     {
+        private string _fromRepo;
+        private string _holdHold;
+        private bool _isSelected = true;
         private string _name;
         private string _newVersion;
-        private string _holdHold;
-        private string _fromRepo;
         private string _platform;
-        private bool _isSelected = true;
+
         public string Name
         {
             get => _name;

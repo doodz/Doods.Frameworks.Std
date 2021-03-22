@@ -6,8 +6,8 @@ namespace Doods.Framework.Std.Validation
 {
     public class IsReachableHostRule<T> : IValidationRule<T>
     {
-        public string ValidationMessage { get; set; }
         public Func<string, string> ValueFormater { get; set; }
+        public string ValidationMessage { get; set; }
 
         public bool Check(T value)
         {
@@ -16,8 +16,8 @@ namespace Doods.Framework.Std.Validation
             try
             {
                 var request =
-                    (HttpWebRequest)WebRequest.Create(ValueFormater.Invoke(ip));
-                var response = (HttpWebResponse)request.GetResponse();
+                    (HttpWebRequest) WebRequest.Create(ValueFormater.Invoke(ip));
+                var response = (HttpWebResponse) request.GetResponse();
                 return response.StatusCode == HttpStatusCode.OK;
 
                 //var ipa = IPAddress.Parse(ip);

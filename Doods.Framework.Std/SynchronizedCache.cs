@@ -7,10 +7,8 @@ namespace Doods.Framework.Std
 {
     public class CacheItem<T>
     {
-
-        public CacheItem(T value):this(value, TimeSpan.FromMinutes(10))
+        public CacheItem(T value) : this(value, TimeSpan.FromMinutes(10))
         {
-
         }
 
         public CacheItem(T value, TimeSpan expiresAfter)
@@ -18,14 +16,15 @@ namespace Doods.Framework.Std
             Value = value;
             ExpiresAfter = expiresAfter;
         }
+
         public T Value { get; }
         internal DateTimeOffset Created { get; } = DateTimeOffset.Now;
         internal TimeSpan ExpiresAfter { get; }
-        public bool IsValid => !((DateTimeOffset.Now - Created) >= ExpiresAfter);
+        public bool IsValid => !(DateTimeOffset.Now - Created >= ExpiresAfter);
     }
+
     public class SynchronizedCacheItemExpire<T> : SynchronizedCache<CacheItem<T>>
     {
-        
         public string TryGetKey(T value)
         {
             _cacheLock.EnterReadLock();
@@ -40,19 +39,18 @@ namespace Doods.Framework.Std
                 _cacheLock.ExitReadLock();
             }
         }
+
         public new T Read(string key)
         {
-                var item = base.Read(key);
+            var item = base.Read(key);
 
-                if (item.IsValid)
-                    return item.Value;
+            if (item.IsValid)
+                return item.Value;
 
-                base.Delete(key);
-                return default(T);
-
+            Delete(key);
+            return default;
         }
     }
-
 
 
     /// <summary>
@@ -74,7 +72,7 @@ namespace Doods.Framework.Std
         public int Count => _innerCache.Count;
 
 
-        public  string TryGetKey(T value)
+        public string TryGetKey(T value)
         {
             _cacheLock.EnterReadLock();
             try

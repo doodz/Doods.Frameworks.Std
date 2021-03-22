@@ -18,7 +18,7 @@ namespace Doods.Framework.Ssh.Std.Serializers
             new SshToBlockdeviceBeanConverter(),
             new SshToAptListConverter(),
             new SshToSimpleStringConverter(),
-            new SshToMemoryUsageConverter(), 
+            new SshToMemoryUsageConverter(),
             new SshToLastloginConverter(),
             new SshToProcessConverter()
         }; //TODO

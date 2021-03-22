@@ -6,7 +6,6 @@ namespace Doods.Framework.Ssh.Std.Queries.GroupedQueries
 {
     public class VcgencmdQuery : GenericQuery<VcgencmdBean>
     {
-
         public int FREQ_ARM = 0;
         public int FREQ_CORE = 1;
 
@@ -17,17 +16,14 @@ namespace Doods.Framework.Ssh.Std.Queries.GroupedQueries
 
         protected override VcgencmdBean PaseResult(string result)
         {
-
             if (!IsValidVcgencmdPath(result))
             {
                 if (CmdString == "vcgencmd")
                     CmdString = "/usr/bin/vcgencmd";
-                else if(CmdString == "/usr/bin/vcgencmd")
+                else if (CmdString == "/usr/bin/vcgencmd")
                     CmdString = "/opt/vc/bin/vcgencmd";
                 else
-                {
                     return CreateVcgencmdBean(result);
-                }
 
                 return Run();
             }
@@ -43,7 +39,7 @@ namespace Doods.Framework.Ssh.Std.Queries.GroupedQueries
 
         private VcgencmdBean CreateVcgencmdBean(string result)
         {
-           var bean = new VcgencmdBean();
+            var bean = new VcgencmdBean();
             bean.ArmFrequency = new FreqQuery(Client, CmdString, FREQ_ARM).Run();
             bean.CoreFrequency = new FreqQuery(Client, CmdString, FREQ_CORE).Run();
             bean.CoreVolts = new VoltsQuery(Client, CmdString).Run();

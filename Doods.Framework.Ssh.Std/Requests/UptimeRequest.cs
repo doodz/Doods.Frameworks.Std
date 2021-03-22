@@ -6,15 +6,21 @@ using Doods.Framework.Ssh.Std.Serializers;
 namespace Doods.Framework.Ssh.Std.Requests
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <example>
-    ///  cat /proc/uptime
-    ///  1106378.63 4430593.31
+    ///     cat /proc/uptime
+    ///     1106378.63 4430593.31
     /// </example>
     public class UptimeRequest : SshRequestBase
     {
-       
+        public const string RequestString = "cat /proc/uptime";
+
+        public UptimeRequest() : base(RequestString)
+        {
+            _SshSerializer = new SshSerializer(new SshSerializerSettings
+                {Converters = new List<ISshConverter> {new UptimeRequestConverter()}});
+        }
+
         private class UptimeRequestConverter : ISshConverter
         {
             public bool CanConvert(Type objectType)
@@ -32,7 +38,7 @@ namespace Doods.Framework.Ssh.Std.Requests
                 var result = FormatUptime(reader);
                 if (objectType == typeof(double)) return result;
 
-                var timeSpan= TimeSpan.FromSeconds(result);
+                var timeSpan = TimeSpan.FromSeconds(result);
                 if (objectType == typeof(TimeSpan))
                     return timeSpan;
 
@@ -42,7 +48,7 @@ namespace Doods.Framework.Ssh.Std.Requests
 
             private double FormatUptime(string output)
             {
-                var lines = output.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                var lines = output.Split(new[] {"\r\n", "\n"}, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var line in lines)
                 {
                     var split = line.Split(' ');
@@ -54,24 +60,12 @@ namespace Doods.Framework.Ssh.Std.Requests
                         }
                         catch (FormatException)
                         {
-                           
                         }
                     }
-                    else
-                    {
-                       
-                    }
                 }
-              
+
                 return 0D;
             }
-
         }
-        public const string RequestString = "cat /proc/uptime";
-        public UptimeRequest() : base(RequestString)
-        {
-            _SshSerializer = new SshSerializer(new SshSerializerSettings() { Converters = new List<ISshConverter>() { new UptimeRequestConverter() } });
-        }
-
     }
 }

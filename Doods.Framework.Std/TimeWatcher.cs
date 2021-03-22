@@ -1,16 +1,13 @@
-﻿using Doods.Framework.Std.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Doods.Framework.Std.Extensions;
 
 namespace Doods.Framework.Std
 {
-
-
-
     public class TimeWatcher : ITimeWatcher, IDisposable
     {
         private readonly Dictionary<string, TimeDescription> _cache;
@@ -48,7 +45,6 @@ namespace Doods.Framework.Std
             _count = 0;
         }
 
-      
 
         public IWatcher StartWatcher(string name, bool telemetry)
         {
@@ -76,7 +72,8 @@ namespace Doods.Framework.Std
             measures = measures ?? new Dictionary<string, double>();
             measures.Add("ms", time.Watcher.ElapsedMilliseconds);
 
-            var value = new TimeDescription(time.Name, time.Key, time.Telemetry, time.Debug, time.Watcher, time.Level, properties, measures);
+            var value = new TimeDescription(time.Name, time.Key, time.Telemetry, time.Debug, time.Watcher, time.Level,
+                properties, measures);
 
             _timeTracer?.Log($"{value.FormatLevel()}{key.Split(':')[0]}: {value.Format()}");
 
@@ -151,7 +148,8 @@ namespace Doods.Framework.Std
 
         private class TimeDescription : IWatcherDescriptor
         {
-            public TimeDescription(string name, string key, bool telemetry, bool debug, Stopwatch watcher, int level, Dictionary<string, string> properties = null, Dictionary<string, double> measures = null)
+            public TimeDescription(string name, string key, bool telemetry, bool debug, Stopwatch watcher, int level,
+                Dictionary<string, string> properties = null, Dictionary<string, double> measures = null)
             {
                 Name = name;
                 Key = key;
@@ -184,15 +182,9 @@ namespace Doods.Framework.Std
             {
                 var r = new List<string>(Properties?.Count ?? 0 + Measures?.Count ?? 0);
 
-                if (Properties.IsNotEmpty())
-                {
-                    r.AddRange(Properties.Select(d => $"{d.Key}={d.Value}"));
-                }
+                if (Properties.IsNotEmpty()) r.AddRange(Properties.Select(d => $"{d.Key}={d.Value}"));
 
-                if (Measures.IsNotEmpty())
-                {
-                    r.AddRange(Measures.Select(d => $"{d.Key}={d.Value}"));
-                }
+                if (Measures.IsNotEmpty()) r.AddRange(Measures.Select(d => $"{d.Key}={d.Value}"));
 
                 return r.Join(", ");
             }
@@ -215,6 +207,4 @@ namespace Doods.Framework.Std
             }
         }
     }
-
-   
 }

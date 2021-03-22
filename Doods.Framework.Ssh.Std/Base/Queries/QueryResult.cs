@@ -2,6 +2,10 @@
 {
     public class QueryResult<T>
     {
+        internal QueryResult()
+        {
+        }
+
         public T Result { get; set; }
         public string Error { get; set; }
 
@@ -11,11 +15,5 @@
         public int ExitStatus { get; set; }
 
         public bool HaveError => !string.IsNullOrEmpty(Error);
-
-        internal QueryResult()
-        {
-            
-        }
-
     }
 }

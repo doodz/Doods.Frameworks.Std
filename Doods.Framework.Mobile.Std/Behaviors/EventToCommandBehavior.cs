@@ -11,13 +11,13 @@ namespace Doods.Framework.Mobile.Std.Behaviors
             typeof(string), typeof(EventToCommandBehavior), null, propertyChanged: OnEventNameChanged);
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(EventToCommandBehavior), null);
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(EventToCommandBehavior));
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(EventToCommandBehavior), null);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(EventToCommandBehavior));
 
         public static readonly BindableProperty InputConverterProperty = BindableProperty.Create(nameof(Converter),
-            typeof(IValueConverter), typeof(EventToCommandBehavior), null);
+            typeof(IValueConverter), typeof(EventToCommandBehavior));
 
         private Delegate _eventHandler;
 

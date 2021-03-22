@@ -1,11 +1,10 @@
 ﻿namespace Doods.Framework.Ssh.Std
 {
     /// <summary>
-    /// https://www.novell.com/documentation/extend5/Docs/help/Composer/books/TelnetAppendixB.html
+    ///     https://www.novell.com/documentation/extend5/Docs/help/Composer/books/TelnetAppendixB.html
     /// </summary>
     public class KeyboardKeys
     {
-
         public static string Arrow_Down = "\u001b[B";
         public static string Arrow_Left = "\u001b[D";
         public static string Arrow_Right = "\u001b[C";
@@ -41,7 +40,7 @@
         public static string one = "\u001bOq";
         public static string two = "\u001bOr";
         public static string three = "\u001bOs";
-        public static string  four= "\u001bOt";
+        public static string four = "\u001bOt";
         public static string five = "\u001bOu";
         public static string six = "\u001bOv";
         public static string seven = "\u001bOw";
@@ -50,7 +49,7 @@
         public static string Minus = "\u001bOm";
         public static string Comma = "\u001bOl";
         public static string Period = "\u001bOn";
-        public static string Enter = "\r";//"\u001bOM";
+        public static string Enter = "\r"; //"\u001bOM";
         public static string Do = "\u001b[29~";
         public static string Find = "\u001b[1~";
         public static string Help = "\u001b[28~";
@@ -61,7 +60,5 @@
         public static string PrevScn = "\u001b[5~";
         public static string Remove = "\u001b[3~";
         public static string Select = "\u001b[44~";
-
-
     }
 }

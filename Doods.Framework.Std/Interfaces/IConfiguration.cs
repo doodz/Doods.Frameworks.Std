@@ -12,6 +12,5 @@ namespace Doods.Framework.Std
         string AdsKey { get; }
         string RewardedVideoKey { get; }
         void LoadConfiguration(XmlReader xmlContent);
-
     }
 }

@@ -16,12 +16,13 @@ namespace Doods.Framework.Mobile.Std.Config
     {
         protected override void Load(ContainerBuilder builder)
         {
-            
             builder.RegisterType<MyDeviceInfo>().As<IDeviceInfo>().SingleInstance();
             builder.RegisterType<Configuration>().As<IConfiguration>().SingleInstance();
             builder.RegisterType<TelemetryService>().As<ITelemetryService>().SingleInstance();
-            builder.RegisterType<ViewNavigationService>().Keyed<INavigationService>(NavigationServiceType.ViewNavigation).SingleInstance();
-            builder.RegisterType<ShellNavigationService>().Keyed<INavigationService>(NavigationServiceType.ShellNavigation).SingleInstance();
+            builder.RegisterType<ViewNavigationService>()
+                .Keyed<INavigationService>(NavigationServiceType.ViewNavigation).SingleInstance();
+            builder.RegisterType<ShellNavigationService>()
+                .Keyed<INavigationService>(NavigationServiceType.ShellNavigation).SingleInstance();
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
         }
     }

@@ -37,6 +37,5 @@ namespace Doods.Framework.Ssh.Std.Interfaces
         bool TestConnection(IConnection connection, bool throwException);
 
         ScpClient GetScpClient();
-        
     }
 }

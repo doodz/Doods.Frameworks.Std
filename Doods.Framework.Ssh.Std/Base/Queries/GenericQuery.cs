@@ -1,8 +1,8 @@
-﻿using Doods.Framework.Ssh.Std.Interfaces;
-using Renci.SshNet;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Doods.Framework.Ssh.Std.Interfaces;
+using Renci.SshNet;
 
 namespace Doods.Framework.Ssh.Std.Base.Queries
 {
@@ -17,10 +17,10 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
     public class GenericQuery<T>
     {
         protected readonly IClientSsh Client;
+        private string _resultStr;
+        private QueryState _state;
         protected string CmdString;
         protected SshCommand Sshcmd;
-        private QueryState _state;
-        private string _resultStr;
 
         public GenericQuery(IClientSsh client)
         {
@@ -37,9 +37,10 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
         {
             if (!Client.IsConnected())
             {
-                Client.Logger.Info($"Client not connected, Connect.");
+                Client.Logger.Info("Client not connected, Connect.");
                 Client.Connect();
             }
+
             Sshcmd = Client.Client.CreateCommand(CmdString);
 
 
@@ -50,9 +51,7 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
 
 
                 if (!string.IsNullOrEmpty(Sshcmd.Error))
-                {
                     Client.Logger.Info($"Running command ({CmdString}) Error : {Sshcmd.Error}.");
-                }
 
                 Client.Logger.Info($"Return Value from command : {_resultStr}.");
                 _state = QueryState.CommandSent;
@@ -82,7 +81,7 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
         }
 
         /// <summary>
-        /// Create the command, execute it at the client level and parse the result.
+        ///     Create the command, execute it at the client level and parse the result.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -98,7 +97,7 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
         }
 
         /// <summary>
-        /// Create the command end execute it at the client level.
+        ///     Create the command end execute it at the client level.
         /// </summary>
         /// <param name="token"></param>
         /// <returns>Result from client in string.</returns>
@@ -108,13 +107,14 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
             {
                 await Client.ReadLock.WaitAsync(token);
                 if (token.IsCancellationRequested)
-                    return await Task.FromResult<string>(default(string));
+                    return await Task.FromResult(default(string));
 
                 if (!Client.IsConnected())
                 {
                     Client.Logger.Info("Client not connected, ConnectAsync.");
                     var res = await Client.ConnectAsync();
                 }
+
                 Client.Logger.Info($"Creta command async : {CmdString}.");
                 //TODO Doods : SshConnectionException
                 Sshcmd = Client.Client.CreateCommand(CmdString);
@@ -132,11 +132,12 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
             {
                 Client.ReadLock.Release();
             }
+
             return _resultStr;
         }
 
         /// <summary>
-        /// Parse the result from client 
+        ///     Parse the result from client
         /// </summary>
         /// <param name="result"></param>
         /// <param name="token"></param>
@@ -144,7 +145,7 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
         public async Task<T> PaseResultAsync(CancellationToken token)
         {
             if (token.IsCancellationRequested)
-                return await Task.FromResult<T>(default(T));
+                return await Task.FromResult(default(T));
             //using (CancellationTokenSource.CreateLinkedTokenSource(token))
             //{
             var res = await Task.Run(() => PaseResult(_resultStr), token);
@@ -155,7 +156,7 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
 
         protected virtual T PaseResult(string result)
         {
-            return default(T);
+            return default;
         }
     }
 }

@@ -11,5 +11,4 @@ namespace Doods.Framework.ApiClientBase.Std.Interfaces
         Credentials Credentials { get; }
         ConnectionType ConnectionType { get; }
     }
-
 }

@@ -1,5 +1,5 @@
-﻿using Doods.Framework.Mobile.Std.Enum;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using Doods.Framework.Mobile.Std.Enum;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.controls

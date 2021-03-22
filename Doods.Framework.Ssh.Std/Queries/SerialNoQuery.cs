@@ -1,21 +1,20 @@
-﻿using Doods.Framework.Ssh.Std.Base.Queries;
+﻿using System;
+using Doods.Framework.Ssh.Std.Base.Queries;
 using Doods.Framework.Ssh.Std.Interfaces;
-using System;
 
 namespace Doods.Framework.Ssh.Std.Queries
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <example>
-    ///  cat /proc/cpuinfo | grep Serial
-    ///  Serial          : 00000000ada830b4
+    ///     cat /proc/cpuinfo | grep Serial
+    ///     Serial          : 00000000ada830b4
     /// </example>
     public class SerialNoQuery : GenericQuery<string>
     {
+        private readonly string CAT_PROC_CPUINFO_GREP_SERIAL = "cat /proc/cpuinfo | grep Serial";
+        private readonly string N_A = "n/a";
 
-        private string CAT_PROC_CPUINFO_GREP_SERIAL = "cat /proc/cpuinfo | grep Serial";
-        private string N_A = "n/a";
         public SerialNoQuery(IClientSsh client) : base(client)
         {
             CmdString = CAT_PROC_CPUINFO_GREP_SERIAL;
@@ -36,10 +35,9 @@ namespace Doods.Framework.Ssh.Std.Queries
             }
 
             Client.Logger.Error(
-                 $"Could not query cpu serial number. Expected another output of '{CAT_PROC_CPUINFO_GREP_SERIAL}'.");
+                $"Could not query cpu serial number. Expected another output of '{CAT_PROC_CPUINFO_GREP_SERIAL}'.");
             Client.Logger.Error($"Output of '{CAT_PROC_CPUINFO_GREP_SERIAL}': {Environment.NewLine}{output}");
             return N_A;
-
         }
     }
 }

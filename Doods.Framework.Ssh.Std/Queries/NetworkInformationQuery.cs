@@ -15,8 +15,7 @@ namespace Doods.Framework.Ssh.Std.Queries
 
         private IEnumerable<NetworkInterfaceInformationBean> GetInterfeces(IEnumerable<string> interfaces)
         {
-
-           var interfacesInfo = new List<NetworkInterfaceInformationBean>();
+            var interfacesInfo = new List<NetworkInterfaceInformationBean>();
             // 1. find all network interfaces (excluding loopback interface) and
             // check carrier
             //var interfaces = new InterfaceQuery(Client).Run();
@@ -32,26 +31,21 @@ namespace Doods.Framework.Ssh.Std.Queries
                 // check carrier
                 interfacesInfo.Add(interfaceInfo);
             }
+
             var wirelessInterfaces = new List<NetworkInterfaceInformationBean>();
             // 2. for every interface with carrier check ip adress
             foreach (var interfaceBean in interfacesInfo)
-            {
                 if (interfaceBean.HasCarrier)
                 {
                     interfaceBean.IpAdress = new IpAddressQuery(Client, interfaceBean.Name).Run();
                     // check if interface is wireless (interface name starts with "wlan")
                     if (interfaceBean.Name.StartsWith("wlan"))
-                    {
                         // add to wireless interfaces list
                         wirelessInterfaces.Add(interfaceBean);
-                    }
                 }
-            }
+
             // 3. query signal level and link status of wireless interfaces
-            if (wirelessInterfaces.Any())
-            {
-                new WlanInfoQuery(Client, wirelessInterfaces).Run();
-            }
+            if (wirelessInterfaces.Any()) new WlanInfoQuery(Client, wirelessInterfaces).Run();
             return interfacesInfo;
         }
 
@@ -59,10 +53,11 @@ namespace Doods.Framework.Ssh.Std.Queries
         {
             return new CheckCarrierQuery(Client, interfaceName).Run();
         }
+
         protected override IEnumerable<NetworkInterfaceInformationBean> PaseResult(string result)
         {
-           
-            var res = result.Split('\n').Where(r => !r.StartsWith("lo") && !string.IsNullOrWhiteSpace(r) && !string.IsNullOrEmpty(r));
+            var res = result.Split('\n').Where(r =>
+                !r.StartsWith("lo") && !string.IsNullOrWhiteSpace(r) && !string.IsNullOrEmpty(r));
             return GetInterfeces(res);
         }
     }

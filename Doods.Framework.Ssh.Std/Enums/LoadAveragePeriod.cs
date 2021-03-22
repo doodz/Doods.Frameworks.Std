@@ -2,6 +2,8 @@
 {
     public enum LoadAveragePeriod
     {
-        OneMinute, FiveMinutes, FifteenMinutes
+        OneMinute,
+        FiveMinutes,
+        FifteenMinutes
     }
 }

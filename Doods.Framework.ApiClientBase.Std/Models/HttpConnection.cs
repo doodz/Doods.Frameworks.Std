@@ -2,9 +2,9 @@
 
 namespace Doods.Framework.ApiClientBase.Std.Models
 {
-    public class HttpConnection: ConnectionBase
+    public class HttpConnection : ConnectionBase
     {
-        public HttpConnection(string host, int port) : base(host, port,new Credentials())
+        public HttpConnection(string host, int port) : base(host, port, new Credentials())
         {
             ConnectionType = ConnectionType.Http;
         }

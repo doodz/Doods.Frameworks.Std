@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Controls
 {

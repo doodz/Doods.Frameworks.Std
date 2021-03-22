@@ -6,18 +6,19 @@ namespace Doods.Framework.Mobile.Ssh.Std.Models
 {
     public class MemoryUsage : NotifyPropertyChangedBase
     {
+        private string _errorMessage;
+        private Dictionary<string, long> _memoryDataValues;
+        private float _percentageUsed;
+        private MemoryBean _totalFree;
         private MemoryBean _totalMemory;
         private MemoryBean _totalUsed;
-        private MemoryBean _totalFree;
-        private float _percentageUsed;
-        private string _errorMessage;
-        private  Dictionary<string, long> _memoryDataValues;
 
         public Dictionary<string, long> MemoryDataValues
         {
             get => _memoryDataValues;
             set => SetProperty(ref _memoryDataValues, value);
         }
+
         public MemoryBean TotalMemory
         {
             get => _totalMemory;

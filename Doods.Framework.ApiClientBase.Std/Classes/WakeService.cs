@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
+﻿using System.Net;
 using System.Threading.Tasks;
 
 namespace Doods.Framework.ApiClientBase.Std.Classes
@@ -12,6 +10,4 @@ namespace Doods.Framework.ApiClientBase.Std.Classes
             return IPAddress.Broadcast.SendWolAsync(mac, 40000);
         }
     }
-
-  
 }

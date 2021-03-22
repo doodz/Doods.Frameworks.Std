@@ -1,6 +1,6 @@
-﻿using Doods.Framework.Std;
+﻿using System.Threading.Tasks;
+using Doods.Framework.Std;
 using SQLite;
-using System.Threading.Tasks;
 
 namespace Doods.Framework.Repository.Std.Interfaces
 {

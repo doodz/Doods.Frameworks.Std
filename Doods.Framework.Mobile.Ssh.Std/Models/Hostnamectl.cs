@@ -14,23 +14,20 @@ using Doods.Framework.Std;
 
 namespace Doods.Framework.Mobile.Ssh.Std.Models
 {
-    public class Hostnamectl: NotifyPropertyChangedBase
+    public class Hostnamectl : NotifyPropertyChangedBase
     {
-        private string _staticHostname;
-        private string _iconName;
-                       
-        private string _chassis;
-                       
-        private string _machineId;
-        private string _bootId;
-        private string _virtualization;
-                       
-        private string _operatingSystem;
-        private string _kernel;
         private string _architecture;
+        private string _bootId;
 
+        private string _chassis;
+        private string _iconName;
+        private string _kernel;
 
+        private string _machineId;
 
+        private string _operatingSystem;
+        private string _staticHostname;
+        private string _virtualization;
 
 
         public string StaticHostname
@@ -38,6 +35,7 @@ namespace Doods.Framework.Mobile.Ssh.Std.Models
             get => _staticHostname;
             internal set => SetProperty(ref _staticHostname, value);
         }
+
         public string IconName
         {
             get => _iconName;
@@ -56,11 +54,13 @@ namespace Doods.Framework.Mobile.Ssh.Std.Models
             get => _machineId;
             internal set => SetProperty(ref _machineId, value);
         }
+
         public string BootID
         {
             get => _bootId;
             internal set => SetProperty(ref _bootId, value);
         }
+
         public string Virtualization
         {
             get => _virtualization;
@@ -72,16 +72,17 @@ namespace Doods.Framework.Mobile.Ssh.Std.Models
             get => _operatingSystem;
             internal set => SetProperty(ref _operatingSystem, value);
         }
+
         public string Kernel
         {
             get => _kernel;
             internal set => SetProperty(ref _kernel, value);
         }
+
         public string Architecture
         {
             get => _architecture;
             internal set => SetProperty(ref _architecture, value);
         }
-
     }
 }

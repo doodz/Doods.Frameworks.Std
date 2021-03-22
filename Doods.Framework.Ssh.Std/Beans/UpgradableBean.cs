@@ -3,21 +3,22 @@ using Doods.Framework.Std;
 
 namespace Doods.Framework.Ssh.Std.Beans
 {
-
     public class UpgradableBeanWhapper : NotifyPropertyChangedBase
     {
         private ICollection<UpgradableBean> _upgradableBean;
-        public ICollection<UpgradableBean> UpgradableBean
-        {
-            get => _upgradableBean;
-            internal set => SetProperty(ref _upgradableBean, value);
-        }
+
         public UpgradableBeanWhapper(ICollection<UpgradableBean> upgradableBean)
         {
             UpgradableBean = upgradableBean;
         }
 
+        public ICollection<UpgradableBean> UpgradableBean
+        {
+            get => _upgradableBean;
+            internal set => SetProperty(ref _upgradableBean, value);
+        }
     }
+
     public class UpgradableBean
     {
         public string Name { get; set; }

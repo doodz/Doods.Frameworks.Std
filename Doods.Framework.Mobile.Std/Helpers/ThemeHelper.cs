@@ -6,14 +6,14 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Helpers
 {
+   
     public static class ThemeHelper
     {
-
-
         public static Theme CurrentTheme
         {
-            get => (Theme)Preferences.Get(nameof(CurrentTheme), HasDefaultThemeOption ? (int)Theme.Default : (int)Theme.Light);
-            set => Preferences.Set(nameof(CurrentTheme), (int)value);
+            get => (Theme) Preferences.Get(nameof(CurrentTheme),
+                HasDefaultThemeOption ? (int) Theme.Default : (int) Theme.Light);
+            set => Preferences.Set(nameof(CurrentTheme), (int) value);
         }
 
         public static bool HasDefaultThemeOption
@@ -47,7 +47,7 @@ namespace Doods.Framework.Mobile.Std.Helpers
             {
                 Theme.Light => new LightTheme(),
                 Theme.Dark => new DarkTheme(),
-                _ => new LightTheme(),
+                _ => new LightTheme()
             };
             ManuallyCopyThemes(newTheme, applicationResourceDictionary);
 
@@ -59,13 +59,9 @@ namespace Doods.Framework.Mobile.Std.Helpers
             //environment?.SetStatusBarColor(ColorConverters.FromHex(background.ToHex()), false);
         }
 
-        static void ManuallyCopyThemes(ResourceDictionary fromResource, ResourceDictionary toResource)
+        private static void ManuallyCopyThemes(ResourceDictionary fromResource, ResourceDictionary toResource)
         {
-            foreach (var item in fromResource.Keys)
-            {
-                toResource[item] = fromResource[item];
-            }
+            foreach (var item in fromResource.Keys) toResource[item] = fromResource[item];
         }
-
     }
 }

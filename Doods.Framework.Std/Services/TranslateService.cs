@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Net.Mime;
-using System.Text;
+using System.Resources;
 
 namespace Doods.Framework.Std.Services
 {
     public class TranslateService : ITranslateService
     {
-        private System.Resources.ResourceManager _resourceManager;
-        public TranslateService(System.Resources.ResourceManager resourceManager)
+        private readonly ResourceManager _resourceManager;
+
+        public TranslateService(ResourceManager resourceManager)
         {
             _resourceManager = resourceManager;
-            
-           
         }
 
         public string Translate(string resourceName)
@@ -22,13 +19,12 @@ namespace Doods.Framework.Std.Services
         }
 
 
-        public string Translate(string resourceName, System.Resources.ResourceManager resourceManager)
+        public string Translate(string resourceName, ResourceManager resourceManager)
         {
             return Translate(resourceName, resourceManager, CultureInfo.CurrentCulture);
-
         }
 
-        public string Translate(string resourceName, System.Resources.ResourceManager resourceManager,CultureInfo culture)
+        public string Translate(string resourceName, ResourceManager resourceManager, CultureInfo culture)
         {
             var translation = resourceManager.GetString(resourceName, culture);
 
@@ -37,11 +33,12 @@ namespace Doods.Framework.Std.Services
             {
 #if DEBUG
                 throw new ArgumentException(
-                    $"Key '{resourceName}' was not found in resources '{ resourceManager.GetType().Assembly}' for culture '{culture.Name}'.");
+                    $"Key '{resourceName}' was not found in resources '{resourceManager.GetType().Assembly}' for culture '{culture.Name}'.");
 #else
                 translation = resourceName; // HACK: returns the key, which GETS DISPLAYED TO THE USER
 #endif
             }
+
             return translation;
         }
     }

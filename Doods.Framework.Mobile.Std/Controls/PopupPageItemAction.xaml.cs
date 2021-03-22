@@ -27,7 +27,7 @@ namespace Doods.Framework.Mobile.Std.controls
         public T SelectedItems
         {
             get => _selectedItems;
-            set => SetProperty(ref _selectedItems,value);
+            set => SetProperty(ref _selectedItems, value);
         }
     }
 

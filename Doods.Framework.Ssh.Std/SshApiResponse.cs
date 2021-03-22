@@ -1,8 +1,8 @@
-﻿using Doods.Framework.Ssh.Std.Enums;
+﻿using System;
+using System.Diagnostics;
+using Doods.Framework.Ssh.Std.Enums;
 using Doods.Framework.Ssh.Std.Interfaces;
 using Renci.SshNet;
-using System;
-using System.Diagnostics;
 
 namespace Doods.Framework.Ssh.Std
 {
@@ -14,6 +14,11 @@ namespace Doods.Framework.Ssh.Std
     [DebuggerDisplay("{DebuggerDisplay()}")]
     public abstract class SshResponseBase
     {
+        public SshResponseBase()
+        {
+            ResponseStatus = ResponseStatus.None;
+        }
+
         public ResponseStatus ResponseStatus { get; set; }
         public long ContentLength { get; set; }
         public string Content { get; set; }
@@ -22,11 +27,6 @@ namespace Doods.Framework.Ssh.Std
         public string ErrorMessage { get; set; }
         public int ExitStatus { get; set; }
         public ISshRequest Request { get; set; }
-
-        public SshResponseBase()
-        {
-            ResponseStatus = ResponseStatus.None;
-        }
 
         protected string DebuggerDisplay()
         {

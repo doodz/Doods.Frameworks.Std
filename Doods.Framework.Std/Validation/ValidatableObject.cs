@@ -6,9 +6,6 @@ namespace Doods.Framework.Std.Validation
 {
     public class ValidatableObject<T> : NotifyPropertyChangedBase, IValidity
     {
-
-        public event EventHandler StatusChanged;
-
         private ICollection<string> _errors = new List<string>();
         private T _innerValue;
         private bool _isValid = true;
@@ -40,17 +37,19 @@ namespace Doods.Framework.Std.Validation
             }
         }
 
+        public ValidatableObjectStatus Status
+        {
+            get => _status;
+            set => SetProperty(ref _status, value);
+        }
+
         public bool IsValid
         {
             get => _isValid;
             set => SetProperty(ref _isValid, value);
         }
 
-        public ValidatableObjectStatus Status
-        {
-            get => _status;
-            set => SetProperty(ref _status, value);
-        }
+        public event EventHandler StatusChanged;
 
         public bool Validate()
         {

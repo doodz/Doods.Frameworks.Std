@@ -16,7 +16,7 @@ namespace Doods.Framework.Ssh.Std.Converters
         public override object Read(string content, Type objectType)
         {
             var lst = new List<LastloginBean>();
-            var lines = content.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = content.Split(new[] {"\r\n", "\n"}, StringSplitOptions.RemoveEmptyEntries);
 
 
             var pattern = @"\s{2,}|\s-\s";

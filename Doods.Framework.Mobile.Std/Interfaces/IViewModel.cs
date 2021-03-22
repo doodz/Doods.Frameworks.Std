@@ -1,5 +1,5 @@
-﻿using Doods.Framework.Mobile.Std.Mvvm;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using Doods.Framework.Mobile.Std.Mvvm;
 
 namespace Doods.Framework.Mobile.Std.Interfaces
 {

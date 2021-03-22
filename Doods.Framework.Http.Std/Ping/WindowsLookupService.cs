@@ -18,7 +18,7 @@ namespace Doods.Framework.Http.Std.Ping
 
         // based on https://github.com/nikeee/wake-on-lan/blob/5bdcecc/src/WakeOnLan/ArpRequest.cs
         /// <summary>
-        /// Call ApHlpApi.SendARP to lookup the mac address on windows-based systems.
+        ///     Call ApHlpApi.SendARP to lookup the mac address on windows-based systems.
         /// </summary>
         /// <exception cref="Win32Exception">If IpHlpApi.SendARP returns non-zero.</exception>
         public static PhysicalAddress Lookup(IPAddress ip)
@@ -28,7 +28,7 @@ namespace Doods.Framework.Http.Std.Ping
             if (ip == null)
                 throw new ArgumentNullException(nameof(ip));
 
-            int destIp = BitConverter.ToInt32(ip.GetAddressBytes(), 0);
+            var destIp = BitConverter.ToInt32(ip.GetAddressBytes(), 0);
 
             var addr = new byte[6];
             var len = addr.Length;
@@ -47,14 +47,17 @@ namespace Doods.Framework.Http.Std.Ping
 
             [DllImport(IphlpApi, ExactSpelling = true)]
             [SecurityCritical]
-            internal static extern int SendARP(int destinationIp, int sourceIp, byte[] macAddress, ref int physicalAddrLength);
+            internal static extern int SendARP(int destinationIp, int sourceIp, byte[] macAddress,
+                ref int physicalAddrLength);
         }
     }
 
     internal static class LinuxLookupService
     {
         private const string ArpTablePath = "/proc/net/arp";
-        private static readonly Regex lineRegex = new Regex(@"^((?:[0-9]{1,3}\.){3}[0-9]{1,3})(?:\s+\w+){2}\s+((?:[0-9A-Fa-f]{2}[:-]){5}(?:[0-9A-Fa-f]{2}))");
+
+        private static readonly Regex lineRegex =
+            new Regex(@"^((?:[0-9]{1,3}\.){3}[0-9]{1,3})(?:\s+\w+){2}\s+((?:[0-9A-Fa-f]{2}[:-]){5}(?:[0-9A-Fa-f]{2}))");
 
         public static bool IsSupported => PlatformHelpers.IsLinux() && File.Exists(ArpTablePath);
 
@@ -64,7 +67,7 @@ namespace Doods.Framework.Http.Std.Ping
                 throw new PlatformNotSupportedException();
             using (var ping = new System.Net.NetworkInformation.Ping())
             {
-                var reply = await ping.SendPingAsync(ip, (int)timeout.TotalMilliseconds).ConfigureAwait(false);
+                var reply = await ping.SendPingAsync(ip, (int) timeout.TotalMilliseconds).ConfigureAwait(false);
                 return await TryReadFromArpTable(ip).ConfigureAwait(false);
             }
         }
@@ -74,7 +77,9 @@ namespace Doods.Framework.Http.Std.Ping
             if (!IsSupported)
                 throw new PlatformNotSupportedException();
             using (var arpFile = new FileStream(ArpTablePath, FileMode.Open, FileAccess.Read))
+            {
                 return await ParseProcNetArp(arpFile, ip).ConfigureAwait(false);
+            }
         }
 
         private static async Task<PhysicalAddress> ParseProcNetArp(Stream content, IPAddress ip)

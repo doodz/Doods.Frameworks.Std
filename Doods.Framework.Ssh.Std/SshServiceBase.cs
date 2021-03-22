@@ -15,22 +15,25 @@ using Doods.Framework.Ssh.Std.Interfaces;
 using Doods.Framework.Std;
 using Renci.SshNet;
 using Renci.SshNet.Common;
+using Timer = System.Timers.Timer;
 
 namespace Doods.Framework.Ssh.Std
 {
-    public interface ISubject<T>: IObservable<T>
+    public interface ISubject<T> : IObservable<T>
     {
         void OnNext(T tempData);
     }
+
     //https://github.com/SuperJMN/UniversalSSH/blob/master/UwpApp/MainViewModel.cs
     public class Subject<T> : ISubject<T>
     {
-        List<IObserver<T>> observers;
+        private readonly List<IObserver<T>> observers;
 
         public Subject()
         {
             observers = new List<IObserver<T>>();
         }
+
         public IDisposable Subscribe(IObserver<T> observer)
         {
             if (!observers.Contains(observer))
@@ -47,13 +50,13 @@ namespace Doods.Framework.Ssh.Std
 
         private class Unsubscriber<T> : IDisposable
         {
-            private List<IObserver<T>> _observers;
-            private IObserver<T> _observer;
+            private readonly IObserver<T> _observer;
+            private readonly List<IObserver<T>> _observers;
 
             public Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer)
             {
-                this._observers = observers;
-                this._observer = observer;
+                _observers = observers;
+                _observer = observer;
             }
 
             public void Dispose()
@@ -66,10 +69,10 @@ namespace Doods.Framework.Ssh.Std
 
     public class StreamPoller : IDisposable
     {
-        private System.Timers.Timer myTimer;
         private readonly Stream output;
         private readonly ISubject<string> textReceivedSubject = new Subject<string>();
         private readonly IDisposable updater;
+        private Timer myTimer;
 
         public StreamPoller(Stream output)
         {
@@ -78,17 +81,25 @@ namespace Doods.Framework.Ssh.Std
             SetTimer();
         }
 
-        private  void SetTimer()
+        public IObservable<string> TextReceived => textReceivedSubject;
+
+        public void Dispose()
+        {
+            myTimer.Elapsed -= OnTimedEvent;
+            //updater?.Dispose();
+        }
+
+        private void SetTimer()
         {
             // Create a timer with a 1 second interval.
-            myTimer = new System.Timers.Timer(1000);
+            myTimer = new Timer(1000);
             // Hook up the Elapsed event for the timer. 
             myTimer.Elapsed += OnTimedEvent;
             myTimer.AutoReset = true;
             myTimer.Enabled = true;
         }
 
-        private  void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             Read();
         }
@@ -97,20 +108,10 @@ namespace Doods.Framework.Ssh.Std
         {
             var bufflen = output.Length - output.Position;
             var buffer = new byte[bufflen];
-            output.Read(buffer, (int)output.Position, (int)bufflen);
+            output.Read(buffer, (int) output.Position, (int) bufflen);
 
             var str = Encoding.UTF8.GetString(buffer);
-            if (str != string.Empty)
-            {
-                textReceivedSubject.OnNext(str);
-            }
-        }
-
-        public IObservable<string> TextReceived => textReceivedSubject;
-        public void Dispose()
-        {
-            myTimer.Elapsed -= OnTimedEvent;
-            //updater?.Dispose();
+            if (str != string.Empty) textReceivedSubject.OnNext(str);
         }
     }
 
@@ -119,41 +120,50 @@ namespace Doods.Framework.Ssh.Std
     {
         public virtual void OnCompleted()
         {
-            
         }
 
         public virtual void OnError(Exception error)
         {
-           
         }
 
         public virtual void OnNext(string value)
         {
-            
         }
     }
 
-    public class ShellClient : ShellReporter,IDisposable
+    public class ShellClient : ShellReporter, IDisposable
     {
         private readonly SshClient _client;
-        private Shell shell;
-        private StreamPoller outputReader;
-        private readonly ISubject<string> textReceivedSubject = new Subject<string>();
-        private IDisposable textUpdater;
-        private readonly StreamWriter outputStreamWriter;
         private readonly Stream extendedOuput = new PipeStream();
-        private readonly Stream output = new PipeStream();
         private readonly Stream input = new PipeStream();
+        private readonly Stream output = new PipeStream();
+        private readonly StreamWriter outputStreamWriter;
+        private readonly ISubject<string> textReceivedSubject = new Subject<string>();
+        private StreamPoller outputReader;
+        private Shell shell;
+        private IDisposable textUpdater;
 
         public ShellClient(SshClient client)
         {
             _client = client;
-            outputStreamWriter = new StreamWriter(input) { AutoFlush = true };
+            outputStreamWriter = new StreamWriter(input) {AutoFlush = true};
+        }
+
+        public void Dispose()
+        {
+            //client?.Dispose();
+            shell?.Dispose();
+            outputReader?.Dispose();
+            textUpdater?.Dispose();
+            //outputStreamWriter?.Dispose();
+            extendedOuput?.Dispose();
+            output?.Dispose();
+            input?.Dispose();
         }
 
         public void Connect()
         {
-            if(!_client.IsConnected)
+            if (!_client.IsConnected)
                 _client.Connect();
             shell = _client.CreateShell(input, output, extendedOuput);
             shell.Start();
@@ -181,21 +191,7 @@ namespace Doods.Framework.Ssh.Std
             output?.Dispose();
             input?.Dispose();
         }
-
-        public void Dispose()
-        {
-            //client?.Dispose();
-            shell?.Dispose();
-            outputReader?.Dispose();
-            textUpdater?.Dispose();
-            //outputStreamWriter?.Dispose();
-            extendedOuput?.Dispose();
-            output?.Dispose();
-            input?.Dispose();
-        }
     }
-
-
 
 
     public class SshServiceBase : APIServiceBase, IDisposable, IClientSsh
@@ -291,7 +287,7 @@ namespace Doods.Framework.Ssh.Std
             return Client.RunCommand(cmd);
         }
 
-        
+
         public Task<bool> ConnectAsync()
         {
             return Task.Run(Connect).ContinueWith(task => IsConnected());
@@ -326,7 +322,7 @@ namespace Doods.Framework.Ssh.Std
                 catch (Exception ex)
                 {
                     Logger.Debug(ex.Message);
-                   
+
                     throw;
                 }
 
@@ -352,20 +348,16 @@ namespace Doods.Framework.Ssh.Std
             }
         }
 
-       
+
         public Shell CreateShell(Stream imputStream, Stream outputStream, Stream extendedStream)
         {
-
-           
-
             return Client.CreateShell(imputStream, outputStream, extendedStream);
         }
 
         public ShellClient CreateShell()
         {
-          
             //_shell?.Stop();
-            return _shell =new ShellClient(Client);
+            return _shell = new ShellClient(Client);
         }
 
         public ScpClient GetScpClient()
@@ -469,12 +461,11 @@ namespace Doods.Framework.Ssh.Std
                         var byteArray = ms.ToArray();
                         lst.Add(byteArray);
                     }
-                    catch 
+                    catch
                     {
-                      
                     }
-                  
                 }
+
             scp.Dispose();
             return Task.FromResult(lst.AsEnumerable());
         }
@@ -488,20 +479,17 @@ namespace Doods.Framework.Ssh.Std
             {
                 try
                 {
-
                     scp.Download(filePath.Trim(), ms);
                     var byteArray = ms.ToArray();
                     return Task.FromResult(byteArray);
                 }
                 catch
                 {
-
                 }
                 finally
                 {
                     scp.Dispose();
                 }
-              
             }
 
             return Task.FromResult(default(byte[]));

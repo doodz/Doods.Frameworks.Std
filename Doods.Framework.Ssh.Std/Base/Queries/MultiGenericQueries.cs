@@ -1,7 +1,7 @@
-﻿using Doods.Framework.Ssh.Std.Interfaces;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.Ssh.Std.Base.Queries
 {
@@ -25,7 +25,7 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
         public override async Task<T> RunAsync(CancellationToken token)
         {
             if (token.IsCancellationRequested)
-                return await Task.FromResult<T>(default(T));
+                return await Task.FromResult(default(T));
 
             try
             {
@@ -35,7 +35,8 @@ namespace Doods.Framework.Ssh.Std.Base.Queries
                 {
                     var res = await Client.ConnectAsync();
                 }
-                return await Task.FromResult<T>(Action());
+
+                return await Task.FromResult(Action());
             }
             catch (Exception ex)
             {

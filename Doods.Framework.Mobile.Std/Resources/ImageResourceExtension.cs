@@ -12,10 +12,7 @@ namespace Doods.Framework.Mobile.Std.Resources
 
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Source == null)
-            {
-                return null;
-            }
+            if (Source == null) return null;
 
             // Do your translation lookup here, using whatever method you require
             var imageSource = ImageSource.FromResource(Source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);

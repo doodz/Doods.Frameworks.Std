@@ -10,10 +10,8 @@ namespace Doods.Framework.Ssh.Std.Queries
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(sudoPassword))
-            {
                 sb.AppendFormat("echo \"{0}\" | sudo -S /sbin/shutdown -h now", sudoPassword);
-                //TODO : using halte command  
-            }
+            //TODO : using halte command  
         }
 
         protected override bool PaseResult(string result)

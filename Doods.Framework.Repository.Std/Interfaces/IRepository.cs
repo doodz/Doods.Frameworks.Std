@@ -1,8 +1,8 @@
-﻿using Doods.Framework.Repository.Std.Tables;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Doods.Framework.Repository.Std.Tables;
 using Doods.Framework.Std;
 using SQLite;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Doods.Framework.Repository.Std.Interfaces
 {
@@ -12,7 +12,8 @@ namespace Doods.Framework.Repository.Std.Interfaces
 
         Task<int> CountAsync<T>(ITimeWatcher timer, SQLiteAsyncConnection cnt = null) where T : TableBase, new();
 
-        Task<List<T>> GetAllAsync<T>(ITimeWatcher timer, SQLiteAsyncConnection cnt = null, bool cache = false) where T : TableBase, new();
+        Task<List<T>> GetAllAsync<T>(ITimeWatcher timer, SQLiteAsyncConnection cnt = null, bool cache = false)
+            where T : TableBase, new();
 
         Task<T> FindAsync<T>(ITimeWatcher timer, long? id) where T : TableBase, new();
 
@@ -22,7 +23,8 @@ namespace Doods.Framework.Repository.Std.Interfaces
 
         Task DeleteAsync<T>(ITimeWatcher timer, T value) where T : TableBase, new();
 
-        Task DeleteAllIdsAsync<T>(ITimeWatcher timer, IEnumerable<long> ids, SQLiteAsyncConnection cnt = null) where T : TableBase, new();
+        Task DeleteAllIdsAsync<T>(ITimeWatcher timer, IEnumerable<long> ids, SQLiteAsyncConnection cnt = null)
+            where T : TableBase, new();
 
         Task ClearCaches(ITimeWatcher timer);
 

@@ -8,10 +8,7 @@ namespace Doods.Framework.Std.Validation
 
         public bool Check(T value)
         {
-            if (value == null)
-            {
-                return false;
-            }
+            if (value == null) return false;
 
             var str = value as string;
             var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");

@@ -95,7 +95,8 @@ namespace Doods.Framework.Std
         public static IEnumerable<TValue> EnumNotNull<TValue>(params TValue[] items) where TValue : class
         {
             foreach (var i in items)
-                if (i != null) yield return i;
+                if (i != null)
+                    yield return i;
         }
     }
 }

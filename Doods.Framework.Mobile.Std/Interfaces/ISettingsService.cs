@@ -2,11 +2,11 @@
 
 namespace Doods.Framework.Mobile.Std.Interfaces
 {
-
     public interface ISettingsBase
     {
         bool TelemetryIsActive { get; set; }
     }
+
     public interface ISettingsService
     {
         bool GetValueOrDefault(string key, bool defaultValue);

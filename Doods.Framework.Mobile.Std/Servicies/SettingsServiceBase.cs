@@ -1,23 +1,37 @@
-﻿using Doods.Framework.Mobile.Std.Interfaces;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Doods.Framework.Mobile.Std.Interfaces;
 using Xamarin.Forms;
+
 namespace Doods.Framework.Mobile.Std.Servicies
 {
-    public class SettingsServiceBase :ISettingsBase, ISettingsService
+    public class SettingsServiceBase : ISettingsBase, ISettingsService
     {
         public bool TelemetryIsActive { get; set; } = true;
-        public Task AddOrUpdateValue(string key, bool value) => AddOrUpdateValueInternal(key, value);
-        public Task AddOrUpdateValue(string key, string value) => AddOrUpdateValueInternal(key, value);
-        public bool GetValueOrDefault(string key, bool defaultValue) => GetValueOrDefaultInternal(key, defaultValue);
-        public string GetValueOrDefault(string key, string defaultValue) => GetValueOrDefaultInternal(key, defaultValue);
 
-        async Task AddOrUpdateValueInternal<T>(string key, T value)
+        public Task AddOrUpdateValue(string key, bool value)
         {
-            if (value == null)
-            {
-                await Remove(key);
-            }
+            return AddOrUpdateValueInternal(key, value);
+        }
+
+        public Task AddOrUpdateValue(string key, string value)
+        {
+            return AddOrUpdateValueInternal(key, value);
+        }
+
+        public bool GetValueOrDefault(string key, bool defaultValue)
+        {
+            return GetValueOrDefaultInternal(key, defaultValue);
+        }
+
+        public string GetValueOrDefault(string key, string defaultValue)
+        {
+            return GetValueOrDefaultInternal(key, defaultValue);
+        }
+
+        private async Task AddOrUpdateValueInternal<T>(string key, T value)
+        {
+            if (value == null) await Remove(key);
 
             Application.Current.Properties[key] = value;
             try
@@ -30,17 +44,14 @@ namespace Doods.Framework.Mobile.Std.Servicies
             }
         }
 
-        T GetValueOrDefaultInternal<T>(string key, T defaultValue = default(T))
+        private T GetValueOrDefaultInternal<T>(string key, T defaultValue = default)
         {
             object value = null;
-            if (Application.Current.Properties.ContainsKey(key))
-            {
-                value = Application.Current.Properties[key];
-            }
-            return null != value ? (T)value : defaultValue;
+            if (Application.Current.Properties.ContainsKey(key)) value = Application.Current.Properties[key];
+            return null != value ? (T) value : defaultValue;
         }
 
-        async Task Remove(string key)
+        private async Task Remove(string key)
         {
             try
             {

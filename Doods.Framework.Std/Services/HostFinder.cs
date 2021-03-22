@@ -8,24 +8,37 @@ using System.Threading;
 
 namespace Doods.Framework.Std.Services
 {
-
     /// <summary>Provides data for the <see cref="E:HostFinderCompleted"></see> event.</summary>
     public class HostFinderCompletedEventArgs : AsyncCompletedEventArgs
     {
-        internal HostFinderCompletedEventArgs(PingReply reply, Exception error, bool cancelled, object userState) : base(error, cancelled, userState)
+        internal HostFinderCompletedEventArgs(PingReply reply, Exception error, bool cancelled, object userState) :
+            base(error, cancelled, userState)
         {
             Reply = reply;
         }
 
-       /// <summary>Gets an object that contains data that describes an attempt to send an Internet Control Message Protocol (ICMP) echo request message and receive a corresponding ICMP echo reply message.</summary>
-        /// <returns>A <see cref="T:System.Net.NetworkInformation.PingReply"></see> object that describes the results of the ICMP echo request.</returns>
+        /// <summary>
+        ///     Gets an object that contains data that describes an attempt to send an Internet Control Message Protocol
+        ///     (ICMP) echo request message and receive a corresponding ICMP echo reply message.
+        /// </summary>
+        /// <returns>
+        ///     A <see cref="T:System.Net.NetworkInformation.PingReply"></see> object that describes the results of the ICMP
+        ///     echo request.
+        /// </returns>
         public PingReply Reply { get; }
     }
 
-    /// <summary>Represents the method that will handle the <see cref="E:HostFinderCompleted"></see> event of a <see cref="T:HostFinder"></see> object.</summary>
+    /// <summary>
+    ///     Represents the method that will handle the <see cref="E:HostFinderCompleted"></see> event of a
+    ///     <see cref="T:HostFinder"></see> object.
+    /// </summary>
     /// <param name="sender">The source of the <see cref="E:HostFinderCompleted"></see> event.</param>
-    /// <param name="e">A <see cref="T:System.Net.NetworkInformation.PingCompletedEventArgs"></see> object that contains the event data.</param>
+    /// <param name="e">
+    ///     A <see cref="T:System.Net.NetworkInformation.PingCompletedEventArgs"></see> object that contains the
+    ///     event data.
+    /// </param>
     public delegate void HostFinderCompletedEventHandler(object sender, PingCompletedEventArgs e);
+
     public class Host
     {
         public string Ip { get; set; }
@@ -33,13 +46,8 @@ namespace Doods.Framework.Std.Services
         public long RoundtripTime { get; set; }
     }
 
-    public class HostFinder: NotifyPropertyChangedBase
+    public class HostFinder : NotifyPropertyChangedBase
     {
-
-        /// <summary>Occurs when process is completed</summary>
-        /// <returns></returns>
-        public event HostFinderCompletedEventHandler HostFinderCompleted;
-
         private readonly ILogger _logger;
         private int _upCount;
 
@@ -50,6 +58,10 @@ namespace Doods.Framework.Std.Services
 
         public List<Host> ReachableAdress { get; } = new List<Host>();
 
+        /// <summary>Occurs when process is completed</summary>
+        /// <returns></returns>
+        public event HostFinderCompletedEventHandler HostFinderCompleted;
+
         public void SearchHosts()
         {
             _upCount = 0;
@@ -58,7 +70,8 @@ namespace Doods.Framework.Std.Services
             var host = Dns.GetHostEntry(Dns.GetHostName());
             string localIP = null;
             foreach (var ip in host.AddressList)
-                if (ip.AddressFamily == AddressFamily.InterNetwork) localIP = ip.ToString();
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    localIP = ip.ToString();
 
             var ipBase = localIP;
             var ipParts = ipBase.Split('.');
@@ -69,20 +82,19 @@ namespace Doods.Framework.Std.Services
                 var ip = ipBase + i;
                 if (localIP == ip) continue;
                 var p = new Ping();
-                p.PingCompleted += new PingCompletedEventHandler(p_PingCompleted);
+                p.PingCompleted += p_PingCompleted;
                 p.SendAsync(ip, 100, ip);
             }
         }
 
         private void p_PingCompleted(object sender, PingCompletedEventArgs e)
         {
-            var ip = (string)e.UserState;
+            var ip = (string) e.UserState;
             if (e.Reply != null && e.Reply.Status == IPStatus.Success)
             {
                 string name;
                 if (true)
                 {
-
                     try
                     {
                         var hostEntry = Dns.GetHostEntry(ip);
@@ -101,19 +113,15 @@ namespace Doods.Framework.Std.Services
                 }
 
                 Interlocked.Increment(ref _upCount);
-                ReachableAdress.Add(new Host() { Ip = ip, Name = name, RoundtripTime = e.Reply.RoundtripTime });
-                
-               
+                ReachableAdress.Add(new Host {Ip = ip, Name = name, RoundtripTime = e.Reply.RoundtripTime});
             }
             else if (e.Reply == null)
             {
                 _logger.Info($"Pinging {ip} failed. (Null Reply object?)");
             }
-            var notify = (_upCount % 10) == 0;
-            if (notify || ip.EndsWith("254"))
-            {
-                OnPropertyChanged(nameof(ReachableAdress));
-            }
+
+            var notify = _upCount % 10 == 0;
+            if (notify || ip.EndsWith("254")) OnPropertyChanged(nameof(ReachableAdress));
         }
     }
 }

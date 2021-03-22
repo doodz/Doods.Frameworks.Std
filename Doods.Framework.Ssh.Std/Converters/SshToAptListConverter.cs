@@ -9,24 +9,17 @@ namespace Doods.Framework.Ssh.Std.Converters
     public class SshToAptListConverter : SshConverter
     {
         /// <summary>
-        /// Determines whether this instance can convert the specified object type.
+        ///     Determines whether this instance can convert the specified object type.
         /// </summary>
         /// <param name="objectType">Type of the object.</param>
         /// <returns>
-        /// 	<c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
+            if (objectType == typeof(UpgradableBeanWhapper)) return true;
 
-            if (objectType == typeof(UpgradableBeanWhapper))
-            {
-                return true;
-            }
-
-            if (objectType == typeof(IEnumerable<UpgradableBean>))
-            {
-                return true;
-            }
+            if (objectType == typeof(IEnumerable<UpgradableBean>)) return true;
             ;
 
             return objectType == typeof(UpgradableBean);
@@ -59,10 +52,7 @@ namespace Doods.Framework.Ssh.Std.Converters
                 lst.Add(obj);
             }
 
-            if (objectType == typeof(UpgradableBeanWhapper))
-            {
-                return new UpgradableBeanWhapper(lst);
-            }
+            if (objectType == typeof(UpgradableBeanWhapper)) return new UpgradableBeanWhapper(lst);
 
             return lst;
         }

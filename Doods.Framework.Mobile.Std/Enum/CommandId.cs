@@ -1,6 +1,6 @@
 ﻿namespace Doods.Framework.Mobile.Std.Enum
 {
-	//toto
+    //toto
     public enum CommandId
     {
         None,

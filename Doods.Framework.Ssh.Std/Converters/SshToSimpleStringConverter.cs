@@ -8,17 +8,14 @@ namespace Doods.Framework.Ssh.Std.Converters
     {
         public override bool CanConvert(Type objectType)
         {
-            if (objectType == typeof(IEnumerable<string>))
-            {
-                return true;
-            }
+            if (objectType == typeof(IEnumerable<string>)) return true;
 
             return false;
         }
 
         public override object Read(string content, Type objectType)
         {
-            var lines = content.Split(new []{'\n'},StringSplitOptions.RemoveEmptyEntries);
+            var lines = content.Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries);
             return lines;
         }
     }

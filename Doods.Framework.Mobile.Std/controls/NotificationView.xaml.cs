@@ -1,5 +1,4 @@
-﻿
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Doods.Framework.Mobile.Std.controls
@@ -10,8 +9,6 @@ namespace Doods.Framework.Mobile.Std.controls
         public NotificationView()
         {
             InitializeComponent();
-
-
         }
     }
 }

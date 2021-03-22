@@ -13,21 +13,24 @@ namespace Doods.Framework.Http.Std.Authentication
             {
                 {AuthenticationType.Anonymous, new AnonymousAuthenticator()},
                 {AuthenticationType.Basic, new HttpBasicAuthenticator(credentials.Login, credentials.Password)},
-                { AuthenticationType.SimpleHttpHeader,new SimpleHttpHeaderAuthenticator(credentials.Login, credentials.Password)},
+                {
+                    AuthenticationType.SimpleHttpHeader,
+                    new SimpleHttpHeaderAuthenticator(credentials.Login, credentials.Password)
+                },
                 {
                     AuthenticationType.Simple,
                     new SimpleAuthenticator("login", credentials.Login, "password", credentials.Password)
-                },
+                }
             };
 
 
             CreatedAuthenticator = Authenticators[credentials.AuthenticationType];
         }
 
-        public IAuthenticator CreatedAuthenticator { get; private set; }
+        public IAuthenticator CreatedAuthenticator { get; }
 
-        public Credentials Credentials { get; private set; }
+        public Credentials Credentials { get; }
 
-        private Dictionary<AuthenticationType, IAuthenticator> Authenticators { get; set; }
+        private Dictionary<AuthenticationType, IAuthenticator> Authenticators { get; }
     }
 }

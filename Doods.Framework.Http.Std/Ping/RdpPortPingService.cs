@@ -11,7 +11,6 @@ namespace Doods.Framework.Http.Std.Ping
     {
         public RdpPortPingService(IAddressLookupService addressLookupService) : base(addressLookupService)
         {
-            
         }
 
         private static async Task<bool> IsPortOpen(IPAddress ip, int port, TimeSpan timeout)
@@ -19,7 +18,10 @@ namespace Doods.Framework.Http.Std.Ping
             try
             {
                 using (var client = new TcpClient())
+                {
                     await client.ConnectAsync(ip, port).TimeoutAfter(timeout).ConfigureAwait(false);
+                }
+
                 return true;
             }
             catch (Exception ex)

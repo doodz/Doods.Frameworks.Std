@@ -1,16 +1,17 @@
-﻿using Doods.Framework.Ssh.Std.Base.Queries;
-using Doods.Framework.Ssh.Std.Beans;
-using Doods.Framework.Ssh.Std.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Doods.Framework.Ssh.Std.Base.Queries;
+using Doods.Framework.Ssh.Std.Beans;
+using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.Ssh.Std.Queries
 {
     public class WlanInfoQuery : GenericQuery<string>
     {
-        private List<NetworkInterfaceInformationBean> _wirelessInterfaces;
+        private readonly List<NetworkInterfaceInformationBean> _wirelessInterfaces;
+
         public WlanInfoQuery(IClientSsh client, List<NetworkInterfaceInformationBean> wirelessInterfaces) : base(client)
         {
             CmdString = "cat /proc/net/wireless";
@@ -29,13 +30,12 @@ namespace Doods.Framework.Ssh.Std.Queries
             foreach (var line in lines)
             {
                 if (line.StartsWith("Inter-") || line.StartsWith(" face"))
-                {
                     //LOGGER.debug("Skipping header line: {}", line);
                     continue;
-                }
 
                 var res = Regex.Matches(line, "\\s+").Cast<Match>()
-                    .ToArray(); ;
+                    .ToArray();
+                ;
 
                 if (res.Length >= 11)
                 {
@@ -55,8 +55,9 @@ namespace Doods.Framework.Ssh.Std.Queries
                     }
                     catch (FormatException)
                     {
-                        Client.Logger.Warning( $"Could not parse link quality field for input: {linkQuality}.");
+                        Client.Logger.Warning($"Could not parse link quality field for input: {linkQuality}.");
                     }
+
                     int? signalLevelInt = null;
                     try
                     {
@@ -66,22 +67,21 @@ namespace Doods.Framework.Ssh.Std.Queries
                     {
                         Client.Logger.Warning("Could not parse link level field for input: {linkLevel}.");
                     }
-                   // LOGGER.debug( "WLAN status of {}: link quality {}, signal level {}.",
-                   //     new Object[] { name, linkQualityInt, signalLevelInt });
+                    // LOGGER.debug( "WLAN status of {}: link quality {}, signal level {}.",
+                    //     new Object[] { name, linkQualityInt, signalLevelInt });
 
                     foreach (var iface in _wirelessInterfaces)
-                    {
                         if (iface.Name.Equals(name))
                         {
                             var wlanInfo = new WlanBean();
-                            wlanInfo.LinkQuality =linkQualityInt.GetValueOrDefault();
+                            wlanInfo.LinkQuality = linkQualityInt.GetValueOrDefault();
                             wlanInfo.SignalLevel = signalLevelInt.GetValueOrDefault();
                             Client.Logger.Debug($"Adding wifi-status info to interface {iface.Name}.");
                             iface.WlanInfo = wlanInfo;
                         }
-                    }
                 }
             }
+
             return null;
         }
     }

@@ -7,7 +7,8 @@ namespace Doods.Framework.Std
     {
         bool IsActive { get; }
 
-        void Event(string name, Dictionary<string, string> properties = null, Dictionary<string, double> measures = null);
+        void Event(string name, Dictionary<string, string> properties = null,
+            Dictionary<string, double> measures = null);
 
         void Metric(string name, double value, Dictionary<string, string> properties = null);
 

@@ -9,21 +9,19 @@ namespace Doods.Framework.Mobile.Std.controls
         public static readonly BindableProperty NextEntryProperty =
             BindableProperty.Create(nameof(NextEntry), typeof(View), typeof(Entry));
 
-        public View NextEntry
-        {
-            get => (View)GetValue(NextEntryProperty);
-            set => SetValue(NextEntryProperty, value);
-        }
-
         public ValidatableObjectControl()
         {
             InitializeComponent();
-           
+        }
+
+        public View NextEntry
+        {
+            get => (View) GetValue(NextEntryProperty);
+            set => SetValue(NextEntryProperty, value);
         }
 
         public void OnNext()
         {
-           
             NextEntry?.Focus();
         }
     }

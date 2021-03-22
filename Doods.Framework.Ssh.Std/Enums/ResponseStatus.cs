@@ -6,6 +6,6 @@
         Completed,
         Error,
         TimedOut,
-        Aborted,
+        Aborted
     }
 }

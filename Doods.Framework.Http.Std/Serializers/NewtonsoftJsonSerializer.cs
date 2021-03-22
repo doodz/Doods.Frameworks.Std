@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text.RegularExpressions;
 using Doods.Framework.Http.Std.Interfaces;
 using Newtonsoft.Json;
 using RestSharp;
-
 
 namespace Doods.Framework.Http.Std.Serializers
 {
@@ -32,6 +30,12 @@ namespace Doods.Framework.Http.Std.Serializers
             _serializer = serializer;
         }
 
+        public string DateFormat { get; set; }
+
+        public string RootElement { get; set; }
+
+        public string Namespace { get; set; }
+
         public string Serialize(object obj)
         {
             using (var stringWriter = new StringWriter())
@@ -49,16 +53,10 @@ namespace Doods.Framework.Http.Std.Serializers
             }
         }
 
-        public string DateFormat { get; set; }
-
         public T Deserialize<T>(IRestResponse response)
         {
             return Deserialize<T>(response.Content);
         }
-
-        public string RootElement { get; set; }
-
-        public string Namespace { get; set; }
 
         public string ContentType { get; set; }
 
@@ -68,15 +66,7 @@ namespace Doods.Framework.Http.Std.Serializers
             {
                 using (var jsonTextReader = new JsonTextReader(stringReader))
                 {
-                    try
-                    {
-                        return _serializer.Deserialize<T>(jsonTextReader);
-                    }
-                    catch (Exception ex)
-                    {
-                        //Logger.Error($"Couldn't deserialize json: {json}. Error: {ex}");
-                        throw;
-                    }
+                    return _serializer.Deserialize<T>(jsonTextReader);
                 }
             }
         }

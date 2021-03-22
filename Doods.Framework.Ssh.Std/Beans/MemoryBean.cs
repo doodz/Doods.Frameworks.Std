@@ -1,19 +1,13 @@
-﻿using Doods.Framework.Ssh.Std.Enums;
-using Doods.Framework.Std;
-using System;
+﻿using System;
 using System.Linq;
+using Doods.Framework.Ssh.Std.Enums;
+using Doods.Framework.Std;
 
 namespace Doods.Framework.Ssh.Std.Beans
 {
     public class MemoryBean : NotifyPropertyChangedBase
     {
         private long _bytes;
-       
-        public long Bytes
-        {
-            get => _bytes;
-            set => SetProperty(ref _bytes, value);
-        }
 
         private string _scale;
 
@@ -22,7 +16,11 @@ namespace Doods.Framework.Ssh.Std.Beans
             _bytes = bytes;
         }
 
-      
+        public long Bytes
+        {
+            get => _bytes;
+            set => SetProperty(ref _bytes, value);
+        }
 
 
         public static MemoryBean From(Memory scale, long data)
@@ -71,9 +69,7 @@ namespace Doods.Framework.Ssh.Std.Beans
 
         public override string ToString()
         {
-
             return $"{Bytes} {_scale}";
-           
         }
     }
 }

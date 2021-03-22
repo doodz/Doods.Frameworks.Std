@@ -8,7 +8,7 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
         {
             BackgroundColor = StyleKit.CardFooterBackgroundColor;
 
-            var label = new Label()
+            var label = new Label
             {
                 Text = text,
                 FontSize = 9,
@@ -16,14 +16,16 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
                 TextColor = StyleKit.LightTextColor
             };
 
-            var stack = new StackLayout()
+            var stack = new StackLayout
             {
                 Padding = new Thickness(5),
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
                 VerticalOptions = LayoutOptions.Center,
-                Children = {
-                    new Image () {
+                Children =
+                {
+                    new Image
+                    {
                         Source = source,
                         HeightRequest = 10,
                         WidthRequest = 10

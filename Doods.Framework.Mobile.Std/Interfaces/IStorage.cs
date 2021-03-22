@@ -1,7 +1,5 @@
 ﻿namespace Doods.Framework.Mobile.Std.Interfaces
 {
-
-
     public interface IStorage
     {
         string GetValue(string key, string defaultValue = null);

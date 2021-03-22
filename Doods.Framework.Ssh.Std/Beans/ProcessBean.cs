@@ -4,13 +4,12 @@ namespace Doods.Framework.Ssh.Std.Beans
 {
     public class ProcessBean : NotifyPropertyChangedBase
     {
-        public string CommandName { get; }
         private string _command;
         private string _cpuTime;
         private int _pId;
         private string _tty;
 
-        public ProcessBean(int pId, string tty, string cpuTime,string commandName, string command)
+        public ProcessBean(int pId, string tty, string cpuTime, string commandName, string command)
         {
             CommandName = commandName;
             _pId = pId;
@@ -18,6 +17,8 @@ namespace Doods.Framework.Ssh.Std.Beans
             _cpuTime = cpuTime;
             _command = command;
         }
+
+        public string CommandName { get; }
 
         public int Pid
         {

@@ -17,13 +17,12 @@ namespace Doods.Framework.Mobile.Std.Controls
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-           
+
             Completed += (sender, e) => { OnNext(); };
         }
 
         public void OnNext()
         {
-            
             NextEntry?.Focus();
         }
     }

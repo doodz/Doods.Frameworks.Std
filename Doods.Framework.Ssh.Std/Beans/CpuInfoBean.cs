@@ -27,6 +27,5 @@ namespace Doods.Framework.Ssh.Std.Beans
 
         public string CpuOpMode { get; internal set; }
         public string VendorId { get; internal set; }
-
     }
 }

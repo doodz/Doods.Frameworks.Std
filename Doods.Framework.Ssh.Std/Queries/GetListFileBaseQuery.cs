@@ -11,6 +11,7 @@ namespace Doods.Framework.Ssh.Std.Queries
     {
         private readonly string _path;
         private readonly string _query;
+
         public GetListFileBaseQuery(IClientSsh client, string path) : base(client)
         {
             _path = path;
@@ -23,12 +24,12 @@ namespace Doods.Framework.Ssh.Std.Queries
             var lst = new List<FileInfoBean>();
 
 
-            var lines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = result.Split(new[] {"\r\n", "\n"}, StringSplitOptions.RemoveEmptyEntries);
 
 
             foreach (var line in lines.Skip(1)) // remove "total xxxx"
             {
-                var split = line.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var split = line.Trim().Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
                 var fileInfo = new FileInfoBean();
 
                 fileInfo.Path = _path;

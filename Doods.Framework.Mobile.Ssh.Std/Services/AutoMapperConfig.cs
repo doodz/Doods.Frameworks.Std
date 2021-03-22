@@ -2,7 +2,6 @@
 using AutoMapper;
 using Doods.Framework.Mobile.Ssh.Std.Models;
 using Doods.Framework.Ssh.Std.Beans;
-using Doods.Framework.Ssh.Std.Queries;
 
 namespace Doods.Framework.Mobile.Ssh.Std.Services
 {
@@ -10,7 +9,6 @@ namespace Doods.Framework.Mobile.Ssh.Std.Services
     {
         protected override void Load(ContainerBuilder builder)
         {
-            
             //Mapper.Initialize(cfg => cfg.CreateMap<CpuInfoBean, CpuInfo>());
         }
     }

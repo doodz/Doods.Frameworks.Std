@@ -1,42 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xaml-comp compile="true" ?>
-<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std"
-             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:local="clr-namespace:Doods.Framework.Mobile.Std.Resources;assembly=Doods.Framework.Mobile.Std"
-             xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std"
-             xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std">
+
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:behaviors="clr-namespace:Doods.Framework.Mobile.Std.Behaviors;assembly=Doods.Framework.Mobile.Std"
+                    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                    xmlns:local="clr-namespace:Doods.Framework.Mobile.Std.Resources;assembly=Doods.Framework.Mobile.Std"
+                   
+                    xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std"
+                    xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std"
+                    xmlns:styles="clr-namespace:Doods.Framework.Mobile.Std.Common.Styles;assembly=Doods.Framework.Mobile.Std">
     <!--<ResourceDictionary Source="pack://application:,,,/YourAssembly;component/Subfolder/YourResourceFile.xaml"/>-->
     <ResourceDictionary.MergedDictionaries>
         <local:DoodsMobileColor />
         <local:DoodsMobileOnPlatform />
         <local:DoodsMobileDataTemplate />
+        <styles:DefaultTheme/>
     </ResourceDictionary.MergedDictionaries>
 
 
-    <Style TargetType="ContentView" >
-        <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}"/>
+    <Style TargetType="ContentView">
+        <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
     </Style>
 
 
-    <Style TargetType="controls:TitledFrameView"  BaseResourceKey="FrameViewStyle">
-        <Setter Property="CornerRadius" Value="8"/>
-        <Setter Property="Padding" Value="2"/>
-        <Setter Property="Margin" Value="2"/>
-        <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}"/>
+    <Style TargetType="controls:TitledFrameView" BaseResourceKey="FrameViewStyle">
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
     </Style>
 
     <Style TargetType="controls:TitleSwitchView">
-        <Setter Property="CornerRadius" Value="8"/>
-        <Setter Property="Padding" Value="2"/>
-        <Setter Property="Margin" Value="2"/>
-        <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}"/>
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
     </Style>
     <x:Int32 x:Key="BorderThicknessStatutConseil">3</x:Int32>
 
-  
-  
+
     <!--Style pour Frame-->
     <!--<Style TargetType="Frame">
         <Setter Property="Margin"
@@ -46,7 +49,7 @@
         <Setter Property="Padding"
                 Value="0,0,0,0" />
     </Style>-->
-   
+
     <Style TargetType="Frame"
            x:Key="FrameActionStyle">
         <Setter Property="Margin"
@@ -58,7 +61,7 @@
         <Setter Property="Margin"
                 Value="-10,-10,-10,0" />
         <Setter Property="BackgroundColor"
-                Value="{DynamicResource FabBackgroundColor}"/>
+                Value="{DynamicResource FabBackgroundColor}" />
     </Style>
 
     <!--Style pour Grid-->
@@ -67,7 +70,7 @@
            x:Key="GridInFrameStyle">
         <Setter Property="Margin"
                 Value="{StaticResource GridInFrameStyleOnPlatform}" />
-        
+
     </Style>
 
     <Style TargetType="Grid"
@@ -75,13 +78,13 @@
         <Setter Property="Padding"
                 Value="7" />
         <Setter Property="BackgroundColor"
-                Value="{DynamicResource WindowBackgroundColor}"/>
+                Value="{DynamicResource WindowBackgroundColor}" />
     </Style>
 
     <Style TargetType="Grid"
            x:Key="GridInContexteStyle">
         <Setter Property="BackgroundColor"
-                Value="{DynamicResource WindowBackgroundColor}"/>
+                Value="{DynamicResource WindowBackgroundColor}" />
     </Style>
 
 
@@ -105,7 +108,7 @@
            BaseResourceKey="BodyStyle">
         <Setter Property="FontSize"
                 Value="14" />
-        <Setter Property="TextColor" Value="{DynamicResource WindowForegroundColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource WindowForegroundColor}" />
 
     </Style>
 
@@ -188,7 +191,6 @@
     </Style>
 
 
-
     <!-- Style pour Entry -->
     <Style x:Key="ValidationErrorLabelStyle"
            TargetType="{x:Type Label}">
@@ -198,19 +200,17 @@
                 Value="{DynamicResource LittleSize}" />
     </Style>
 
-   
-  
 
-    <Style x:Key="EntryValidatableStyle"  
+    <Style x:Key="EntryValidatableStyle"
            TargetType="{x:Type Entry}">
-       
-        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"  
+
+        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
                 Value="True" />
-        <Setter Property="behaviors:LineColorBehavior.LineColor"  
+        <Setter Property="behaviors:LineColorBehavior.LineColor"
                 Value="{DynamicResource BlackColor}" />
         <Style.Triggers>
             <Trigger TargetType="Entry"
-                     Property="IsFocused" 
+                     Property="IsFocused"
                      Value="True">
                 <Setter Property="Opacity" Value="1" />
             </Trigger>
@@ -228,7 +228,7 @@
                      Property="IsFocused"
                      Value="True">
                 <Setter Property="Opacity" Value="1" />
-                <Setter Property="behaviors:LineColorBehavior.LineColor"                        
+                <Setter Property="behaviors:LineColorBehavior.LineColor"
                         Value="{DynamicResource GreenColor}" />
             </Trigger>
         </Style.Triggers>
@@ -251,8 +251,7 @@
     </Style>
 
     <!-- Style pour bouton  -->
-    <Style TargetType="Button"
-           >
+    <Style TargetType="Button">
         <Setter Property="BackgroundColor" Value="{DynamicResource MyColorButton}" />
         <Setter Property="TextColor" Value="White" />
     </Style>
@@ -260,5 +259,5 @@
     <Style TargetType="forms:SvgCachedImage">
         <Setter Property="ReplaceStringMap" Value="{x:Static enum:SvgIconTarget.ReplaceColor}" />
     </Style>
-    
+
 </ResourceDictionary>

@@ -1,5 +1,5 @@
-﻿using Doods.Framework.Std.Validation;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using Doods.Framework.Std.Validation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,117 +13,26 @@ namespace Doods.Framework.Mobile.Std.controls
             typeof(ClearableEntryViewValidator), defaultBindingMode: BindingMode.OneWay,
             propertyChanged: ClearCmdPropertyChanged);
 
-        private static void ClearCmdPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (newvalue == oldvalue)
-                return;
-            var val = (ICommand) newvalue;
-            ((ClearableEntryViewValidator) bindable).MyFloatingActionButton.Command = val;
-            //var oldVal = (Color)bindable.GetValue(ClearableEntryViewValidator.NormalColorProperty);
-            //if (oldVal == val)
-            //    return;
-
-            //bindable.SetValue(ClearableEntryViewValidator.NormalColorProperty, val);
-        }
-
-        public ICommand ClearCmd
-        {
-            get => (ICommand) GetValue(ClearCmdProperty);
-            set => SetValue(ClearCmdProperty, value);
-        }
-
-        public ICommand ClearCmd2 => new Command(Clear);
-
-        private void Clear()
-        {
-            EntryText = null;
-        }
-
         public static readonly BindableProperty NormalColorProperty =
             BindableProperty.Create(nameof(NormalColor),
                 typeof(Color), typeof(ClearableEntryViewValidator), Color.Blue,
                 propertyChanged: NormalColorPropertyChanged);
 
-
-        private static void NormalColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (newvalue == oldvalue)
-                return;
-            var val = (Color) newvalue;
-            ((ClearableEntryViewValidator) bindable).MyFloatingActionButton.NormalColor = val;
-            //var oldVal = (Color)bindable.GetValue(ClearableEntryViewValidator.NormalColorProperty);
-            //if (oldVal == val)
-            //    return;
-
-            //bindable.SetValue(ClearableEntryViewValidator.NormalColorProperty, val);
-        }
-
-
-        public Color NormalColor
-        {
-            get => (Color) GetValue(NormalColorProperty);
-            set => SetValue(NormalColorProperty, value);
-        }
-
         public static readonly BindableProperty EntryStyleProperty = BindableProperty.Create(nameof(EntryStyle),
             typeof(Style), typeof(ClearableEntryViewValidator));
 
 
-        public Style EntryStyle
-        {
-            get => (Style) GetValue(StyleProperty);
-            set => SetValue(StyleProperty, (object) value);
-        }
-
-
-        public static readonly BindableProperty ValidateOnLostFocusProperty = BindableProperty.Create(nameof(ValidateOnLostFocus),
-            typeof(bool), typeof(ClearableEntryViewValidator),true);
-
-
-        public bool ValidateOnLostFocus
-        {
-            get => (bool)GetValue(ValidateOnLostFocusProperty);
-            set => SetValue(ValidateOnLostFocusProperty, (object)value);
-        }
+        public static readonly BindableProperty ValidateOnLostFocusProperty = BindableProperty.Create(
+            nameof(ValidateOnLostFocus),
+            typeof(bool), typeof(ClearableEntryViewValidator), true);
 
         public static readonly BindableProperty EntryTextProperty =
             BindableProperty.Create(nameof(EntryText), typeof(ValidatableObject<string>),
                 typeof(ClearableEntryViewValidator), propertyChanged: EntryTextPropertyChanged,
                 defaultValue: default(string));
 
-        private static void EntryTextPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            var entry = ((ClearableEntryViewValidator) bindable).MyEntry;
-            // ISSUE: reference to a compiler-generated field
-
-
-            if (newvalue == oldvalue)
-                return;
-            var val = (ValidatableObject<string>) newvalue;
-
-
-            //((ClearableEntryViewValidator)bindable).MyEntry.Text = val;
-            //var oldVal = (Color)bindable.GetValue(ClearableEntryViewValidator.NormalColorProperty);
-            //if (oldVal == val)
-            //    return;
-
-            //bindable.SetValue(ClearableEntryViewValidator.NormalColorProperty, val);
-        }
-
-        public ValidatableObject<string> EntryText
-        {
-            get => (ValidatableObject<string>) GetValue(EntryTextProperty);
-            set => SetValue(EntryTextProperty, value);
-        }
-
         public static readonly BindableProperty LabelTextProperty =
             BindableProperty.Create(nameof(LabelText), typeof(string), typeof(ClearableEntryViewValidator));
-
-        public string LabelText
-        {
-            get => (string) GetValue(LabelTextProperty);
-            set => SetValue(LabelTextProperty, value);
-        }
 
         public ClearableEntryViewValidator()
         {
@@ -146,10 +55,102 @@ namespace Doods.Framework.Mobile.Std.controls
                 "EntryText.FirstError", BindingMode.OneWay);
         }
 
+        public ICommand ClearCmd
+        {
+            get => (ICommand) GetValue(ClearCmdProperty);
+            set => SetValue(ClearCmdProperty, value);
+        }
+
+        public ICommand ClearCmd2 => new Command(Clear);
+
+
+        public Color NormalColor
+        {
+            get => (Color) GetValue(NormalColorProperty);
+            set => SetValue(NormalColorProperty, value);
+        }
+
+
+        public Style EntryStyle
+        {
+            get => (Style) GetValue(StyleProperty);
+            set => SetValue(StyleProperty, value);
+        }
+
+
+        public bool ValidateOnLostFocus
+        {
+            get => (bool) GetValue(ValidateOnLostFocusProperty);
+            set => SetValue(ValidateOnLostFocusProperty, value);
+        }
+
+        public ValidatableObject<string> EntryText
+        {
+            get => (ValidatableObject<string>) GetValue(EntryTextProperty);
+            set => SetValue(EntryTextProperty, value);
+        }
+
+        public string LabelText
+        {
+            get => (string) GetValue(LabelTextProperty);
+            set => SetValue(LabelTextProperty, value);
+        }
+
+        private static void ClearCmdPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (newvalue == oldvalue)
+                return;
+            var val = (ICommand) newvalue;
+            ((ClearableEntryViewValidator) bindable).MyFloatingActionButton.Command = val;
+            //var oldVal = (Color)bindable.GetValue(ClearableEntryViewValidator.NormalColorProperty);
+            //if (oldVal == val)
+            //    return;
+
+            //bindable.SetValue(ClearableEntryViewValidator.NormalColorProperty, val);
+        }
+
+        private void Clear()
+        {
+            EntryText = null;
+        }
+
+
+        private static void NormalColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (newvalue == oldvalue)
+                return;
+            var val = (Color) newvalue;
+            ((ClearableEntryViewValidator) bindable).MyFloatingActionButton.NormalColor = val;
+            //var oldVal = (Color)bindable.GetValue(ClearableEntryViewValidator.NormalColorProperty);
+            //if (oldVal == val)
+            //    return;
+
+            //bindable.SetValue(ClearableEntryViewValidator.NormalColorProperty, val);
+        }
+
+        private static void EntryTextPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var entry = ((ClearableEntryViewValidator) bindable).MyEntry;
+            // ISSUE: reference to a compiler-generated field
+
+
+            if (newvalue == oldvalue)
+                return;
+            var val = (ValidatableObject<string>) newvalue;
+
+
+            //((ClearableEntryViewValidator)bindable).MyEntry.Text = val;
+            //var oldVal = (Color)bindable.GetValue(ClearableEntryViewValidator.NormalColorProperty);
+            //if (oldVal == val)
+            //    return;
+
+            //bindable.SetValue(ClearableEntryViewValidator.NormalColorProperty, val);
+        }
+
         private void MyEntry_Unfocused(object sender, FocusEventArgs e)
         {
-            if(ValidateOnLostFocus)
-            EntryText?.Validate();
+            if (ValidateOnLostFocus)
+                EntryText?.Validate();
         }
     }
 }

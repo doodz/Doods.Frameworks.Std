@@ -7,16 +7,17 @@ namespace Doods.Framework.Http.Std.Ping
 {
     public class PingService : DnsPingServiceBase
     {
-        private readonly RdpPortPingService rdpPing;
         private readonly IcmpPingService icmpPing;
+        private readonly RdpPortPingService rdpPing;
 
-        public PingService(IAddressLookupService addressLookupService, RdpPortPingService rdpPing, IcmpPingService icmpPing) : base(addressLookupService)
+        public PingService(IAddressLookupService addressLookupService, RdpPortPingService rdpPing,
+            IcmpPingService icmpPing) : base(addressLookupService)
         {
             this.rdpPing = rdpPing;
             this.icmpPing = icmpPing;
         }
 
-        public async override Task<bool> IsReachable(IPAddress ip, TimeSpan timeout)
+        public override async Task<bool> IsReachable(IPAddress ip, TimeSpan timeout)
         {
             // start pings in parallel
             var rdp = rdpPing.IsReachable(ip, timeout);

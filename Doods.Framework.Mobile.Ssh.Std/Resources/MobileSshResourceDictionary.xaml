@@ -1,56 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xaml-comp compile="true" ?>
-<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             
-             xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std"
-             xmlns:controls1="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Controls;assembly=Doods.Framework.Mobile.Ssh.Std"
-             xmlns:resources="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Resources;assembly=Doods.Framework.Mobile.Ssh.Std"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std">
+
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+                    xmlns:controls="clr-namespace:Doods.Framework.Mobile.Std.Controls;assembly=Doods.Framework.Mobile.Std"
+                    xmlns:controls1="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Controls;assembly=Doods.Framework.Mobile.Ssh.Std"
+                    xmlns:resources="clr-namespace:Doods.Framework.Mobile.Ssh.Std.Resources;assembly=Doods.Framework.Mobile.Ssh.Std"
+                    xmlns:enum="clr-namespace:Doods.Framework.Mobile.Std.Enum;assembly=Doods.Framework.Mobile.Std">
 
     <Style x:Key="NewSubTitleStyle" TargetType="Label">
         <Setter Property="FontAttributes" Value="None" />
-        <Setter Property="TextColor" Value="BlueViolet"/>
-        <Setter Property="VerticalTextAlignment" Value="Center"/>
-        <Setter Property="HorizontalTextAlignment" Value="End"/>
+        <Setter Property="TextColor" Value="BlueViolet" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
     </Style>
     <Style x:Key="NewTitleStyle" TargetType="Label">
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="White" />
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
     </Style>
 
     <DataTemplate x:Key="ProcessesTitledFrameView">
         <controls:TitledFrameView
-                                    Title="{Binding Command}"
-                                    SubTitle="{Binding Pid}"
-                                    SubTitleStyle="{StaticResource NewSubTitleStyle}">
+            Title="{Binding Command}"
+            SubTitle="{Binding Pid}"
+            SubTitleStyle="{StaticResource NewSubTitleStyle}">
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
 
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="1" Text="{Binding Command,Mode=OneWay}"/>
-                        <Label Grid.Column="1" Grid.Row="1"  Text="{Binding Pid,Mode=OneWay}"/>
-                        <Label Grid.Column="0" Text="{Binding Tty,Mode=OneWay}"/>
-                        <Label Grid.Column="1" Text="{Binding CpuTime,Mode=OneWay}"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Command,Mode=OneWay}" />
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Pid,Mode=OneWay}" />
+                <Label Grid.Column="0" Text="{Binding Tty,Mode=OneWay}" />
+                <Label Grid.Column="1" Text="{Binding CpuTime,Mode=OneWay}" />
                 <controls:DoodsSvgImage
-                                            Grid.Column="2"
-                                            Grid.Row="0"
-                                            Source="{Binding ResourceFile,Source={ x:Static enum:SvgIconTarget.Delete}}"
-                                            WidthRequest="40"
-                                            HeightRequest="40"
-                                            HorizontalOptions="EndAndExpand"
-                                            VerticalOptions="Center" >
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Source="{Binding ResourceFile,Source={ x:Static enum:SvgIconTarget.Delete}}"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    HorizontalOptions="EndAndExpand"
+                    VerticalOptions="Center">
                     <!--Error with source PAge Xamarin.Forms.Xaml.XamlParseException
                       Message=Position 53:55. Can not find the object referenced by `Page`
                       Source=Xamarin.Forms.Xaml
@@ -73,17 +73,18 @@
                       at Java.Lang.IRunnableInvoker.n_Run (System.IntPtr jnienv, System.IntPtr native__this) [0x00009] in <a2f1be6565a84d5393d8f9efa19f479b>:0 
                       at (wrapper dynamic-method) Android.Runtime.DynamicMethodNameCounter.45(intptr,intptr)
                     -->
-                            <!--<forms:SvgCachedImage.GestureRecognizers>
+                    <!--<forms:SvgCachedImage.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.StopProcessCommand,Mode=OneWay, Source={x:Reference Page}}" CommandParameter="{Binding .}"  />
                             </forms:SvgCachedImage.GestureRecognizers>-->
-                        </controls:DoodsSvgImage>
-                    </Grid>
-                </controls:TitledFrameView>
-            </DataTemplate>
- 
+                </controls:DoodsSvgImage>
+            </Grid>
+        </controls:TitledFrameView>
+    </DataTemplate>
+
     <DataTemplate x:Key="UpgradableTitledFrameView">
         <controls:TitledFrameView Title="{Binding Name,Mode=OneWay}" SubTitle="{Binding FromRepo,Mode=OneWay}"
-                                  TitleStyle="{StaticResource NewTitleStyle}" SubTitleStyle="{StaticResource NewSubTitleStyle}" >
+                                  TitleStyle="{StaticResource NewTitleStyle}"
+                                  SubTitleStyle="{StaticResource NewSubTitleStyle}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*" />
@@ -92,39 +93,40 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="{Binding Platform,Mode=OneWay}" />
                 <Label Grid.Column="1" Text="{Binding NewVersion,Mode=OneWay}" />
-                <Switch  Grid.Column="2" IsToggled="{Binding IsSelected,Mode=TwoWay}" />
+                <Switch Grid.Column="2" IsToggled="{Binding IsSelected,Mode=TwoWay}" />
             </Grid>
 
         </controls:TitledFrameView>
     </DataTemplate>
     <DataTemplate x:Key="DiskUsageTitledFrameView">
         <controls:TitledFrameView Title="{Binding FileSystem,Mode=OneWay}" SubTitle="{Binding MountedOn,Mode=OneWay}"
-                                  SubTitleStyle="{StaticResource NewSubTitleStyle}"          >
+                                  SubTitleStyle="{StaticResource NewSubTitleStyle}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <!--<controls1:AngleArc  SweepAngle="{Binding UsedPercentNoUnit,Mode=OneWay}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>-->
 
-                <controls1:Gauge Valeur="{Binding UsedPercentNoUnit,Mode=OneWay}" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-                <Label Grid.Column="1" Grid.Row="0" Text="{resources:Translate Text=UseSize}"/>
-                <Label Grid.Column="1" Grid.Row="1" Text="{Binding UseSize,Mode=OneWay}"/>
+                <controls1:Gauge Valeur="{Binding UsedPercentNoUnit,Mode=OneWay}" HorizontalOptions="StartAndExpand"
+                                 VerticalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" />
+                <Label Grid.Column="1" Grid.Row="0" Text="{resources:Translate Text=UseSize}" />
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding UseSize,Mode=OneWay}" />
 
-                <Label Grid.Column="2" Grid.Row="0" Text="{resources:Translate Text=AvailableUsedPercent}"/>
-                <Label Grid.Column="2" Grid.Row="1" Text="{Binding AvailableUsedPercent,Mode=OneWay}"/>
+                <Label Grid.Column="2" Grid.Row="0" Text="{resources:Translate Text=AvailableUsedPercent}" />
+                <Label Grid.Column="2" Grid.Row="1" Text="{Binding AvailableUsedPercent,Mode=OneWay}" />
 
                 <!--<ContentPresenter ... />-->
             </Grid>
 
         </controls:TitledFrameView>
     </DataTemplate>
-  
-    
+
+
 </ResourceDictionary>

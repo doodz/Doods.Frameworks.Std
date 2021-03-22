@@ -9,6 +9,47 @@ namespace Doods.Framework.Mobile.Std.Behaviors
     public class NumericValidationBehavior : Behavior<Entry>
     {
         /// <summary>
+        ///     Backing storage for the boolean flag which decides between
+        ///     integer vs. double validation.
+        /// </summary>
+        public static BindableProperty AllowDecimalProperty = BindableProperty.Create(
+            nameof(AllowDecimal),
+            typeof(bool), typeof(NumericValidationBehavior),
+            true);
+
+
+        /// <summary>
+        ///     Backing storage for the color used when the
+        ///     Entry has invalid data (non-numeric).
+        /// </summary>
+        public static BindableProperty InvalidColorProperty = BindableProperty.Create(
+            nameof(InvalidColor),
+            typeof(Color), typeof(NumericValidationBehavior),
+            Color.Red);
+
+        /// <summary>
+        ///     Bindable property to hold the boolean flag which decides
+        ///     whether we test for integer vs. double values.
+        /// </summary>
+        /// <value>The selected item.</value>
+        public bool AllowDecimal
+        {
+            get => (bool) GetValue(AllowDecimalProperty);
+            set => SetValue(AllowDecimalProperty, value);
+        }
+
+        /// <summary>
+        ///     Bindable property to hold the color used when the
+        ///     Entry has invalid data (non-numeric).
+        /// </summary>
+        /// <value>The selected item.</value>
+        public Color InvalidColor
+        {
+            get => (Color) GetValue(InvalidColorProperty);
+            set => SetValue(InvalidColorProperty, value);
+        }
+
+        /// <summary>
         ///     Called when this behavior is attached to a visual.
         /// </summary>
         /// <param name="bindable">Visual owner</param>
@@ -45,48 +86,5 @@ namespace Doods.Framework.Mobile.Std.Behaviors
 
             ((Entry) sender).TextColor = isValid ? Color.Default : InvalidColor;
         }
-
-        /// <summary>
-        ///     Backing storage for the boolean flag which decides between
-        ///     integer vs. double validation.
-        /// </summary>
-        public static BindableProperty AllowDecimalProperty = BindableProperty.Create(
-            nameof(AllowDecimal),
-            typeof(bool), typeof(NumericValidationBehavior),
-            true, BindingMode.OneWay);
-
-        /// <summary>
-        ///     Bindable property to hold the boolean flag which decides
-        ///     whether we test for integer vs. double values.
-        /// </summary>
-        /// <value>The selected item.</value>
-        public bool AllowDecimal
-        {
-            get => (bool) GetValue(AllowDecimalProperty);
-            set => SetValue(AllowDecimalProperty, value);
-        }
-
-
-
-        /// <summary>
-        ///     Backing storage for the color used when the
-        ///     Entry has invalid data (non-numeric).
-        /// </summary>
-        public static BindableProperty InvalidColorProperty = BindableProperty.Create(
-            nameof(InvalidColor),
-            typeof(Color), typeof(NumericValidationBehavior),
-            Color.Red, BindingMode.OneWay);
-
-        /// <summary>
-        ///     Bindable property to hold the color used when the
-        ///     Entry has invalid data (non-numeric).
-        /// </summary>
-        /// <value>The selected item.</value>
-        public Color InvalidColor
-        {
-            get => (Color) GetValue(InvalidColorProperty);
-            set => SetValue(InvalidColorProperty, value);
-        }
-
     }
 }

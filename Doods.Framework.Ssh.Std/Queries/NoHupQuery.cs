@@ -7,7 +7,6 @@ using Doods.Framework.Ssh.Std.Interfaces;
 namespace Doods.Framework.Ssh.Std.Queries
 {
     /// <summary>
-    /// 
     /// </summary>
     // <example>
     // pi@raspberrypi:~ $ nohup sudo apt-get update >/dev/null 2>&1 </dev/null &
@@ -16,7 +15,7 @@ namespace Doods.Framework.Ssh.Std.Queries
     public class NoHupQuery : GenericQuery<string>
     {
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         /// <param name="client">the client</param>
         /// <param name="cmd">The command to execut with nohup</param>
@@ -35,7 +34,7 @@ namespace Doods.Framework.Ssh.Std.Queries
         private string ParsePid(string result)
         {
             //var tab = result.Trim().Split(new[] {"] "}, StringSplitOptions.RemoveEmptyEntries);
-            var tab = result.Trim().Split(new[] { ReturnQuery.ResultPid }, StringSplitOptions.RemoveEmptyEntries);
+            var tab = result.Trim().Split(new[] {ReturnQuery.ResultPid}, StringSplitOptions.RemoveEmptyEntries);
             if (!tab.Any()) return null;
             return tab?.Last().Trim();
         }

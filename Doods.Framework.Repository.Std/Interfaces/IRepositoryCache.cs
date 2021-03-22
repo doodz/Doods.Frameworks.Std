@@ -1,5 +1,5 @@
-﻿using Doods.Framework.Std;
-using System;
+﻿using System;
+using Doods.Framework.Std;
 
 namespace Doods.Framework.Repository.Std.Interfaces
 {

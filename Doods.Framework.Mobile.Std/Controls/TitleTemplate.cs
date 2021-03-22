@@ -8,10 +8,10 @@ namespace Doods.Framework.Mobile.Std.Controls
     /// </summary>
     public class TitleTemplate : ContentView
     {
+        public readonly Label SubTitleLabel;
 
         public readonly Label TitleLabel;
-        public readonly Label SubTitleLabel;
-       
+
         public TitleTemplate()
         {
             TitleLabel = new Label();
@@ -49,12 +49,11 @@ namespace Doods.Framework.Mobile.Std.Controls
             Content = frame;
 
 
-         BindingContextChanged+=OnBindingContextChanged;   
+            BindingContextChanged += OnBindingContextChanged;
         }
 
         private void OnBindingContextChanged(object sender, EventArgs e)
         {
-            
         }
     }
 }

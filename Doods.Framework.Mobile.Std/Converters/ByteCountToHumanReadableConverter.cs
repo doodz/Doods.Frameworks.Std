@@ -9,11 +9,11 @@ namespace Doods.Framework.Mobile.Std.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (long.TryParse(value.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out long r))
+            if (long.TryParse(value.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out var r))
             {
                 var param = true;
                 if (parameter is bool)
-                    param = (bool)parameter;
+                    param = (bool) parameter;
 
                 return HumanReadableByteCount(r, param);
             }
@@ -31,7 +31,7 @@ namespace Doods.Framework.Mobile.Std.Converters
             var unit = si ? 1000 : 1024;
             if (bytes < unit)
                 return bytes + " B";
-            var exp = (int)(Math.Log(bytes) / Math.Log(unit));
+            var exp = (int) (Math.Log(bytes) / Math.Log(unit));
             var pre = (si ? "kMGTPE" : "KMGTPE").ElementAt(exp - 1)
                       + (si ? "" : "i");
             return $"{bytes / Math.Pow(unit, exp)} {pre}";

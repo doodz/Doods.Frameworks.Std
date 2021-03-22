@@ -6,10 +6,7 @@ namespace Doods.Framework.Std.Utilities
     {
         public static void ArgumentNotNull(object value, string parameterName)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(parameterName);
-            }
+            if (value == null) throw new ArgumentNullException(parameterName);
         }
     }
 }

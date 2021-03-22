@@ -8,31 +8,28 @@ namespace Doods.Framework.Std.Utilities
         {
             ValidationUtils.ArgumentNotNull(t, nameof(t));
 
-            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
+            return t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         public static bool IsNullable(Type t)
         {
             ValidationUtils.ArgumentNotNull(t, nameof(t));
 
-            if (t.IsValueType)
-            {
-                return IsNullableType(t);
-            }
+            if (t.IsValueType) return IsNullableType(t);
 
             return true;
         }
 
         public static Type EnsureNotByRefType(Type t)
         {
-            return (t.IsByRef && t.HasElementType)
+            return t.IsByRef && t.HasElementType
                 ? t.GetElementType()
                 : t;
         }
 
         public static Type EnsureNotNullableType(Type t)
         {
-            return (IsNullableType(t))
+            return IsNullableType(t)
                 ? Nullable.GetUnderlyingType(t)
                 : t;
         }

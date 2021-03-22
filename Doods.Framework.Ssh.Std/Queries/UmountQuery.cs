@@ -5,7 +5,7 @@ namespace Doods.Framework.Ssh.Std.Queries
 {
     public class UmountQuery : GenericQuery<bool>
     {
-        public UmountQuery(IClientSsh client,string device) : base(client)
+        public UmountQuery(IClientSsh client, string device) : base(client)
         {
             CmdString = $"umount {device}";
         }

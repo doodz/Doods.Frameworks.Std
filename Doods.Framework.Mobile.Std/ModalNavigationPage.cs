@@ -9,7 +9,8 @@ namespace Doods.Framework.Mobile.Std
     {
         private readonly INavigationService _navigationService;
 
-        public ModalNavigationPage([KeyFilter(NavigationServiceType.ViewNavigation)]INavigationService navigationService, Page root) : base(root)
+        public ModalNavigationPage([KeyFilter(NavigationServiceType.ViewNavigation)]
+            INavigationService navigationService, Page root) : base(root)
         {
             _navigationService = navigationService;
         }

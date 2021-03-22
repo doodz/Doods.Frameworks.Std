@@ -30,21 +30,25 @@ namespace Doods.Framework.Mobile.Std.Servicies
         BackgroundTask = 6,
         RefreshToken
     }
+
     public static class ITelemetryServiceExtensions
     {
-        public static void Event(this ITelemetryService telemetry, TelemetryEventType type, string message, Dictionary<string, string> properties = null,
+        public static void Event(this ITelemetryService telemetry, TelemetryEventType type, string message,
+            Dictionary<string, string> properties = null,
             Dictionary<string, double> measures = null)
         {
             telemetry.Event(TelemetryEventHelper.GetEvent(type, message), properties, measures);
         }
 
-        public static void Metric(this ITelemetryService telemetry, TelemetryEventType type, string message, double value, Dictionary<string, string> properties = null)
+        public static void Metric(this ITelemetryService telemetry, TelemetryEventType type, string message,
+            double value, Dictionary<string, string> properties = null)
         {
             telemetry.Metric(TelemetryEventHelper.GetEvent(type, message), value, properties);
         }
     }
+
     /// <summary>
-    /// Helper pour formattage chaine envoyé à la télémétrie
+    ///     Helper pour formattage chaine envoyé à la télémétrie
     /// </summary>
     internal class TelemetryEventHelper
     {
@@ -53,29 +57,24 @@ namespace Doods.Framework.Mobile.Std.Servicies
             return $"{type}: {message}";
         }
     }
-    public class ShellNavigationService : NavigationBaseService,INavigationService
-    {
-        public ShellNavigationService(ILogger logger, ITelemetryService telemetryService):base(logger, telemetryService)
-        {
 
+    public class ShellNavigationService : NavigationBaseService, INavigationService
+    {
+        public ShellNavigationService(ILogger logger, ITelemetryService telemetryService) : base(logger,
+            telemetryService)
+        {
         }
 
         public override void Configure(string pageKey, Type pageType)
         {
-           base.Configure(pageKey,pageType);
-           Routing.RegisterRoute(pageKey, pageType);
+            base.Configure(pageKey, pageType);
+            Routing.RegisterRoute(pageKey, pageType);
         }
 
-        public  Task GoBack()
+        public Task GoBack()
         {
             _telemetry.Event(TelemetryEventType.Navigation, "Go back");
             return Shell.Current.Navigation.PopAsync();
-        }
-
-        public  Task GoToRootAsync()
-        {
-            _telemetry.Event(TelemetryEventType.Navigation, "Go to root");
-            return Shell.Current.Navigation.PopToRootAsync();
         }
 
         public Task NavigateModalAsync(string pageKey, bool animated = true)
@@ -109,6 +108,12 @@ namespace Doods.Framework.Mobile.Std.Servicies
             {
                 throw new InvalidOperationException($"You need pass a {nameof(IQueryShellNavigationObject)}");
             }
+        }
+
+        public Task GoToRootAsync()
+        {
+            _telemetry.Event(TelemetryEventType.Navigation, "Go to root");
+            return Shell.Current.Navigation.PopToRootAsync();
         }
     }
 }

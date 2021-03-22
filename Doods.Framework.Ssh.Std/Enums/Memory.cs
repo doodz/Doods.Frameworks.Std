@@ -3,41 +3,25 @@
     //TODO : I think implement a structure is better.
     public class Memory
     {
+        private Memory(string name, string shortName, long scale)
+        {
+            LongName = name;
+            ShortName = shortName;
+            Scale = scale;
+        }
+
         public static Memory B => new Memory("Byte", "B", 1);
         public static Memory KB => new Memory("KiloByte", "KB", 1024);
         public static Memory MB => new Memory("MegaByte", "MB", 1024 * 1024);
         public static Memory GB => new Memory("GigaByte", "GB", 1024 * 1024 * 1024);
         public static Memory TB => new Memory("TeraByte", "TB", 1099511627776); //1024 * 1024 * 1024 * 1024
 
-        private string _longName;
-        private string _shortName;
-        private long _scale;
 
+        public string LongName { get; set; }
 
-        public string LongName
-        {
-            get => _longName;
-            set => _longName = value;
-        }
+        public string ShortName { get; set; }
 
-        public string ShortName
-        {
-            get => _shortName;
-            set => _shortName = value;
-        }
-
-        public long Scale
-        {
-            get => _scale;
-            set => _scale = value;
-        }
-
-        private Memory(string name, string shortName, long scale)
-        {
-            _longName = name;
-            _shortName = shortName;
-            _scale = scale;
-        }
+        public long Scale { get; set; }
 
         public static bool operator ==(Memory left, Memory right)
         {
@@ -62,8 +46,8 @@
 
         protected bool Equals(Memory other)
         {
-            return string.Equals(_longName, other._longName) && string.Equals(_shortName, other._shortName) &&
-                   _scale == other._scale;
+            return string.Equals(LongName, other.LongName) && string.Equals(ShortName, other.ShortName) &&
+                   Scale == other.Scale;
         }
 
         public override bool Equals(object obj)
@@ -78,9 +62,9 @@
         {
             unchecked
             {
-                var hashCode = _longName != null ? _longName.GetHashCode() : 0;
-                hashCode = (hashCode * 397) ^ (_shortName != null ? _shortName.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ _scale.GetHashCode();
+                var hashCode = LongName != null ? LongName.GetHashCode() : 0;
+                hashCode = (hashCode * 397) ^ (ShortName != null ? ShortName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Scale.GetHashCode();
                 return hashCode;
             }
         }

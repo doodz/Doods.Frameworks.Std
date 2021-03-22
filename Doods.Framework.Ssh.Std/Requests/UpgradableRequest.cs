@@ -3,11 +3,9 @@
     public class UpgradableRequest : SshRequestBase
     {
         public const string RequestString = "apt list --upgradable";
-        public UpgradableRequest():base(RequestString)
+
+        public UpgradableRequest() : base(RequestString)
         {
-            
         }
-       
-       
     }
 }

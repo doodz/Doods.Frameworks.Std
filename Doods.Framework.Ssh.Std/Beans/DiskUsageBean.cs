@@ -6,26 +6,38 @@ namespace Doods.Framework.Ssh.Std.Beans
     public class DiskUsageBeanWhapper : NotifyPropertyChangedBase
     {
         private IEnumerable<DiskUsageBean> _diskUsages;
-        public IEnumerable<DiskUsageBean> DiskUsages
-        {
-            get => _diskUsages;
-            internal set => SetProperty(ref _diskUsages, value);
-        }
+
         public DiskUsageBeanWhapper(IEnumerable<DiskUsageBean> diskUsages)
         {
             DiskUsages = diskUsages;
         }
 
+        public IEnumerable<DiskUsageBean> DiskUsages
+        {
+            get => _diskUsages;
+            internal set => SetProperty(ref _diskUsages, value);
+        }
     }
 
     public class DiskUsageBean : NotifyPropertyChangedBase
     {
+        private string _available;
         private string _fileSystem;
+        private string _mountedOn;
         private string _size;
         private string _used;
-        private string _available;
         private string _usedPercent;
-        private string _mountedOn;
+
+        public DiskUsageBean(string fileSystem, string size, string used,
+            string available, string usedPercent, string mountedOn)
+        {
+            _fileSystem = fileSystem;
+            _size = size;
+            _used = used;
+            _available = available;
+            _usedPercent = usedPercent;
+            _mountedOn = mountedOn;
+        }
 
 
         public string FileSystem
@@ -62,17 +74,6 @@ namespace Doods.Framework.Ssh.Std.Beans
         {
             get => _mountedOn;
             internal set => SetProperty(ref _mountedOn, value);
-        }
-
-        public DiskUsageBean(string fileSystem, string size, string used,
-            string available, string usedPercent, string mountedOn)
-        {
-            _fileSystem = fileSystem;
-            _size = size;
-            _used = used;
-            _available = available;
-            _usedPercent = usedPercent;
-            _mountedOn = mountedOn;
         }
     }
 }

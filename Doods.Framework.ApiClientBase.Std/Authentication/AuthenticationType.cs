@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Doods.Framework.ApiClientBase.Std.Authentication
+﻿namespace Doods.Framework.ApiClientBase.Std.Authentication
 {
     public enum AuthenticationType
     {
@@ -10,6 +8,4 @@ namespace Doods.Framework.ApiClientBase.Std.Authentication
         SimpleHttpHeader,
         OAuth
     }
-
-    
 }

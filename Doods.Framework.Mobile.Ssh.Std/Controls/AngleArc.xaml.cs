@@ -1,6 +1,4 @@
 ﻿using System;
-using Doods.Framework.Mobile.Std.controls;
-using System;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
@@ -14,10 +12,10 @@ namespace Doods.Framework.Mobile.Ssh.Std.Controls
         public static readonly BindableProperty SweepAngleProperty = BindableProperty.Create(nameof(SweepAngle),
             typeof(float),
             typeof(AngleArc), propertyChanged: PropertyChanged);
+
         /// <summary>
-        /// 
         /// </summary>
-        private readonly SKPaint _arcPaintGreen = new SKPaint
+        private readonly SKPaint _arcPaintGreen = new SKPaint()
         {
             Style = SKPaintStyle.Stroke,
             StrokeWidth = 15,
@@ -25,9 +23,8 @@ namespace Doods.Framework.Mobile.Ssh.Std.Controls
         };
 
         /// <summary>
-        /// 
         /// </summary>
-        private readonly SKPaint _arcPaintRed = new SKPaint
+        private readonly SKPaint _arcPaintRed = new SKPaint()
         {
             Style = SKPaintStyle.Stroke,
             StrokeWidth = 15,
@@ -36,9 +33,8 @@ namespace Doods.Framework.Mobile.Ssh.Std.Controls
 
 
         /// <summary>
-        /// 
         /// </summary>
-        private readonly SKPaint _outlinePaint = new SKPaint
+        private readonly SKPaint _outlinePaint = new SKPaint()
         {
             Style = SKPaintStyle.Stroke,
             StrokeWidth = 15,
@@ -79,7 +75,7 @@ namespace Doods.Framework.Mobile.Ssh.Std.Controls
             var rect = new SKRect(val, val, info.Width - val, info.Height - val);
             var startAngle = -0f;
             var sweepAnglelocal = SweepAngle * 3.60f;
-            var flour = (float)Math.Floor(sweepAnglelocal);
+            var flour = (float) Math.Floor(sweepAnglelocal);
             var arcPaint = SweepAngle > 80 ? _arcPaintRed : _arcPaintGreen;
 
             //canvas.DrawCircle(info.Width / 2, info.Height / 2, 100, _outlinePaint);

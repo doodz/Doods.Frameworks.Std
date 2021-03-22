@@ -39,6 +39,7 @@ namespace Doods.Framework.Std.Extensions
                     i++;
                 }
             }
+
             return false;
         }
 
@@ -133,7 +134,8 @@ namespace Doods.Framework.Std.Extensions
             var s = source.ToList();
 
             foreach (var t in s)
-                if (t.ToString().Contains(split)) pos.Add(s.IndexOf(t));
+                if (t.ToString().Contains(split))
+                    pos.Add(s.IndexOf(t));
 
             if (pos.IsEmpty())
             {
@@ -228,7 +230,8 @@ namespace Doods.Framework.Std.Extensions
                             var children = childrenSelector(i);
 
                             if (children != null)
-                                foreach (var j in children.Reverse()) stack.Push(j);
+                                foreach (var j in children.Reverse())
+                                    stack.Push(j);
                         }
                     }
                 }
@@ -327,7 +330,8 @@ namespace Doods.Framework.Std.Extensions
                             var children = childrenSelector(i);
 
                             if (children != null)
-                                foreach (var j in children) q.Enqueue(j);
+                                foreach (var j in children)
+                                    q.Enqueue(j);
                         }
                     }
                 }

@@ -8,7 +8,8 @@ namespace Doods.Framework.Http.Std.Extensions
     {
         public static PhysicalAddress ParseMacAddress(this string mac)
         {
-            var macString = mac?.Replace(":", "-")?.ToUpper(CultureInfo.InvariantCulture) ?? throw new ArgumentNullException(nameof(mac));
+            var macString = mac?.Replace(":", "-")?.ToUpper(CultureInfo.InvariantCulture) ??
+                            throw new ArgumentNullException(nameof(mac));
             return PhysicalAddress.Parse(macString);
         }
     }

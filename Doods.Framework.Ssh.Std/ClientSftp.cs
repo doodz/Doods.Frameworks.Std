@@ -1,20 +1,20 @@
-﻿using Doods.Framework.Ssh.Std.Beans;
-using Renci.SshNet;
-using Renci.SshNet.Sftp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Doods.Framework.Ssh.Std.Beans;
+using Renci.SshNet;
+using Renci.SshNet.Sftp;
 
 namespace Doods.Framework.Ssh.Std
 {
     public class ClientSftp
     {
-        private readonly string _host;
-        private readonly string _username;
-        private readonly string _password;
         private readonly Lazy<SftpClient> _client;
+        private readonly string _host;
+        private readonly string _password;
+        private readonly string _username;
 
         public ClientSftp(string host, string username, string password)
         {
@@ -46,7 +46,7 @@ namespace Doods.Framework.Ssh.Std
             if (!_client.Value.IsConnected) _client.Value.Connect();
             using (var saveFile = File.OpenWrite(localPath))
             {
-                Func<IAsyncResult, Stream> endMethod = (a) =>
+                Func<IAsyncResult, Stream> endMethod = a =>
                 {
                     _client.Value.EndDownloadFile(a);
                     return null;
@@ -66,10 +66,6 @@ namespace Doods.Framework.Ssh.Std
         //            _client.Value.EndDownloadFile(a);
         //            return saveFile;
         //        };
-
-
-
-
 
 
         //        return await Task.Factory.FromAsync(_client.Value.BeginDownloadFile(filePath, saveFile), endMethod);

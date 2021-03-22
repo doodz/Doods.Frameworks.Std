@@ -1,18 +1,18 @@
-﻿using Doods.Framework.Repository.Std.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Doods.Framework.Repository.Std.Interfaces;
 using Doods.Framework.Std;
 using Doods.Framework.Std.Extensions;
 using SQLite;
 using SQLiteNetExtensionsAsync.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Doods.Framework.Repository.Std.Tables
 {
     internal class RepositoryBase : IRepository
     {
-        private readonly IDatabase _database;
         private readonly IRepositoryCache _cache;
+        private readonly IDatabase _database;
 
         public RepositoryBase(IDatabase database, IRepositoryCache cache)
         {
@@ -31,7 +31,8 @@ namespace Doods.Framework.Repository.Std.Tables
         }
 
 
-        public async Task<List<T>> GetAllAsync<T>(ITimeWatcher timer, SQLiteAsyncConnection cnt, bool cache) where T : TableBase, new()
+        public async Task<List<T>> GetAllAsync<T>(ITimeWatcher timer, SQLiteAsyncConnection cnt, bool cache)
+            where T : TableBase, new()
         {
             using (var watch = timer.StartWatcher("GetAllAsync"))
             {
@@ -42,10 +43,7 @@ namespace Doods.Framework.Repository.Std.Tables
                 if (cache)
                 {
                     var cacheValues = _cache.Get<List<T>>(timer, key);
-                    if (cacheValues != null)
-                    {
-                        return cacheValues;
-                    }
+                    if (cacheValues != null) return cacheValues;
                 }
 
                 cnt = cnt ?? await _database.GetConnection(timer);
@@ -53,10 +51,7 @@ namespace Doods.Framework.Repository.Std.Tables
 
                 watch?.Properties?.Add("count", rslt.Count.ToString());
 
-                if (cache)
-                {
-                    _cache.Set(timer, key, rslt);
-                }
+                if (cache) _cache.Set(timer, key, rslt);
 
                 return rslt;
             }
@@ -69,7 +64,7 @@ namespace Doods.Framework.Repository.Std.Tables
             {
                 watch?.Properties?.Add("type", typeof(T).Name);
 
-                if (id == null) return default(T);
+                if (id == null) return default;
                 watch?.Properties?.Add("id", id.ToString());
 
                 var cnt = await _database.GetConnection(timer);
@@ -95,16 +90,15 @@ namespace Doods.Framework.Repository.Std.Tables
             await cnt.DeleteAsync(value);
         }
 
-        public async Task DeleteAllIdsAsync<T>(ITimeWatcher timer, IEnumerable<long> ids, SQLiteAsyncConnection cnt) where T : TableBase, new()
+        public async Task DeleteAllIdsAsync<T>(ITimeWatcher timer, IEnumerable<long> ids, SQLiteAsyncConnection cnt)
+            where T : TableBase, new()
         {
             if (ids.IsNotEmpty())
-            {
                 using (timer.StartWatcher("DeleteAllIdsAsync"))
                 {
                     cnt = cnt ?? await _database.GetConnection(timer);
-                    await cnt.DeleteAllIdsAsync<T>(ids.Select(i => (object)i));
+                    await cnt.DeleteAllIdsAsync<T>(ids.Select(i => (object) i));
                 }
-            }
         }
 
         public Task<SQLiteAsyncConnection> GetConnection(ITimeWatcher timer)

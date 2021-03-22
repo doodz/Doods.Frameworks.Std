@@ -7,7 +7,7 @@ namespace Doods.Framework.Mobile.Std.Converters
     public class ImageEnumEmbeddedResourceConverter : TypeConverter, IValueConverter
     {
         /// <summary>
-        /// Convert
+        ///     Convert
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>
@@ -24,18 +24,8 @@ namespace Doods.Framework.Mobile.Std.Converters
             return ConvertFromInvariantString(str);
         }
 
-        public override object ConvertFromInvariantString(string resourceName)
-        {
-            //var MainAssembly = Application.Current?.GetType()?.GetTypeAssemblyFullName();
-            var assemblyName = typeof(ImageEnumEmbeddedResourceConverter).Assembly;
-
-            var assemblyFullName = assemblyName.GetName().Name;
-            return $"resource://{assemblyFullName}.Resources.Svg.{resourceName}?assembly={assemblyFullName}";
-
-
-        }
         /// <summary>
-        /// ConvertBack
+        ///     ConvertBack
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>
@@ -45,6 +35,15 @@ namespace Doods.Framework.Mobile.Std.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        public override object ConvertFromInvariantString(string resourceName)
+        {
+            //var MainAssembly = Application.Current?.GetType()?.GetTypeAssemblyFullName();
+            var assemblyName = typeof(ImageEnumEmbeddedResourceConverter).Assembly;
+
+            var assemblyFullName = assemblyName.GetName().Name;
+            return $"resource://{assemblyFullName}.Resources.Svg.{resourceName}?assembly={assemblyFullName}";
         }
     }
 }

@@ -5,11 +5,10 @@ namespace Doods.Framework.Http.Std.Authentication
 {
     internal class SimpleHttpHeaderAuthenticator : IAuthenticator
     {
-
         private readonly string _authHeader;
+        private readonly string _password;
 
         private readonly string _username;
-        private readonly string _password;
 
         public SimpleHttpHeaderAuthenticator(string username, string password)
         {

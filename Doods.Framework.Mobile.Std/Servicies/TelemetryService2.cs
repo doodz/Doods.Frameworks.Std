@@ -1,15 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Doods.Framework.Mobile.Std.Interfaces;
-using Doods.Framework.Std;
-using Doods.Framework.Std.Extensions;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
-
-namespace Doods.Framework.Mobile.Std.Servicies
+﻿namespace Doods.Framework.Mobile.Std.Servicies
 {
     //internal class TelemetryService2 : ITelemetryService
     //{

@@ -62,7 +62,7 @@ namespace Doods.Framework.Std.Extensions
         /// <param name="items">Éléments à ajouter</param>
         public static void AddRange<TValue>(this IList<TValue> list, params TValue[] items)
         {
-            list.AddRange((IEnumerable<TValue>)items);
+            list.AddRange((IEnumerable<TValue>) items);
         }
     }
 }

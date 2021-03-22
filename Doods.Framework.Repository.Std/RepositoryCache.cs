@@ -1,9 +1,9 @@
-﻿using Doods.Framework.Repository.Std.Interfaces;
-using Doods.Framework.Std;
-using Doods.Framework.Std.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Doods.Framework.Repository.Std.Interfaces;
+using Doods.Framework.Std;
+using Doods.Framework.Std.Extensions;
 
 namespace Doods.Framework.Repository.Std
 {
@@ -20,12 +20,9 @@ namespace Doods.Framework.Repository.Std
         {
             using (var watcher = timer.StartWatcher("RepositoryCache.Set"))
             {
-                watcher?.Properties?.Add("key", k.ToString());
+                watcher?.Properties?.Add("key", k);
 
-                if (k != null && value != null)
-                {
-                    _cache.AddOrSet(k, value);
-                }
+                if (k != null && value != null) _cache.AddOrSet(k, value);
             }
         }
 
@@ -38,12 +35,12 @@ namespace Doods.Framework.Repository.Std
                 if (k != null && _cache.ContainsKey(k))
                 {
                     watcher?.Properties?.Add("exists", true.ToString());
-                    return (T)_cache[k];
+                    return (T) _cache[k];
                 }
 
                 watcher?.Properties?.Add("exists", false.ToString());
 
-                return default(T);
+                return default;
             }
         }
 
@@ -55,10 +52,7 @@ namespace Doods.Framework.Repository.Std
                 watcher?.Properties?.Add("keys", keys.Join(","));
                 if (keys.IsNotEmpty())
                 {
-                    foreach (var k in keys)
-                    {
-                        _cache.Remove(k);
-                    }
+                    foreach (var k in keys) _cache.Remove(k);
 
                     return true;
                 }
@@ -84,6 +78,5 @@ namespace Doods.Framework.Repository.Std
 
             return value.GetType().FullName;
         }
-
     }
 }

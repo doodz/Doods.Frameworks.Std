@@ -17,6 +17,8 @@ namespace Doods.Framework.Std
 
         Dictionary<string, double> Measures { get; }
     }
+
     public interface IWatcher : IWatcherDescriptor, IDisposable
-    { }
+    {
+    }
 }

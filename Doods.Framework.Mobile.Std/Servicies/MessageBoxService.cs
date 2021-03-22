@@ -12,16 +12,14 @@ namespace Doods.Framework.Mobile.Std.Servicies
 
         public async void ShowAlert(string title, string message, Action onClosed = null)
         {
-          
-             await CurrentMainPage.DisplayAlert(title, message, Resource.ButtonOK);
+            await CurrentMainPage.DisplayAlert(title, message, Resource.ButtonOK);
             onClosed?.Invoke();
         }
 
 
         public async Task<bool> ShowAction(string title, string message, Action<bool> onClosed = null)
         {
-
-            var result =await CurrentMainPage.DisplayAlert(title, message, Resource.ButtonOK,"nok");
+            var result = await CurrentMainPage.DisplayAlert(title, message, Resource.ButtonOK, "nok");
             onClosed?.Invoke(result);
             return result;
         }

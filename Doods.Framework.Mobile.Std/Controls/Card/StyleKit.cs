@@ -20,17 +20,16 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
 
         public class Icons
         {
-            public static FileImageSource Alert = new FileImageSource() { File = "Alert.png" };
-            public static FileImageSource Resume = new FileImageSource() { File = "Resume.png" };
-            public static FileImageSource Completed = new FileImageSource() { File = "Completed.png" };
-            public static FileImageSource Report = new FileImageSource() { File = "Report.png" };
-            public static FileImageSource Unresolved = new FileImageSource() { File = "Unresolved.png" };
-            public static FileImageSource Cog = new FileImageSource() { File = "Config.png" };
-            public static FileImageSource SmallCalendar = new FileImageSource() { File = "Calendarmini.png" };
-            public static FileImageSource SmallClock = new FileImageSource() { File = "Clockmini.png" };
+            public static FileImageSource Alert = new FileImageSource() {File = "Alert.png"};
+            public static FileImageSource Resume = new FileImageSource() {File = "Resume.png"};
+            public static FileImageSource Completed = new FileImageSource() {File = "Completed.png"};
+            public static FileImageSource Report = new FileImageSource() {File = "Report.png"};
+            public static FileImageSource Unresolved = new FileImageSource() {File = "Unresolved.png"};
+            public static FileImageSource Cog = new FileImageSource() {File = "Config.png"};
+            public static FileImageSource SmallCalendar = new FileImageSource() {File = "Calendarmini.png"};
+            public static FileImageSource SmallClock = new FileImageSource() {File = "Clockmini.png"};
 
-            public static FileImageSource Shadow0240 = new FileImageSource() { File = "Shadow-0-2-4-0.png" };
-
+            public static FileImageSource Shadow0240 = new FileImageSource() {File = "Shadow-0-2-4-0.png"};
         }
     }
 }

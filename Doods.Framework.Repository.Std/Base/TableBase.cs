@@ -1,6 +1,6 @@
-﻿using Doods.Framework.Repository.Std.Interfaces;
+﻿using System;
+using Doods.Framework.Repository.Std.Interfaces;
 using SQLite;
-using System;
 
 namespace Doods.Framework.Repository.Std.Tables
 {
@@ -10,8 +10,6 @@ namespace Doods.Framework.Repository.Std.Tables
 
         public DateTimeOffset SyncDate { get; set; }
 
-        [PrimaryKey]
-        [AutoIncrement]
-        public long? Id { get; set; }
+        [PrimaryKey] [AutoIncrement] public long? Id { get; set; }
     }
 }

@@ -21,10 +21,10 @@
             AuthenticationType = AuthenticationType.Simple;
         }
 
-        public string Login { get; private set; }
+        public string Login { get; }
 
-        public string Password { get; private set; }
+        public string Password { get; }
 
-        public AuthenticationType AuthenticationType { get; private set; }
+        public AuthenticationType AuthenticationType { get; }
     }
 }

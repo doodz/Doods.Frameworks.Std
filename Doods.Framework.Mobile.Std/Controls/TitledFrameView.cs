@@ -44,7 +44,6 @@ namespace Doods.Framework.Mobile.Std.Controls
                     {
                         Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center
                     }
-                    
                 }
             };
 

@@ -1,12 +1,12 @@
-﻿using Doods.Framework.Std;
-using System;
+﻿using System;
+using Doods.Framework.Std;
 
 namespace Doods.Framework.Ssh.Std.Beans
 {
     public class FileInfoBean : NotifyPropertyChangedBase
     {
         /// <summary>
-        /// -rw-r--r--
+        ///     -rw-r--r--
         /// </summary>
         public string AccessRights { get; set; }
 

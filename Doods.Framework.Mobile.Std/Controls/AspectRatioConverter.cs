@@ -4,7 +4,7 @@ namespace Doods.Framework.Mobile.Std.controls
 {
     public class AspectRatioConverter : ContentView
     {
-        public  readonly BindableProperty AspectRatioProperty =
+        public readonly BindableProperty AspectRatioProperty =
             BindableProperty.Create(nameof(AspectRatio), typeof(double), typeof(AspectRatioConverter), 1d);
 
 

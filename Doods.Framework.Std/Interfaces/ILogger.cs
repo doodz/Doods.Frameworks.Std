@@ -10,6 +10,5 @@ namespace Doods.Framework.Std
         void Warning(Exception e);
         void Info(string msg);
         void Debug(string msg);
-
     }
 }

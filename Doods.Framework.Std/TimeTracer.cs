@@ -1,6 +1,6 @@
-﻿using Doods.Framework.Std.Extensions;
-using System;
+﻿using System;
 using System.Linq;
+using Doods.Framework.Std.Extensions;
 
 namespace Doods.Framework.Std
 {
@@ -16,7 +16,8 @@ namespace Doods.Framework.Std
         private readonly Action<ILogger, string> _logging;
         private readonly ITelemetryService _telemetryService;
 
-        public TimeTracer(ILogger logger, ITelemetryService telemetryService, TimeTracerContext? context = null, Action<ILogger, string> logging = null)
+        public TimeTracer(ILogger logger, ITelemetryService telemetryService, TimeTracerContext? context = null,
+            Action<ILogger, string> logging = null)
         {
             _logger = logger;
             _telemetryService = telemetryService;
@@ -38,15 +39,10 @@ namespace Doods.Framework.Std
         {
             if (IsActive)
             {
-                if (Context == TimeTracerContext.LogInDispose)
-                {
-                    _logging(_logger, $"{Timer.Traces.Join("\n")}");
-                }
+                if (Context == TimeTracerContext.LogInDispose) _logging(_logger, $"{Timer.Traces.Join("\n")}");
 
                 foreach (var watcher in Timer.Watchers.Where(w => w.Telemetry))
-                {
                     _telemetryService?.Event(watcher.Name, watcher.Properties, watcher.Measures);
-                }
             }
 
             IsActive = false;

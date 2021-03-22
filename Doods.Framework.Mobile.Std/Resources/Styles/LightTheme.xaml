@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <?xaml-comp compile="true" ?>
+
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="Doods.Framework.Mobile.Std.Resources.Styles.LightTheme">
@@ -30,18 +31,18 @@
     <Color x:Key="SystemGray4">#D1D1D6</Color>
     <Color x:Key="SystemGray5">#E5E5EA</Color>
     <Color x:Key="SystemGray6">#F2F2F7</Color>
-    
+
     <!--Shell-->
     <Color x:Key="ShellTabBarBackgroundColor">#F5F5F5</Color>
 
     <!--Seperator-->
     <Color x:Key="SeparatorColor">#757575</Color>
     <Color x:Key="OpaqueSeparatorColor">#757575</Color>
-    
+
     <!--Frame-->
     <Color x:Key="FrameBackgroundColor">#FFFFFF</Color>
     <Color x:Key="FrameBorderColor">Default</Color>
-    
+
     <!--Entry-->
     <Color x:Key="EntryBackgroundColor">#FFFFFF</Color>
 

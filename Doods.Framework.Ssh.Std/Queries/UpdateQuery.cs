@@ -19,6 +19,5 @@ namespace Doods.Framework.Ssh.Std.Queries
             //var res = result.Split('\n').Where(r => !string.IsNullOrWhiteSpace(r) && !string.IsNullOrEmpty(r));
             //return Parse(res);
         }
-
     }
 }

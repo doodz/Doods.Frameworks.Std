@@ -15,7 +15,7 @@ namespace Doods.Framework.Mobile.Std.Controls.Card
 
         public static Style Set<T>(this Style _style, BindableProperty property, T value)
         {
-            _style.Setters.Add(new Setter() { Property = property, Value = value });
+            _style.Setters.Add(new Setter {Property = property, Value = value});
             return _style;
         }
     }

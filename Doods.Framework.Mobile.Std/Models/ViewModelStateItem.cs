@@ -8,7 +8,6 @@ using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Models
 {
-
     //public enum StateLoadingPage
     //{
     //    Before,
@@ -21,7 +20,6 @@ namespace Doods.Framework.Mobile.Std.Models
     public interface IStateItem
     {
         bool IsRunning { get; }
-
     }
 
     public class ViewModelStateItem : BaseItem, IStateItem
@@ -44,45 +42,6 @@ namespace Doods.Framework.Mobile.Std.Models
             set => SetProperty(ref _showCurrentCmd, value);
         }
 
-        public async Task RunActionAsync(Func<Task> myAction, Action before, Action after)
-        {
-            before?.Invoke();
-            MainThread.BeginInvokeOnMainThread(() => { IsRunning = true; });
-            await myAction.Invoke();
-            MainThread.BeginInvokeOnMainThread(() => { IsRunning = false; });
-            after?.Invoke();
-        }
-
-        public void RunActions(Action myAction, Action before, Action after)
-        {
-            before?.Invoke();
-            RunAction(myAction);
-            after?.Invoke();
-        }
-        public TResult RunFunc<TResult>(Func<TResult> myFunc, Action before, Action after)
-        {
-            before?.Invoke();
-            var result=RunFunc(myFunc);
-            after?.Invoke();
-            return result;
-        }
-
-        public TResult RunFunc<TResult>(Func<TResult> myFunc)
-        {
-            IsRunning = true;
-            var result =myFunc.Invoke();
-            IsRunning = false;
-            return result;
-        }
-
-        public void RunAction(Action myAction)
-        {
-            IsRunning = true;
-            myAction.Invoke();
-            IsRunning = false;
-
-        }
-
         public IViewModel ViewModel { get; }
 
         public SvgIconTarget Icon
@@ -101,6 +60,45 @@ namespace Doods.Framework.Mobile.Std.Models
         {
             get => _isRunning;
             set => SetProperty(ref _isRunning, value);
+        }
+
+        public async Task RunActionAsync(Func<Task> myAction, Action before, Action after)
+        {
+            before?.Invoke();
+            MainThread.BeginInvokeOnMainThread(() => { IsRunning = true; });
+            await myAction.Invoke();
+            MainThread.BeginInvokeOnMainThread(() => { IsRunning = false; });
+            after?.Invoke();
+        }
+
+        public void RunActions(Action myAction, Action before, Action after)
+        {
+            before?.Invoke();
+            RunAction(myAction);
+            after?.Invoke();
+        }
+
+        public TResult RunFunc<TResult>(Func<TResult> myFunc, Action before, Action after)
+        {
+            before?.Invoke();
+            var result = RunFunc(myFunc);
+            after?.Invoke();
+            return result;
+        }
+
+        public TResult RunFunc<TResult>(Func<TResult> myFunc)
+        {
+            IsRunning = true;
+            var result = myFunc.Invoke();
+            IsRunning = false;
+            return result;
+        }
+
+        public void RunAction(Action myAction)
+        {
+            IsRunning = true;
+            myAction.Invoke();
+            IsRunning = false;
         }
     }
 }

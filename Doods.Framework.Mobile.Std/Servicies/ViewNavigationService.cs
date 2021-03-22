@@ -1,36 +1,25 @@
-﻿using Doods.Framework.Mobile.Std.Interfaces;
-using Doods.Framework.Std;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Doods.Framework.Mobile.Std.Interfaces;
+using Doods.Framework.Std;
 using Xamarin.Forms;
 
 namespace Doods.Framework.Mobile.Std.Servicies
 {
-    public class ViewNavigationService : NavigationBaseService,INavigationService
+    public class ViewNavigationService : NavigationBaseService, INavigationService
     {
-     
-        public ViewNavigationService(ILogger looger, ITelemetryService telemetryService):base(looger,telemetryService)
-        {
-            
-        }
-      
         private readonly Stack<NavigationPage> _navigationPageStack =
             new Stack<NavigationPage>();
-        private NavigationPage CurrentNavigationPage => _navigationPageStack.Peek();
 
-        
-
-        public Page SetRootPage(string rootPageKey)
+        public ViewNavigationService(ILogger looger, ITelemetryService telemetryService) : base(looger,
+            telemetryService)
         {
-            var rootPage = GetPage(rootPageKey);
-            _navigationPageStack.Clear();
-            var mainPage = new ModalNavigationPage(this,rootPage);
-            _navigationPageStack.Push(mainPage);
-            return mainPage;
         }
+
+        private NavigationPage CurrentNavigationPage => _navigationPageStack.Peek();
 
         public string CurrentPageKey
         {
@@ -38,10 +27,7 @@ namespace Doods.Framework.Mobile.Std.Servicies
             {
                 lock (_sync)
                 {
-                    if (CurrentNavigationPage?.CurrentPage == null)
-                    {
-                        return null;
-                    }
+                    if (CurrentNavigationPage?.CurrentPage == null) return null;
 
                     var pageType = CurrentNavigationPage.CurrentPage.GetType();
 
@@ -80,7 +66,7 @@ namespace Doods.Framework.Mobile.Std.Servicies
         {
             var page = GetPage(pageKey, parameter);
             NavigationPage.SetHasNavigationBar(page, false);
-            var modalNavigationPage = new ModalNavigationPage(this,page);
+            var modalNavigationPage = new ModalNavigationPage(this, page);
             await CurrentNavigationPage.Navigation.PushModalAsync(modalNavigationPage, animated);
             _navigationPageStack.Push(modalNavigationPage);
         }
@@ -96,16 +82,24 @@ namespace Doods.Framework.Mobile.Std.Servicies
             await CurrentNavigationPage.Navigation.PushAsync(page, animated);
         }
 
+
+        public Page SetRootPage(string rootPageKey)
+        {
+            var rootPage = GetPage(rootPageKey);
+            _navigationPageStack.Clear();
+            var mainPage = new ModalNavigationPage(this, rootPage);
+            _navigationPageStack.Push(mainPage);
+            return mainPage;
+        }
+
         private Page GetPage(string pageKey, object parameter = null)
         {
             _telemetry.Event($"Navigation: {pageKey}");
             lock (_sync)
             {
                 if (!_routes.ContainsKey(pageKey))
-                {
                     throw new ArgumentException(
                         $"No such page: {pageKey}. Did you forget to call NavigationService.Configure?");
-                }
 
                 var type = _routes[pageKey];
                 ConstructorInfo constructor;
@@ -140,10 +134,8 @@ namespace Doods.Framework.Mobile.Std.Servicies
                 }
 
                 if (constructor == null)
-                {
                     throw new InvalidOperationException(
                         "No suitable constructor found for page " + pageKey);
-                }
 
                 var page = constructor.Invoke(parameters) as Page;
                 return page;

@@ -17,15 +17,9 @@ namespace Doods.Framework.Std.Extensions
 
                 var resultTask = await Task.WhenAny(task, delayTask).ConfigureAwait(false);
                 if (resultTask == delayTask)
-                {
                     // Operation cancelled
                     throw new OperationCanceledException();
-                }
-                else
-                {
-                    // Cancel the timer task so that it does not fire
-                    cts.Cancel();
-                }
+                cts.Cancel();
             }
 
             await task.ConfigureAwait(false);
@@ -39,30 +33,26 @@ namespace Doods.Framework.Std.Extensions
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             // This disposes the registration as soon as one of the tasks trigger
-            using (cancellationToken.Register(state =>
-            {
-                ((TaskCompletionSource<object>)state).TrySetResult(null);
-            },
-            tcs))
+            using (cancellationToken.Register(state => { ((TaskCompletionSource<object>) state).TrySetResult(null); },
+                tcs))
             {
                 var resultTask = await Task.WhenAny(task, tcs.Task).ConfigureAwait(false);
                 if (resultTask == tcs.Task)
-                {
                     // Operation cancelled
                     throw new OperationCanceledException(cancellationToken);
-                }
 
                 return await task.ConfigureAwait(false);
             }
         }
     }
+
     public static class DateTimeExtensions
     {
         public static long ToUnixTimestamp(this DateTime d)
         {
             var epoch = d - new DateTime(1970, 1, 1, 0, 0, 0);
 
-            return (long)epoch.TotalSeconds;
+            return (long) epoch.TotalSeconds;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Doods.Framework.Http.Std
         Task<IRestResponse<T>> ExecuteAsync<T>(IRestRequest request);
     }
 
-    public abstract class RestClientBase : RestClient,IHttpClient
+    public abstract class RestClientBase : RestClient, IHttpClient
     {
         //TODO logger
         //private readonly ILog _logger =
@@ -25,9 +25,8 @@ namespace Doods.Framework.Http.Std
 
         protected readonly IConnection Connection;
 
-        public RestClientBase(IConnection connection):this(connection,new NewtonsoftJsonSerializer())
+        public RestClientBase(IConnection connection) : this(connection, new NewtonsoftJsonSerializer())
         {
-            
         }
 
         public RestClientBase(IConnection connection, NewtonsoftJsonSerializer serializer)
@@ -62,7 +61,6 @@ namespace Doods.Framework.Http.Std
 
         public async Task<IRestResponse<T>> ExecuteAsync<T>(IRestRequest request)
         {
-           
             //_logger.Info($"Calling ExecuteTaskAsync. BaseUrl: {BaseUrl} Resource: {request.Resource} Parameters: {string.Join(", ", request.Parameters)}");
             AddHeaders(request);
             var response = await base.ExecuteAsync<T>(request).ConfigureAwait(false);
@@ -84,7 +82,7 @@ namespace Doods.Framework.Http.Std
 
             if (response.StatusCode == HttpStatusCode.Forbidden) throw new ForbiddenException(response.ErrorMessage);
 
-            if ((int)response.StatusCode >= 400)
+            if ((int) response.StatusCode >= 400)
             {
                 var errorMessage = response.ErrorMessage;
                 var friendly = false;
@@ -109,15 +107,18 @@ namespace Doods.Framework.Http.Std
             IRestRequest request)
         {
             var responsenew = await RedirectIfNeededAndGetResponseAsync(response, request).ConfigureAwait(false);
-            return responsenew = await RedirectIfMovedPermanentlyAndGetResponseAsync(response, request).ConfigureAwait(false);
+            return responsenew = await RedirectIfMovedPermanentlyAndGetResponseAsync(response, request)
+                .ConfigureAwait(false);
         }
 
         private async Task<IRestResponse<T>> CheckRedirectsHeaderAsync<T>(IRestResponse<T> response,
             IRestRequest request)
         {
             var responsenew = await RedirectIfNeededAndGetResponseAsync(response, request).ConfigureAwait(false);
-            return responsenew = await RedirectIfMovedPermanentlyAndGetResponseAsync(response, request).ConfigureAwait(false);
+            return responsenew = await RedirectIfMovedPermanentlyAndGetResponseAsync(response, request)
+                .ConfigureAwait(false);
         }
+
         private async Task<IRestResponse<T>> RedirectIfMovedPermanentlyAndGetResponseAsync<T>(IRestResponse<T> response,
             IRestRequest request)
         {
@@ -134,8 +135,6 @@ namespace Doods.Framework.Http.Std
 
             return response;
         }
-
-
 
 
         private async Task<IRestResponse> RedirectIfMovedPermanentlyAndGetResponseAsync(IRestResponse response,
@@ -173,8 +172,6 @@ namespace Doods.Framework.Http.Std
             return response;
         }
 
-       
-
 
         private async Task<IRestResponse> RedirectIfNeededAndGetResponseAsync(IRestResponse response,
             IRestRequest request)
@@ -204,7 +201,7 @@ namespace Doods.Framework.Http.Std
 
         private string RemoveBaseUrl(Parameter newLocation)
         {
-            return newLocation.Value.ToString().Replace(Connection.Host.ToString(), string.Empty);
+            return newLocation.Value.ToString().Replace(Connection.Host, string.Empty);
         }
     }
 }

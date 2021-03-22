@@ -25,7 +25,7 @@ namespace Doods.Framework.Ssh.Std.Queries
             do
             {
                 Task.Delay(delay).Wait();
-                
+
                 isRunningIpd = new IsRunningPidQuery(Client, str).Run();
                 delay += 1000;
                 if (delay > 5000)

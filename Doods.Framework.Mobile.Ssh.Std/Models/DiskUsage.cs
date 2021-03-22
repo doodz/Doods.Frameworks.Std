@@ -1,5 +1,4 @@
-﻿using System;
-using Doods.Framework.Std;
+﻿using Doods.Framework.Std;
 
 namespace Doods.Framework.Mobile.Ssh.Std.Models
 {

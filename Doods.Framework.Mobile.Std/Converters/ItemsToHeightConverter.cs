@@ -10,10 +10,7 @@ namespace Doods.Framework.Mobile.Std.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int)
-            {
-                return System.Convert.ToInt32(value) * ItemHeight;
-            }
+            if (value is int) return System.Convert.ToInt32(value) * ItemHeight;
 
             return 0;
         }

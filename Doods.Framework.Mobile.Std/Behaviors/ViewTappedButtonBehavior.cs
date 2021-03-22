@@ -14,10 +14,10 @@ namespace Doods.Framework.Mobile.Std.Behaviors
                 AnimationType.Fade);
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ViewTappedButtonBehavior),null);
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ViewTappedButtonBehavior));
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ViewTappedButtonBehavior),null);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ViewTappedButtonBehavior));
 
         private bool _isAnimating;
 
@@ -61,8 +61,6 @@ namespace Doods.Framework.Mobile.Std.Behaviors
                 tapGestureRecognizer.Tapped += View_Tapped;
                 bindable.GestureRecognizers.Add(tapGestureRecognizer);
             }
-
-           
         }
 
         protected override void OnDetachingFrom(View bindable)
@@ -73,8 +71,6 @@ namespace Doods.Framework.Mobile.Std.Behaviors
 
             if (bindable.GestureRecognizers.FirstOrDefault() is TapGestureRecognizer exists)
                 exists.Tapped -= View_Tapped;
-
-           
         }
 
         private void View_Tapped(object sender, EventArgs e)
