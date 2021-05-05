@@ -1,6 +1,14 @@
 ﻿namespace Doods.Framework.ApiClientBase.Std.Authentication
 {
-    public class Credentials
+    public interface ICredentials
+    {
+        string Login { get; }
+
+        string Password { get; }
+
+        AuthenticationType AuthenticationType { get; }
+    }
+    public class Credentials: ICredentials
     {
         public Credentials()
         {

@@ -30,7 +30,7 @@ namespace Doods.Framework.Ssh.Std.Serializers
             set => _contractResolver = value ?? DefaultContractResolver.Instance;
         }
 
-        public static DoodsSshRequestSerializer CreateDefault(SshSerializerSettings settings)
+        public static DoodsSshRequestSerializer CreateDefault(ISshSerializerSettings settings)
         {
             var serializer = CreateDefault();
             if (settings != null) ApplySerializerSettings(serializer, settings);
@@ -38,7 +38,7 @@ namespace Doods.Framework.Ssh.Std.Serializers
         }
 
         private static void ApplySerializerSettings(DoodsSshRequestSerializer serializer,
-            SshSerializerSettings settings)
+            ISshSerializerSettings settings)
         {
             if (!CollectionUtils.IsNullOrEmpty(settings.Converters))
                 for (var i = 0; i < settings.Converters.Count; i++)

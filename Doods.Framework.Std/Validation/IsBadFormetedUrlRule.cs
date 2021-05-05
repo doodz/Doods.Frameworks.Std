@@ -2,7 +2,7 @@
 
 namespace Doods.Framework.Std.Validation
 {
-    public class IsBadFormetedUrlRule<T> : IValidationRule<T>
+    public class IsBadFormetedUrlRule<T> : ValidationRule<T>
     {
         //private const string regex = @"^(https?:\/\/)";
         private readonly Regex _haveHttpS = new Regex(@"^(https?:\/\/)");
@@ -13,12 +13,17 @@ namespace Doods.Framework.Std.Validation
             _needHttp = needHttp;
         }
 
-        public string ValidationMessage { get; set; }
 
-        public bool Check(T value)
+
+        public override bool Check(T value)
         {
             if (value == null) return false;
-            var res = _haveHttpS.IsMatch(value.ToString().ToLower());
+
+            var localval = value.ToString().ToLower();
+
+            if(string.IsNullOrWhiteSpace(localval)) return false;
+
+            var res = _haveHttpS.IsMatch(localval);
 
             if (!_needHttp) return !res;
             return res;

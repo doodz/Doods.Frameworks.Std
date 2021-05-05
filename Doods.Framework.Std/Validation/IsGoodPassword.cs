@@ -1,10 +1,9 @@
 ﻿namespace Doods.Framework.Std.Validation
 {
-    public class IsGoodPassword<T> : IValidationRule<T>
+    //toto great
+    public class IsGoodPassword<T> : ValidationRule<T>
     {
-        public string ValidationMessage { get; set; }
-
-        public bool Check(T value)
+        public override bool Check(T value)
         {
             if (value == null) return false;
             if (!(value is string)) return false;

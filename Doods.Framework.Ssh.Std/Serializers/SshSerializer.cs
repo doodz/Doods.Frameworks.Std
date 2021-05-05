@@ -3,7 +3,16 @@ using Doods.Framework.Ssh.Std.Interfaces;
 
 namespace Doods.Framework.Ssh.Std.Serializers
 {
-    public class SshSerializer : IDeserializer
+    public interface ISshSerializer : IDeserializer
+    {
+        T Deserialize<T>(IApiResponse apiResponse);
+
+       T DeserializeError<T>(IApiResponse apiResponse);
+
+        T Deserialize<T>(string content);
+    }
+
+    public class SshSerializer : ISshSerializer
     {
         private readonly DoodsSshRequestSerializer _serializer;
 
@@ -13,7 +22,7 @@ namespace Doods.Framework.Ssh.Std.Serializers
             _serializer = new DoodsSshRequestSerializer();
         }
 
-        public SshSerializer(SshSerializerSettings settings)
+        public SshSerializer(ISshSerializerSettings settings)
         {
             _serializer = DoodsSshRequestSerializer.CreateDefault(settings);
         }

@@ -6,7 +6,7 @@ namespace Doods.Framework.Http.Std.Authentication
 {
     internal class Authenticator
     {
-        public Authenticator(Credentials credentials)
+        public Authenticator(ICredentials credentials)
         {
             Credentials = credentials;
             Authenticators = new Dictionary<AuthenticationType, IAuthenticator>
@@ -29,7 +29,7 @@ namespace Doods.Framework.Http.Std.Authentication
 
         public IAuthenticator CreatedAuthenticator { get; }
 
-        public Credentials Credentials { get; }
+        public ICredentials Credentials { get; }
 
         private Dictionary<AuthenticationType, IAuthenticator> Authenticators { get; }
     }

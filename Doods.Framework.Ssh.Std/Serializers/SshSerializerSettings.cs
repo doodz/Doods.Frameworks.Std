@@ -2,7 +2,14 @@
 
 namespace Doods.Framework.Ssh.Std.Serializers
 {
-    public class SshSerializerSettings
+
+    public interface ISshSerializerSettings
+    {
+        IList<ISshConverter> Converters { get; set; }
+    }
+
+
+    public class SshSerializerSettings: ISshSerializerSettings
     {
         public SshSerializerSettings()
         {

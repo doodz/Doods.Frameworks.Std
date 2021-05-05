@@ -8,7 +8,7 @@ namespace Doods.Framework.Ssh.Std.Requests
     {
         private readonly string _commandText;
 
-        protected SshSerializer _SshSerializer;
+        protected ISshSerializer _SshSerializer;
         public IEnumerable<string> NeedGroup = new List<string>();
         public bool NeedSudo;
         protected bool UseSudo;
@@ -19,7 +19,7 @@ namespace Doods.Framework.Ssh.Std.Requests
             _SshSerializer = new SshSerializer();
         }
 
-        public SshRequestBase(string commandText, SshSerializerSettings settings)
+        public SshRequestBase(string commandText, ISshSerializerSettings settings)
         {
             _commandText = commandText;
             _SshSerializer = new SshSerializer(settings);

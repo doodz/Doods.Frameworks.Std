@@ -4,12 +4,11 @@ using System.Net.NetworkInformation;
 
 namespace Doods.Framework.Std.Validation
 {
-    public class IsReachableHostRule<T> : IValidationRule<T>
+    public class IsReachableHostRule<T> : ValidationRule<T>
     {
         public Func<string, string> ValueFormater { get; set; }
-        public string ValidationMessage { get; set; }
-
-        public bool Check(T value)
+       
+        public override bool Check(T value)
         {
             var p = new Ping();
             var ip = value as string;

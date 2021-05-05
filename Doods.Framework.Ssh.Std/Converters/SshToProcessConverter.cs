@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Doods.Framework.Ssh.Std.Beans;
@@ -61,6 +62,18 @@ namespace Doods.Framework.Ssh.Std.Converters
                     }
                 }
             }
+
+            //if (!objectType.IsArray)
+            //{
+            //    if (objectType == typeof(Collection<ProcessBean>))
+            //    {
+            //        return new Collection<ProcessBean>(processes);
+            //    }
+
+            //    return lines.ToList();
+
+
+            //}
 
             return processes;
         }

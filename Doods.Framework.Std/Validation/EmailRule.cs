@@ -2,11 +2,10 @@
 
 namespace Doods.Framework.Std.Validation
 {
-    public class EmailRule<T> : IValidationRule<T>
+    public class EmailRule<T> : ValidationRule<T>
     {
-        public string ValidationMessage { get; set; }
-
-        public bool Check(T value)
+      
+        public override bool Check(T value)
         {
             if (value == null) return false;
 

@@ -75,8 +75,7 @@ namespace Doods.Framework.Http.Std
 
         private void CheckResponseStatusCode(IRestResponse response)
         {
-            if (response.ErrorException != null)
-                throw response.ErrorException;
+            
 
             if (response.StatusCode == HttpStatusCode.Unauthorized) throw new AuthorizationException(response.Content);
 
@@ -100,6 +99,8 @@ namespace Doods.Framework.Http.Std
 
                 throw new RequestFailedException(errorMessage, friendly);
             }
+            if (response.ErrorException != null)
+                throw response.ErrorException;
         }
 
 

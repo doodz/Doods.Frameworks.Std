@@ -1,6 +1,6 @@
 ﻿namespace Doods.Framework.Std.Validation
 {
-    public class IsNumericRule<T> : IValidationRule<T>
+    public class IsNumericRule<T> : ValidationRule<T>
     {
         private readonly bool _allowDecimal;
 
@@ -9,10 +9,11 @@
             _allowDecimal = allowDecimal;
         }
 
-        public string ValidationMessage { get; set; }
+        
 
-        public bool Check(T value)
+        public override bool Check(T value)
         {
+            
             var isValid = false;
             if (_allowDecimal)
                 isValid = double.TryParse(value.ToString(), out var result);

@@ -1,10 +1,9 @@
 ﻿namespace Doods.Framework.Std.Validation
 {
-    public class IsNotNullOrEmptyRule<T> : IValidationRule<T>
+    public class IsNotNullOrEmptyRule<T> : ValidationRule<T>
     {
-        public string ValidationMessage { get; set; }
-
-        public bool Check(T value)
+      
+        public override bool Check(T value)
         {
             if (value == null) return false;
             return !string.IsNullOrWhiteSpace(value.ToString());
