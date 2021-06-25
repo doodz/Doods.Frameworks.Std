@@ -24,7 +24,7 @@ namespace Doods.Framework.Std
         /// <typeparam name="TValue"></typeparam>
         /// <returns></returns>
         public static IReadOnlyCollection<TValue> EmptyReadOnly<TValue>()
-        {
+        {//toto
             return Empty<TValue>().ToList();
         }
 
